@@ -1,0 +1,8 @@
+.shadow-link {
+  color: black;
+  text-decoration: none;
+}
+.shadow-link-gray {
+  color: rgba(0,0,0,.55);
+  text-decoration: none;
+}

@@ -22,11 +22,11 @@ const BackImg1 = () => {
           <p>Dummy</p>
         </div>
         <Container fluid className="mh-100">
-          <div className="row align-items-end"
-          style={{height: "250px"}}>
-            <div class="col-12 text-center flex-grow-1" >
-            <Link ></Link>
-            <Button >Fai un preventivo</Button>
+          <div className="row align-items-end" style={{ height: "250px" }}>
+            <div class="col-12 text-center flex-grow-1">
+              <Link to="/product">
+                <Button>Fai un preventivo</Button>
+              </Link>
             </div>
           </div>
         </Container>
