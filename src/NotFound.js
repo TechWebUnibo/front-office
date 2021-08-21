@@ -3,7 +3,7 @@ import { Button, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 const NotFound = () => {
   return (
-    <Container style={{ minHeight: "100vh" }}>
+    <Container style={{ minHeight: "90vh" }}>
       <div>
         <p className="display-1 mt-2">
           Hai chiamato, ma nessuno ha risposto...

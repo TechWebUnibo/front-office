@@ -4,7 +4,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Topbar from "./Topbar";
 import Home from "./Home";
 import NotFound from "./NotFound";
-import Product from "./Product";
+import Products from "./Products";
+import LoginPage from "./LoginPage";
+import SignupPage from "./SinupPage";
 
 class App extends Component {
   render() {
@@ -19,8 +21,16 @@ class App extends Component {
                 <Home />
               </Route>
 
-              <Route path="/product">
-                <Product />
+              <Route path="/products">
+                <Products />
+              </Route>
+
+              <Route path="/login">
+                <LoginPage />
+              </Route>
+
+              <Route path="/signup">
+                <SignupPage />
               </Route>
 
               <Route path="*">
