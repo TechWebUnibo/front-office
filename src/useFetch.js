@@ -1,15 +1,24 @@
 import { useState, useEffect } from 'react';
 
-const useFetch = (url) => {
+//method: the http method, url: the url of the api, requestBody: the body of the request IN JSON
+const useFetch = (method, url, requestBody) => {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const abortCont = new AbortController();
+    
+    const abortCont = new window.AbortController();
+
+    const requestOptions = {
+      method: method,
+      headers: { 'Content-Type': 'application/json' },
+      body: requestBody,
+      signal: abortCont.signal
+    };
 
     setTimeout(() => {
-      fetch(url, { signal: abortCont.signal })
+      fetch(url, requestOptions)
       .then(res => {
         if (!res.ok) { // error coming back from server
           throw Error('could not fetch the data for that resource');
@@ -30,7 +39,7 @@ const useFetch = (url) => {
           setError(err.message);
         }
       })
-    }, 1000);
+    }, 5000);
 
     // abort the fetch
     return () => abortCont.abort();

@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+import { Navbar, Container, Nav, NavDropdown, Button } from "react-bootstrap";
 import "./common.css";
 import logo from "../assets/logo.png";
+import { isLogged, logout } from "./apiLibrary";
 
 const Topbar = () => {
-  const loggedIn = false;
+  
+  const [loggedIn, setLoggedIn] = useState(isLogged());
+
+  useState(() => {
+    isLogged().then(data => setLoggedIn(data));
+  })
+
+  function logoutHere() {
+    logout();
+    isLogged().then(data => setLoggedIn(data));
+  }
 
   return (
     <Navbar bg="light" expand="md">
@@ -31,13 +42,27 @@ const Topbar = () => {
 
             {loggedIn && (
               <NavDropdown title="Account" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Profilo</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Notifiche
+                <NavDropdown.Item >
+                  <Link to="/profile" className="shadow-link-gray">
+                    Profilo
+                  </Link>
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Noleggi</NavDropdown.Item>
+                <NavDropdown.Item >
+                <Link to="/profile" className="shadow-link-gray">
+                    Notifiche
+                  </Link>
+                </NavDropdown.Item>
+                <NavDropdown.Item >
+                  <Link to="/profile" className="shadow-link-gray">
+                    Noleggi
+                  </Link>
+                </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">Logout</NavDropdown.Item>
+                <NavDropdown.Item >
+                  <Button className="btn-danger" onClick={logoutHere}>
+                    Logout
+                  </Button>
+                </NavDropdown.Item>
               </NavDropdown>
             )}
             {!loggedIn && (
