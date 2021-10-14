@@ -1,7 +1,7 @@
 import React from "react";
 import { Container} from "react-bootstrap";
 import logo from "../assets/logo.png";
-import ProductCard from "./ProductCard";
+import ProductCard from "./components/ProductCard";
 
 const Products = () => { 
   

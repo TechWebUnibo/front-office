@@ -1,32 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Topbar from "./Topbar";
+import Topbar from "./components/Topbar";
 import Home from "./Home";
-import NotFound from "./NotFound";
+import NotFound from "./components/NotFound";
 import Products from "./Products";
-import LoginPage from "./LoginPage";
-import SignupPage from "./SinupPage";
-import { isLogged, logout } from "./apiLibrary";
+import LoginPage from "./components/LoginPage";
+import SignupPage from "./components/SignupPage";
+import { isLogged, logout } from "./utility/apiLibrary";
 
 
 
 function App() {
 
-  const [loggedIn, setLoggedIn] = useState(isLogged());
-
+  const [loggedIn, setLoggedIn] = useState();
+  
   const setLoginState = (value) => {
     switch (value) {
       case true:
         setLoggedIn(true);
         break;
       case false:
+        console.log('cos')
         logout();
         setLoggedIn(false);
         break;
       default:
         throw Error('Invalid value');
     }};
+    
+  useEffect(() =>{
+    const checkLogin = async() =>{
+      setLoginState(await isLogged())
+    } 
+    checkLogin()
+  }, [])
+
+
 
   return (
     <Router>

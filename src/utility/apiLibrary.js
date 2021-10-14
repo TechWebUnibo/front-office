@@ -1,4 +1,3 @@
-import { setLogedIn } from "./Topbar"
 
 const jwt = require('jsonwebtoken')
 const ACCESS_TOKEN_KEY = 'access_token'
@@ -18,13 +17,12 @@ async function apiLogin(username, password) {
         body: data,
       };
       try{
-        let res = await fetch(CUSTMER_LOGIN, requestOptions, )
+        let res = await fetch(CUSTMER_LOGIN, requestOptions,)
         let status = res.status;
         res = await res.json();
         if(status === 200){
             setToken(res.accessToken);
         }
-        setLogedIn("true");
         return status;
       }
       catch(e){
@@ -34,9 +32,9 @@ async function apiLogin(username, password) {
          
 }
 
-export default apiLogin;
 
 export function logout() {
+    console.log('non dovrei essere qui')
     setToken(null);
 }
 
@@ -94,13 +92,16 @@ export async function isLogged(){
         return true
         */
     try{
-        jwt.verify(getToken(), await getPublicKey(), { algorithm: 'RS256' })
+        console.log(getToken())
+        console.log(jwt.verify(getToken(), await getPublicKey(), { algorithm: 'RS256' }))
         return true
     }
     catch(err){
+        console.log(err)
         return false
     }
 }
 
 
 
+export default apiLogin;

@@ -2,13 +2,13 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Form, Button, Container } from "react-bootstrap";
 import { useState } from "react";
-import apiLogin from "./apiLibrary.js";
+import apiLogin from "../utility/apiLibrary.js";
 const LoginPage = ({setLoginState}) => {
 
   const [wrongUsrnm, setWrongUsrnm] = useState(false);
   const [wrongPassw, setWrongPassw] = useState(false);
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [isPending, setIsPending] = useState(false);
   
   const history = useHistory();
@@ -26,7 +26,7 @@ const LoginPage = ({setLoginState}) => {
     else if(status === 404)
       setWrongUsrnm(true);
     else {
-        setLoginState(true);
+        setLoginState(true)
         history.goBack();
       }
       
@@ -39,7 +39,7 @@ const LoginPage = ({setLoginState}) => {
 
         <Form.Group className="mb-3" controlId="formBasicUsername">
           <Form.Label>Username</Form.Label>
-          <Form.Control type="text" placeholder="Inserisci username" value={username} id="userName" onChange={(e) => setUsername(e.target.value)}/>
+          <Form.Control type="text" placeholder="Inserisci username" value={username}  onChange={(e) => setUsername(e.target.value)}/>
           {wrongUsrnm && <Form.Text className=" text-danger">
             Nessun username corrispondente. Riprova o <Link to="/signup">registrati gratis</Link>
           </Form.Text>}
@@ -47,7 +47,7 @@ const LoginPage = ({setLoginState}) => {
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" id="password" onChange={(e) => setPassword(e.target.value)}/>
+          <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
           {wrongPassw && <Form.Text className=" text-danger">
             Password errata
           </Form.Text>}

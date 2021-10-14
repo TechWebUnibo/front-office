@@ -1,16 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Container, Nav, NavDropdown, Button } from "react-bootstrap";
-import "./common.css";
-import { useEffect } from "react";
+import "../style/common.css";
 
 const Topbar = ({loggedIn, setLoginState}) => {
-  
-
-  useEffect(() => {
-    console.log(loggedIn);
-  });
-
 
   return (
     <Navbar collapseOnSelect bg="light" expand="md" >
@@ -23,47 +16,35 @@ const Topbar = ({loggedIn, setLoginState}) => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav" >
           <Nav className="me-auto">
-            <Nav.Link href="/">
-              <Link to="/" className="shadow-link-gray">
-                Home
-              </Link>
+            <Nav.Link as={Link} to="/" href="/" className="shadow-link-gray" >
+              Home
             </Nav.Link>
-            <Nav.Link href="/products">
-              <Link to="/products" className="shadow-link-gray">
+            <Nav.Link as={Link} to="/products" href="/products" className="shadow-link-gray" >
                 Prodotti
-              </Link>
             </Nav.Link>
 
             {loggedIn && (
               <NavDropdown title="Account" id="basic-nav-dropdown">
-                <NavDropdown.Item >
-                  <Link to="/profile" className="shadow-link-gray">
+                <NavDropdown.Item as={Link} to="/profile" className="shadow-link-gray">
                     Profilo
-                  </Link>
                 </NavDropdown.Item>
-                <NavDropdown.Item >
-                <Link to="/profile" className="shadow-link-gray">
+                <NavDropdown.Item as={Link} to="/profile" className="shadow-link-gray">
                     Notifiche
-                  </Link>
                 </NavDropdown.Item>
-                <NavDropdown.Item >
-                  <Link to="/profile" className="shadow-link-gray">
-                    Noleggi
-                  </Link>
+                <NavDropdown.Item as={Link} to="/profile" className="shadow-link-gray">
+                  Noleggi
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item >
-                  <Button className="btn-danger" onClick={setLoginState(false)}>
+                  <Button className="btn-danger" onClick={() => setLoginState(false)}>
                     Logout
                   </Button>
                 </NavDropdown.Item>
               </NavDropdown>
             )}
             {!loggedIn && (
-              <Nav.Link href="/login">
-                <Link to="/login" className="shadow-link-gray">
-                  Log in
-                </Link>
+              <Nav.Link as={Link} to="/login" href="/login" className="shadow-link-gray" >
+                Login
               </Nav.Link>
             )}
           </Nav>
