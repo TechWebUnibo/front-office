@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Topbar from "./Topbar";
@@ -7,41 +7,57 @@ import NotFound from "./NotFound";
 import Products from "./Products";
 import LoginPage from "./LoginPage";
 import SignupPage from "./SinupPage";
+import { isLogged, logout } from "./apiLibrary";
 
-class App extends Component {
-  render() {
-    return (
-      <Router>
-        <div className="App">
-          <Topbar />
-          <div className="content">
-            <Switch>
 
-              <Route exact path="/">
-                <Home />
-              </Route>
 
-              <Route path="/products">
-                <Products />
-              </Route>
+function App() {
 
-              <Route path="/login">
-                <LoginPage />
-              </Route>
+  const [loggedIn, setLoggedIn] = useState(isLogged());
 
-              <Route path="/signup">
-                <SignupPage />
-              </Route>
+  const setLoginState = (value) => {
+    switch (value) {
+      case true:
+        setLoggedIn(true);
+        break;
+      case false:
+        logout();
+        setLoggedIn(false);
+        break;
+      default:
+        throw Error('Invalid value');
+    }};
 
-              <Route path="*">
-                <NotFound />
-              </Route>
-            </Switch>
-          </div>
+  return (
+    <Router>
+      <div className="App">
+        <Topbar loggedIn={loggedIn} setLoginState={setLoginState}/>
+        <div className="content">
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+
+            <Route path="/products">
+              <Products />
+            </Route>
+
+            <Route path="/login"> {/*TODO: add control if already logged in*/}
+              <LoginPage setLoginState={setLoginState}/>
+            </Route>
+
+            <Route path="/signup">
+              <SignupPage />
+            </Route>
+
+            <Route path="*">
+              <NotFound />
+            </Route>
+          </Switch>
         </div>
-      </Router>
-    );
-  }
+      </div>
+    </Router>
+  );
 }
 
 export default App;

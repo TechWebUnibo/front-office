@@ -1,40 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Container, Nav, NavDropdown, Button } from "react-bootstrap";
 import "./common.css";
-import logo from "../assets/logo.png";
-import { isLogged, logout } from "./apiLibrary";
+import { useEffect } from "react";
 
-const Topbar = () => {
+const Topbar = ({loggedIn, setLoginState}) => {
   
-  const [loggedIn, setLoggedIn] = useState(isLogged());
 
-  useState(() => {
-    isLogged().then(data => setLoggedIn(data));
-  })
+  useEffect(() => {
+    console.log(loggedIn);
+  });
 
-  function logoutHere() {
-    logout();
-    isLogged().then(data => setLoggedIn(data));
-  }
 
   return (
-    <Navbar bg="light" expand="md">
+    <Navbar collapseOnSelect bg="light" expand="md" >
       <Container>
         <Navbar.Brand>
           <Link to="/" className="shadow-link">
-            <img src={logo} alt="CATER" style={{ height: "20px" }}></img>
+            <img src="//site202118.tw.cs.unibo.it/img/logo.eda7be37.png" alt="CATER" style={{ height: "35px" }}></img>
           </Link>
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav" >
           <Nav className="me-auto">
-            <Nav.Link>
+            <Nav.Link href="/">
               <Link to="/" className="shadow-link-gray">
                 Home
               </Link>
             </Nav.Link>
-            <Nav.Link>
+            <Nav.Link href="/products">
               <Link to="/products" className="shadow-link-gray">
                 Prodotti
               </Link>
@@ -59,14 +53,14 @@ const Topbar = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item >
-                  <Button className="btn-danger" onClick={logoutHere}>
+                  <Button className="btn-danger" onClick={setLoginState(false)}>
                     Logout
                   </Button>
                 </NavDropdown.Item>
               </NavDropdown>
             )}
             {!loggedIn && (
-              <Nav.Link>
+              <Nav.Link href="/login">
                 <Link to="/login" className="shadow-link-gray">
                   Log in
                 </Link>

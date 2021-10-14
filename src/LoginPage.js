@@ -1,15 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Form, Button, Container } from "react-bootstrap";
 import { useState } from "react";
 import apiLogin from "./apiLibrary.js";
-const LoginPage = () => {
+const LoginPage = ({setLoginState}) => {
 
   const [wrongUsrnm, setWrongUsrnm] = useState(false);
   const [wrongPassw, setWrongPassw] = useState(false);
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [isPending, setIsPending] = useState(false);
+  
+  const history = useHistory();
 
   async function login(e) {
     e.preventDefault();
@@ -23,9 +25,11 @@ const LoginPage = () => {
       setWrongPassw(true);
     else if(status === 404)
       setWrongUsrnm(true);
-    // setError(error);
-    // setIsPending(isPending);
-    // setLoginData(status);
+    else {
+        setLoginState(true);
+        history.goBack();
+      }
+      
   };
 
   return (

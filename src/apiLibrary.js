@@ -1,4 +1,4 @@
-import { useJwt } from "react-jwt";
+import { setLogedIn } from "./Topbar"
 
 const jwt = require('jsonwebtoken')
 const ACCESS_TOKEN_KEY = 'access_token'
@@ -24,6 +24,7 @@ async function apiLogin(username, password) {
         if(status === 200){
             setToken(res.accessToken);
         }
+        setLogedIn("true");
         return status;
       }
       catch(e){
