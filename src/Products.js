@@ -1,10 +1,11 @@
 import React from "react";
 import { Container} from "react-bootstrap";
-import logo from "../assets/logo.png";
 import ProductCard from "./components/ProductCard";
 
 const Products = () => { 
   
+  const logo = '/box'
+
     const products= [{title: "Gruppo 1", price:245.68, img:{logo}},
     {title: "Gruppo 2", price:285.68, img:{logo}},
     {title: "Gruppo 3", price:345.68, img:{logo}},
