@@ -4,7 +4,7 @@ import ProductCard from "./components/ProductCard";
 
 const Products = () => { 
   
-  const logo = '/box'
+  const logo = '/img/box'
 
     const products= [{title: "Gruppo 1", price:245.68, img:{logo}},
     {title: "Gruppo 2", price:285.68, img:{logo}},
