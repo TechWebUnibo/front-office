@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Form, Button, Container } from "react-bootstrap";
 import { useState } from "react";
-import apiLogin from "../utility/apiLibrary.js";
+import {apiLogin} from "../utility/apiLibrary.js";
 const LoginPage = ({setLoginState}) => {
 
   const [wrongUsrnm, setWrongUsrnm] = useState(false);

@@ -1,4 +1,4 @@
-
+// For auth
 const jwt = require('jsonwebtoken')
 const ACCESS_TOKEN_KEY = 'access_token'
 const PUBLICKEY_KEY = 'publicKey'
@@ -6,35 +6,43 @@ const BASE_URL = '//site202118.tw.cs.unibo.it/api/auth'
 const PUBLICKEY_URL = BASE_URL + '/publicKey'
 const CUSTMER_LOGIN = BASE_URL + '/login/customers'
 
-async function apiLogin(username, password) {
-    let data = `{
+// For API
+const url = '//site202118.tw.cs.unibo.it/api/'
+const customersUrl = 'customers'
+const rentsUrl = 'rentals'
+const staffUrl = 'staff'
+const invoicesUrl = 'invoices'
+const productsUrl = 'products'
+const itemsUrl = 'items'
+
+
+
+export async function apiLogin(username, password) {
+  let data = `{
         "username": "${username}",
         "password": "${password}"
         }`;
-    const requestOptions = {
-        method: "POST",
-        headers: { 'Content-Type': 'application/json' },
-        body: data,
-      };
-      try{
-        let res = await fetch(CUSTMER_LOGIN, requestOptions,)
-        let status = res.status;
-        res = await res.json();
-        if(status === 200){
-            setToken(res.accessToken);
-        }
-        return status;
-      }
-      catch(e){
-        console.log(e)
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: data,
+  };
+  try {
+    let res = await fetch(CUSTMER_LOGIN, requestOptions);
+    let status = res.status;
+    res = await res.json();
+    if (status === 200) {
+      setToken(res.accessToken);
     }
-    return 502;
-         
+    return status;
+  } catch (e) {
+    console.log(e);
+  }
+  return 502;
 }
 
 
 export function logout() {
-    console.log('non dovrei essere qui')
     setToken(null);
 }
 
@@ -70,30 +78,10 @@ function setToken(token){
 export function getToken(){
     return localStorage[ACCESS_TOKEN_KEY]
 }
-/*
-function clearToken()  {
-    localStorage.removeItem(ACCESS_TOKEN_KEY);
-}*/
 
 export async function isLogged(){
-    /*
-    let res = await fetch(MANAGER_AUTH, {
-        method: 'GET',
-        mode: 'cors', // no-cors, *cors, same-origin
-        headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': 'Bearer ' + getToken()
-        }
-    })
-    console.log(res.status)
-    if(res.status === 401)
-        return false
-    else
-        return true
-        */
     try{
-        console.log(getToken())
-        console.log(jwt.verify(getToken(), await getPublicKey(), { algorithm: 'RS256' }))
+        jwt.verify(getToken(), await getPublicKey(), { algorithm: 'RS256' })
         return true
     }
     catch(err){
@@ -103,5 +91,178 @@ export async function isLogged(){
 }
 
 
+export async function getCustomers (){
+    let res = await fetch(url + customersUrl, {
+        method: 'GET',
+        mode: 'cors', // no-cors, *cors, same-origin
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+        },
+    })
+    if(res.status == 200){
+        res = await res.json()
+        return res
+    }
+    else{
+        return []
+    }
+}
+export async function getStaff(){
+        try {
+            let res = await fetch(url + staffUrl, {
+                method: 'GET',
+                mode: 'cors', // no-cors, *cors, same-origin
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': 'Bearer ' + getToken()
+                },
+            })
+            if (res.status == 200) {
+                res = await res.json()
+                return res
+            }
+            else {
+                return []
+            }
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+    export async function getProducts(){
+        try{
+            let res = await fetch(url + productsUrl, {
+                method: 'GET',
+                mode: 'cors', // no-cors, *cors, same-origin
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': 'Bearer ' + getToken()
+                },
+            })
+            if(res.status == 200){
+                res = await res.json()
+                return res
+            }
+            else{
+                return []
+            }
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
+    export async function getRentals(query){
+        if(typeof query != 'undefined'){
+            query = '?' + new URLSearchParams(query).toString()
+        }
+        else{
+            query = ''
+        }
+        try{
+            let res = await fetch(url + rentsUrl + query, {
+                method: 'GET',
+                mode: 'cors', // no-cors, *cors, same-origin
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': 'Bearer ' + getToken()
+                },
+            })
+            if(res.status == 200){
+                res = await res.json()
+                return res
+            }
+            else{
+                return []
+            }
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
+    export async function getInvoices(query) {
+        if (typeof query != 'undefined') {
+            query = '?' + new URLSearchParams(query).toString()
+        }
+        else {
+            query = ''
+        }
+        try {
+            let res = await fetch(url + invoicesUrl + query, {
+                method: 'GET',
+                mode: 'cors', // no-cors, *cors, same-origin
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': 'Bearer ' + getToken()
+                },
+            })
+            if (res.status == 200) {
+                res = await res.json()
+                return res
+            }
+            else {
+                return []
+            }
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+    export async function getItems(query) {
+        if (typeof query != 'undefined') {
+            query = '?' + new URLSearchParams(query).toString()
+        }
+        else {
+            query = ''
+        }
+        try {
+            let res = await fetch(url + itemsUrl + query, {
+                method: 'GET',
+                mode: 'cors', // no-cors, *cors, same-origin
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': 'Bearer ' + getToken()
+                },
+            })
+            if (res.status == 200) {
+                res = await res.json()
+                return res
+            }
+            else {
+                return []
+            }
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+    export async function modifyStaff(id, data) {
+        try {
+            let res = await fetch(url + staffUrl + '/' + id, {
+                method: 'POST',
+                mode: 'cors', // no-cors, *cors, same-origin
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': 'Bearer ' + getToken()
+                },
+                body: JSON.stringify(data)
+            })
+            if (res.status == 200) {
+                res = await res.json()
+                return res
+            }
+            else {
+                return []
+            }
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
 
-export default apiLogin;

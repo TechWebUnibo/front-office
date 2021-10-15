@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Topbar from "./components/Topbar";
 import Home from "./Home";
 import NotFound from "./components/NotFound";
-import Products from "./Products";
+import Products from "./components/Products";
 import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignupPage";
 import { isLogged, logout } from "./utility/apiLibrary";
@@ -27,7 +27,8 @@ function App() {
         break;
       default:
         throw Error('Invalid value');
-    }};
+    }
+  };
     
   useEffect(() =>{
     const checkLogin = async() =>{
@@ -57,7 +58,7 @@ function App() {
             </Route>
 
             <Route path="/signup">
-              <SignupPage />
+              <SignupPage setLoginState={setLoginState}/>
             </Route>
 
             <Route path="*">
