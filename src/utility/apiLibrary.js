@@ -267,9 +267,24 @@ export async function getStaff(){
     }
 
 
+export async function getUser(){
+    let token = getToken()
+    try{
+        let decoded = jwt.decode(token)
+        return decoded._id
+    }
+    catch(err){
+        console.log(err)
+        return null
+    }
+}
+
 
 export async function getAvailability (id, start, end, rent) {
     try {
+        start = start.toISOString().split('T')[0]
+        end = end.toISOString().split('T')[0]
+
         let res = await fetch(url + productsUrl + `/${id}/available?start=${start}&end=${end}${rent ? '&rent=' + rent : ''}`, {
         method: "GET",
         mode: "cors",
@@ -288,6 +303,28 @@ export async function getAvailability (id, start, end, rent) {
         }
     }
     catch(err){
-        console.log(err)
+        // console.log(err)
     }
+}
+
+export async function createRent (customer, employee, start, end, price, products, productType){
+    const data = {
+        customer: customer,
+        employee: employee,
+        products: products,
+        productType: productType,
+        start: start,
+        end: end,
+        price: price
+    }
+    const res = await fetch(url +  rentsUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Authorization': 'Bearer ' + getToken()
+        },
+        body: JSON.stringify(data)
+    })
+    return res.status
 }
