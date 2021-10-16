@@ -100,7 +100,7 @@ export async function getCustomers (){
             'Access-Control-Allow-Origin': '*'
         },
     })
-    if(res.status == 200){
+    if(res.status === 200){
         res = await res.json()
         return res
     }
@@ -119,7 +119,7 @@ export async function getStaff(){
                     'Authorization': 'Bearer ' + getToken()
                 },
             })
-            if (res.status == 200) {
+            if (res.status === 200) {
                 res = await res.json()
                 return res
             }
@@ -142,7 +142,7 @@ export async function getStaff(){
                     'Authorization': 'Bearer ' + getToken()
                 },
             })
-            if(res.status == 200){
+            if(res.status === 200){
                 res = await res.json()
                 return res
             }
@@ -171,7 +171,7 @@ export async function getStaff(){
                     'Authorization': 'Bearer ' + getToken()
                 },
             })
-            if(res.status == 200){
+            if(res.status === 200){
                 res = await res.json()
                 return res
             }
@@ -200,7 +200,7 @@ export async function getStaff(){
                     'Authorization': 'Bearer ' + getToken()
                 },
             })
-            if (res.status == 200) {
+            if (res.status === 200) {
                 res = await res.json()
                 return res
             }
@@ -229,7 +229,7 @@ export async function getStaff(){
                     'Authorization': 'Bearer ' + getToken()
                 },
             })
-            if (res.status == 200) {
+            if (res.status === 200) {
                 res = await res.json()
                 return res
             }
@@ -253,7 +253,7 @@ export async function getStaff(){
                 },
                 body: JSON.stringify(data)
             })
-            if (res.status == 200) {
+            if (res.status === 200) {
                 res = await res.json()
                 return res
             }

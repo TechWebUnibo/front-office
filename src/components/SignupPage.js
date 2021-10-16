@@ -5,10 +5,9 @@ import { useState } from "react";
 import { apiLogin } from "../utility/apiLibrary.js";
 
 const SignupPage = ({ setLoginState }) => {
-  const [wrongUsrnm, setWrongUsrnm] = useState(false);
+  const [wrongUser, setWrongUser] = useState(false);
   const [wrongPassw, setWrongPassw] = useState(false);
   const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
   const [isPending, setIsPending] = useState(false);
 
   const history = useHistory();
@@ -16,12 +15,12 @@ const SignupPage = ({ setLoginState }) => {
   async function login(e) {
     e.preventDefault();
     setWrongPassw(false);
-    setWrongUsrnm(false);
+    setWrongUser(false);
     setIsPending(true);
-    const status = await apiLogin(name, surname);
+    const status = await apiLogin(name);
     if (status) setIsPending(false);
     if (status === 403) setWrongPassw(true);
-    else if (status === 404) setWrongUsrnm(true);
+    else if (status === 404) setWrongUser(true);
     else {
       setLoginState(true);
       history.goBack();
@@ -41,27 +40,27 @@ const SignupPage = ({ setLoginState }) => {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-            {wrongUsrnm && (
+            {wrongUser && (
+              <Form.Text className=" text-danger">
+                blah blah
+              </Form.Text>
+            )}
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicName">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Inserisci nome"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            {wrongPassw && (
               <Form.Text className=" text-danger">
                 blah blah
               </Form.Text>
             )}
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicSurname">
-            <Form.Label>Cognome</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Inserisci cognome"
-              value={surname}
-              onChange={(e) => setSurname(e.target.value)}
-            />
-            {wrongUsrnm && (
-              <Form.Text className=" text-danger">
-                blah balh
-              </Form.Text>
-            )}
-          </Form.Group>
 
 
           <Form.Group className="mb-3" controlId="formGridAddress1">

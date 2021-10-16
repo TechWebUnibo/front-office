@@ -1,23 +1,29 @@
-import React from "react";
-import { useParams } from "react-router";
-import useFetch from "../utility/useFetch";
+import React, { useEffect } from "react";
+import { Container, Row, Col, Image } from "react-bootstrap";
+import { useLocation } from "react-router";
+import { createURL } from '../utility/develop'
 
 const ProductPage = () => {
 
-    const { id } = useParams();
-    const { data: product, error, isPending } = useFetch('http://localhost:8000/products/' + id);
+    const location = useLocation()
+    const { product } = location.state
+    
+    useEffect(() => {
+        product.img = createURL(product.img)
+    }, [product])
 
     return ( 
-        <div className="blog-details">
-      { isPending && <div>Loading...</div> }
-      { error && <div>{ error }</div> }
-      { blog && (
-          <div>
-          <h1>product.title</h1>
-          <img src={product.img} />
-          </div>
-      )}
-      </div>
+        <Container>
+            <Row>
+                <Col sm>
+                    <Image src={product.img} fluid thumbnail="true" alt="product image"/>
+                </Col>
+                <Col sm>
+                    <h2>{product.name}</h2>
+                    <p>{product.description}</p>
+                </Col>
+            </Row>
+        </Container>
           
      );
 }
