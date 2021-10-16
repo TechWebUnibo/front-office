@@ -266,3 +266,28 @@ export async function getStaff(){
         }
     }
 
+
+
+export async function getAvailability (id, start, end, rent) {
+    try {
+        let res = await fetch(url + productsUrl + `/${id}/available?start=${start}&end=${end}${rent ? '&rent=' + rent : ''}`, {
+        method: "GET",
+        mode: "cors",
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Authorization': 'Bearer ' + getToken()
+        }
+        })
+        if (res.status === 200) {
+            res = await res.json()
+            return res
+        }
+        else {
+            return false
+        }
+    }
+    catch(err){
+        console.log(err)
+    }
+}

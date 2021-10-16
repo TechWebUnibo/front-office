@@ -8,6 +8,7 @@ const SignupPage = ({ setLoginState }) => {
   const [wrongUser, setWrongUser] = useState(false);
   const [wrongPassw, setWrongPassw] = useState(false);
   const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
   const [isPending, setIsPending] = useState(false);
 
   const history = useHistory();
@@ -31,37 +32,6 @@ const SignupPage = ({ setLoginState }) => {
     <div>
       <Container>
         <p className="display-2">Registrati</p>
-<<<<<<< HEAD
-        <Form className="my-3" onSubmit={login}>
-          <Form.Group className="mb-3" controlId="formBasicName">
-            <Form.Label>Nome</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Inserisci nome"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            {wrongUser && (
-              <Form.Text className=" text-danger">
-                blah blah
-              </Form.Text>
-            )}
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicName">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Inserisci nome"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            {wrongPassw && (
-              <Form.Text className=" text-danger">
-                blah blah
-              </Form.Text>
-            )}
-          </Form.Group>
-=======
         <Form className="my-3 mx-2" onSubmit={login}>
           <Row>
             <Col sm>
@@ -73,12 +43,11 @@ const SignupPage = ({ setLoginState }) => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
-                {wrongUsrnm && (
+                {wrongUser && (
                   <Form.Text className=" text-danger">blah blah</Form.Text>
                 )}
               </Form.Group>
             </Col>
->>>>>>> e04090f07731fa37a9ba30063159b22930925147
 
             <Col sm>
               <Form.Group
@@ -93,13 +62,21 @@ const SignupPage = ({ setLoginState }) => {
                   value={surname}
                   onChange={(e) => setSurname(e.target.value)}
                 />
-                {wrongUsrnm && (
+                {wrongUser && (
                   <Form.Text className=" text-danger">blah balh</Form.Text>
                 )}
               </Form.Group>
             </Col>
           </Row>
 
+
+          <Form.Group className="mb-3" controlId="formPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control placeholder="Insert your password" />
+            {wrongPassw && (
+              <Form.Text className=" text-danger">blah balh</Form.Text>
+            )}
+          </Form.Group>
 
           <Form.Group className="mb-3" controlId="formGridAddress1">
             <Form.Label>Indirizzo</Form.Label>

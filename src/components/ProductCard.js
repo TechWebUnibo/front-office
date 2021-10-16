@@ -13,7 +13,7 @@ const ProductCard = ({product}) => {
           <Link to={{
             pathname: '/productPage',
             state: {
-              product: product
+              product: product,
             }}}
              className="shadow-link-gray">
           <Button>Vai a prodotto</Button>
