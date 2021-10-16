@@ -32,37 +32,42 @@ const SignupPage = ({ setLoginState }) => {
     <div>
       <Container>
         <p className="display-2">Registrati</p>
-        <Form className="my-3" onSubmit={login}>
-          <Form.Group className="mb-3" controlId="formBasicName">
-            <Form.Label>Nome</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Inserisci nome"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            {wrongUsrnm && (
-              <Form.Text className=" text-danger">
-                blah blah
-              </Form.Text>
-            )}
-          </Form.Group>
+        <Form className="my-3 mx-2" onSubmit={login}>
+          <Row>
+            <Col sm>
+              <Form.Group className="mb-3" controlId="formBasicName">
+                <Form.Label>Nome</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Inserisci nome"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                {wrongUsrnm && (
+                  <Form.Text className=" text-danger">blah blah</Form.Text>
+                )}
+              </Form.Group>
+            </Col>
 
-          <Form.Group className="mb-3" controlId="formBasicSurname">
-            <Form.Label>Cognome</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Inserisci cognome"
-              value={surname}
-              onChange={(e) => setSurname(e.target.value)}
-            />
-            {wrongUsrnm && (
-              <Form.Text className=" text-danger">
-                blah balh
-              </Form.Text>
-            )}
-          </Form.Group>
-
+            <Col sm>
+              <Form.Group
+                as={Col}
+                className="mb-3"
+                controlId="formBasicSurname"
+              >
+                <Form.Label>Cognome</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Inserisci cognome"
+                  value={surname}
+                  onChange={(e) => setSurname(e.target.value)}
+                />
+                {wrongUsrnm && (
+                  <Form.Text className=" text-danger">blah balh</Form.Text>
+                )}
+              </Form.Group>
+            </Col>
+          </Row>
 
           <Form.Group className="mb-3" controlId="formGridAddress1">
             <Form.Label>Indirizzo</Form.Label>
@@ -75,42 +80,51 @@ const SignupPage = ({ setLoginState }) => {
           </Form.Group>
 
           <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridCity">
-              <Form.Label>Città</Form.Label>
-              <Form.Control />
-            </Form.Group>
-
-            <Form.Group as={Col} controlId="formGridState">
-              <Form.Label>Regione</Form.Label>
-              <Form.Select defaultValue="Choose...">
-                <option>Abruzzo</option>
-                <option>Basilicata</option>
-                <option>Calabria</option>
-                <option>Campania</option>
-                <option>Emilia-Romagna</option>
-                <option>Friuli Venezia Giulia</option>
-                <option>Lazio</option>
-                <option>Liguria</option>
-                <option>Lombardia</option>
-                <option>Marche</option>
-                <option>Molise</option>
-                <option>Piemonte</option>
-                <option>Puglia</option>
-                <option>Sardegna</option>
-                <option>Sicilia</option>
-                <option>Toscana</option>
-                <option>Trentino-Alto Adige</option>
-                <option>Umbria</option>
-                <option>Valle d'Aosta</option>
-                <option>Veneto</option>
-              </Form.Select>
-            </Form.Group>
-
-            <Form.Group as={Col} controlId="formGridZip">
-              <Form.Label>Zip</Form.Label>
-              <Form.Control />
-            </Form.Group>
+            <Col md>
+              <Form.Group className="mb-3" controlId="formGridCity">
+                <Form.Label>Città</Form.Label>
+                <Form.Control />
+              </Form.Group>
+            </Col>
+            <Col md>
+              <Form.Group className="mb-3" controlId="formGridState">
+                <Form.Label>Regione</Form.Label>
+                <Form.Select defaultValue="Choose...">
+                  <option>Abruzzo</option>
+                  <option>Basilicata</option>
+                  <option>Calabria</option>
+                  <option>Campania</option>
+                  <option>Emilia-Romagna</option>
+                  <option>Friuli Venezia Giulia</option>
+                  <option>Lazio</option>
+                  <option>Liguria</option>
+                  <option>Lombardia</option>
+                  <option>Marche</option>
+                  <option>Molise</option>
+                  <option>Piemonte</option>
+                  <option>Puglia</option>
+                  <option>Sardegna</option>
+                  <option>Sicilia</option>
+                  <option>Toscana</option>
+                  <option>Trentino-Alto Adige</option>
+                  <option>Umbria</option>
+                  <option>Valle d'Aosta</option>
+                  <option>Veneto</option>
+                </Form.Select>
+              </Form.Group>
+            </Col>
+            <Col md>
+              <Form.Group className="mb-3" controlId="formGridZip">
+                <Form.Label>Zip</Form.Label>
+                <Form.Control />
+              </Form.Group>
+            </Col>
           </Row>
+
+          <Form.Group controlId="formFile" className="mb-3">
+            <Form.Label>Inserisci mmagine (Facoltativo)</Form.Label>
+            <Form.Control type="file" />
+          </Form.Group>
 
           <div className="text-center">
             <Button variant="primary" type="submit">
