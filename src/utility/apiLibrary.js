@@ -5,6 +5,7 @@ const PUBLICKEY_KEY = 'publicKey'
 const BASE_URL = '//site202118.tw.cs.unibo.it/api/auth'
 const PUBLICKEY_URL = BASE_URL + '/publicKey'
 const CUSTMER_LOGIN = BASE_URL + '/login/customers'
+const CUSTOMER_REGISTER = BASE_URL + '/customers'
 
 // For API
 const url = '//site202118.tw.cs.unibo.it/api/'
@@ -266,3 +267,36 @@ export async function getStaff(){
         }
     }
 
+    export async function apiRegister(name, surname, username, password, address, city, region, zip, avatar) {
+        let data = `{
+              "name": "${name}",
+              "surname"= ${surname}",
+              "username": "${username}",
+              "password": "${password}",
+              "avatar": "${avatar}",
+              "address":
+                {
+                    "city": "${city}",
+                    "zip": "${zip}",
+                    "residence": "${address}",
+                    "region": "${region}"
+                }
+              }`;
+        const requestOptions = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: data,
+        };
+        try {
+          let res = await fetch(CUSTOMER_REGISTER, requestOptions);
+          let status = res.status;
+          res = await res.json();
+          if (status === 200) {
+            setToken(res.accessToken);
+          }
+          return status;
+        } catch (e) {
+          console.log(e);
+        }
+        return 502;
+      }

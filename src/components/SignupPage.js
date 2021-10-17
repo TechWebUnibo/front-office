@@ -9,6 +9,13 @@ const SignupPage = ({ setLoginState }) => {
   const [wrongPassw, setWrongPassw] = useState(false);
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [city, setCity] = useState("");
+  const [zip, setZip] = useState("");
+  const [address, setAddress] = useState("");
+  const [region, setRegion] = useState();
+  const [avatar, setAvatar] = useState(null);
   const [isPending, setIsPending] = useState(false);
 
   const history = useHistory();
@@ -20,8 +27,7 @@ const SignupPage = ({ setLoginState }) => {
     setIsPending(true);
     const status = await apiLogin(name, surname);
     if (status) setIsPending(false);
-    if (status === 403) setWrongPassw(true);
-    else if (status === 404) setWrongUsrnm(true);
+    if (status === 400) setWrongPassw(true);
     else {
       setLoginState(true);
       history.goBack();
@@ -69,25 +75,71 @@ const SignupPage = ({ setLoginState }) => {
             </Col>
           </Row>
 
+          <Row>
+            <Col sm>
+              <Form.Group className="mb-3" controlId="formBasicUsername">
+                <Form.Label>Username</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Inserisci username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+                {wrongUsrnm && (
+                  <Form.Text className=" text-danger">blah blah</Form.Text>
+                )}
+              </Form.Group>
+            </Col>
+
+            <Col sm>
+              <Form.Group
+                as={Col}
+                className="mb-3"
+                controlId="formBasicPassword"
+              >
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Inserisci password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                {wrongUsrnm && (
+                  <Form.Text className=" text-danger">blah balh</Form.Text>
+                )}
+              </Form.Group>
+            </Col>
+          </Row>
+
           <Form.Group className="mb-3" controlId="formGridAddress1">
             <Form.Label>Indirizzo</Form.Label>
-            <Form.Control placeholder="1234 Main St" />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formGridAddress2">
-            <Form.Label>Indirizzo 2</Form.Label>
-            <Form.Control placeholder="Apartment, studio, or floor" />
+            <Form.Control
+              placeholder="123 Via Fasulla"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
           </Form.Group>
 
           <Row className="mb-3">
             <Col md>
               <Form.Group className="mb-3" controlId="formGridCity">
                 <Form.Label>Città</Form.Label>
-                <Form.Control />
+                <Form.Control
+                  placeholder="Springfield"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                />
               </Form.Group>
             </Col>
             <Col md>
-              <Form.Group className="mb-3" controlId="formGridState">
+              <Form.Group
+                className="mb-3"
+                controlId="formGridState"
+                value={region}
+                onChange={(e) => setRegion(e.target.value)}
+              >
                 <Form.Label>Regione</Form.Label>
                 <Form.Select defaultValue="Choose...">
                   <option>Abruzzo</option>
@@ -114,14 +166,23 @@ const SignupPage = ({ setLoginState }) => {
               </Form.Group>
             </Col>
             <Col md>
-              <Form.Group className="mb-3" controlId="formGridZip">
+              <Form.Group
+                className="mb-3"
+                controlId="formGridZip"
+                value={zip}
+                onChange={(e) => setZip(e.target.value)}
+              >
                 <Form.Label>Zip</Form.Label>
                 <Form.Control />
               </Form.Group>
             </Col>
           </Row>
 
-          <Form.Group controlId="formFile" className="mb-3">
+          <Form.Group
+            controlId="formFile"
+            className="mb-3"
+            onChange={(e) => setAvatar(e.target.file[0])}
+          >
             <Form.Label>Inserisci mmagine (Facoltativo)</Form.Label>
             <Form.Control type="file" />
           </Form.Group>
