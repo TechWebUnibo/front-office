@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+/*
+
+import React, { useState, useEffect } from 'react';
 
 //method: the http method, url: the url of the api, requestBody: the body of the request IN JSON
 const useFetch = (method, url, requestBody) => {
@@ -48,4 +50,4 @@ const useFetch = (method, url, requestBody) => {
   return { data, isPending, error };
 }
  
-export default useFetch;
+export default useFetch;*/

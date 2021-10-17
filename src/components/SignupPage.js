@@ -5,7 +5,7 @@ import { useState } from "react";
 import { apiLogin } from "../utility/apiLibrary.js";
 
 const SignupPage = ({ setLoginState }) => {
-  const [wrongUsrnm, setWrongUsrnm] = useState(false);
+  const [wrongUser, setWrongUser] = useState(false);
   const [wrongPassw, setWrongPassw] = useState(false);
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
@@ -23,11 +23,12 @@ const SignupPage = ({ setLoginState }) => {
   async function login(e) {
     e.preventDefault();
     setWrongPassw(false);
-    setWrongUsrnm(false);
+    setWrongUser(false);
     setIsPending(true);
-    const status = await apiLogin(name, surname);
+    const status = await apiLogin(name);
     if (status) setIsPending(false);
-    if (status === 400) setWrongPassw(true);
+    if (status === 403) setWrongPassw(true);
+    else if (status === 404) setWrongUser(true);
     else {
       setLoginState(true);
       history.goBack();
@@ -49,7 +50,7 @@ const SignupPage = ({ setLoginState }) => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
-                {wrongUsrnm && (
+                {wrongUser && (
                   <Form.Text className=" text-danger">blah blah</Form.Text>
                 )}
               </Form.Group>
@@ -68,7 +69,7 @@ const SignupPage = ({ setLoginState }) => {
                   value={surname}
                   onChange={(e) => setSurname(e.target.value)}
                 />
-                {wrongUsrnm && (
+                {wrongUser && (
                   <Form.Text className=" text-danger">blah balh</Form.Text>
                 )}
               </Form.Group>

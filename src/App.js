@@ -8,6 +8,7 @@ import Products from "./components/Products";
 import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignupPage";
 import { isLogged, logout } from "./utility/apiLibrary";
+import ProductPage from "./components/ProductPage";
 
 
 
@@ -51,6 +52,10 @@ function App() {
 
             <Route path="/products">
               <Products />
+            </Route>
+
+            <Route path="/productPage">
+              <ProductPage />
             </Route>
 
             <Route path="/login"> {/*TODO: add control if already logged in*/}
