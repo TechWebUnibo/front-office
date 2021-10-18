@@ -267,10 +267,10 @@ export async function getStaff(){
         }
     }
 
-    export async function apiRegister(name, surname, username, password, address, city, region, zip, avatar) {
+    export async function apiRegister(name, surname, username, password, address, city, zip, avatar) {
         let data = `{
               "name": "${name}",
-              "surname"= ${surname}",
+              "surname": "${surname}",
               "username": "${username}",
               "password": "${password}",
               "avatar": "${avatar}",
@@ -278,8 +278,7 @@ export async function getStaff(){
                 {
                     "city": "${city}",
                     "zip": "${zip}",
-                    "residence": "${address}",
-                    "region": "${region}"
+                    "residence": "${address}"
                 }
               }`;
         const requestOptions = {

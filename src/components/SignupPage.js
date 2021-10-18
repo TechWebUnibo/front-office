@@ -2,11 +2,10 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { useState } from "react";
-import { apiLogin } from "../utility/apiLibrary.js";
+import { apiRegister } from "../utility/apiLibrary.js";
 
 const SignupPage = ({ setLoginState }) => {
-  const [wrongUser, setWrongUser] = useState(false);
-  const [wrongPassw, setWrongPassw] = useState(false);
+  const [error, setError] = useState(false);
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [username, setUsername] = useState("");
@@ -15,31 +14,42 @@ const SignupPage = ({ setLoginState }) => {
   const [zip, setZip] = useState("");
   const [address, setAddress] = useState("");
   const [region, setRegion] = useState();
-  const [avatar, setAvatar] = useState(null);
+  const [avatar, setAvatar] = useState();
   const [isPending, setIsPending] = useState(false);
 
   const history = useHistory();
 
-  async function login(e) {
+  async function signup(e) {
     e.preventDefault();
-    setWrongPassw(false);
-    setWrongUser(false);
     setIsPending(true);
-    const status = await apiLogin(name);
+    const status = await apiRegister(
+      name,
+      surname,
+      username,
+      password,
+      address,
+      city,
+      zip,
+      avatar
+    );
     if (status) setIsPending(false);
-    if (status === 403) setWrongPassw(true);
-    else if (status === 404) setWrongUser(true);
+    if (status === 400) setError(true);
+    else if (status === 502) setError(true);
     else {
-      setLoginState(true);
-      history.goBack();
+      history.push("/login");
     }
   }
+
+  // async function fileSelectHandler(event) {
+  //   //console.log(event.target.files[0]);
+  //   setAvatar(event.target.files[0]);
+  // }
 
   return (
     <div>
       <Container>
         <p className="display-2">Registrati</p>
-        <Form className="my-3 mx-2" onSubmit={login}>
+        <Form className="my-3 mx-2" onSubmit={signup}>
           <Row>
             <Col sm>
               <Form.Group className="mb-3" controlId="formBasicName">
@@ -50,7 +60,7 @@ const SignupPage = ({ setLoginState }) => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
-                {wrongUser && (
+                {error && (
                   <Form.Text className=" text-danger">blah blah</Form.Text>
                 )}
               </Form.Group>
@@ -69,7 +79,7 @@ const SignupPage = ({ setLoginState }) => {
                   value={surname}
                   onChange={(e) => setSurname(e.target.value)}
                 />
-                {wrongUser && (
+                {error && (
                   <Form.Text className=" text-danger">blah balh</Form.Text>
                 )}
               </Form.Group>
@@ -87,7 +97,7 @@ const SignupPage = ({ setLoginState }) => {
                   onChange={(e) => setUsername(e.target.value)}
                   required
                 />
-                {wrongUsrnm && (
+                {error && (
                   <Form.Text className=" text-danger">blah blah</Form.Text>
                 )}
               </Form.Group>
@@ -107,7 +117,7 @@ const SignupPage = ({ setLoginState }) => {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
-                {wrongUsrnm && (
+                {error && (
                   <Form.Text className=" text-danger">blah balh</Form.Text>
                 )}
               </Form.Group>
@@ -179,13 +189,14 @@ const SignupPage = ({ setLoginState }) => {
             </Col>
           </Row>
 
-          <Form.Group
-            controlId="formFile"
-            className="mb-3"
-            onChange={(e) => setAvatar(e.target.file[0])}
-          >
+          <Form.Group controlId="formFile" className="mb-3">
             <Form.Label>Inserisci mmagine (Facoltativo)</Form.Label>
-            <Form.Control type="file" />
+            <Form.Control
+              type="file"
+              value={avatar}
+              onChange={(e) => setAvatar(e.target.files[0])}
+              //onChange={(e) => fileSelectHandler(e)}
+            />
           </Form.Group>
 
           <div className="text-center">
