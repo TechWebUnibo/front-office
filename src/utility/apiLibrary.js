@@ -304,7 +304,7 @@ export async function getStaff(){
 export async function getUser(){
     let token = getToken()
     try{
-        let decoded = jwt.decode(token)
+        let decoded = jwt.verify(token, await getPublicKey(), { algorithm: 'RS256' })
         return decoded._id
     }
     catch(err){
@@ -341,10 +341,11 @@ export async function getAvailability (id, start, end, rent) {
     }
 }
 
-export async function createRent (customer, employee, start, end, price, products, productType){
+export async function createRent (customer, start, end, price, products, productType){
+    start = start.toISOString().split('T')[0]
+    end = end.toISOString().split('T')[0]
     const data = {
         customer: customer,
-        employee: employee,
         products: products,
         productType: productType,
         start: start,

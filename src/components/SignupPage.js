@@ -87,7 +87,7 @@ const SignupPage = ({ setLoginState }) => {
                   onChange={(e) => setUsername(e.target.value)}
                   required
                 />
-                {wrongUsrnm && (
+                {wrongUser && (
                   <Form.Text className=" text-danger">blah blah</Form.Text>
                 )}
               </Form.Group>
@@ -107,7 +107,7 @@ const SignupPage = ({ setLoginState }) => {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
-                {wrongUsrnm && (
+                {wrongUser && (
                   <Form.Text className=" text-danger">blah balh</Form.Text>
                 )}
               </Form.Group>

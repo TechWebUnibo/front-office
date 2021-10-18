@@ -23,16 +23,21 @@ const ProductPage = () => {
     
     useEffect(() => {
         async function refreshPrice(){
-            const res = await getAvailability(product._id, startDate, endDate)
-            if(res){
-                setPrice(res.price)
-                if (res.available){
-                    setAvailable(res.available)
-                    setisLogged(true)
-                    setProducts(res.products)
-                }
-                else{
-                    setisLogged(false)
+            if (Date.parse(startDate) < new Date().setHours(23, 59, 59)){
+                setAvailable(false)
+            }
+            else{
+                const res = await getAvailability(product._id, startDate, endDate)
+                if(res){
+                    setPrice(res.price)
+                    if (typeof res.available !== 'undefined'){
+                        setAvailable(res.available)
+                        setisLogged(true)
+                        setProducts(res.products)
+                    }
+                    else{
+                        setisLogged(false)
+                    }
                 }
             }
         }
@@ -43,9 +48,7 @@ const ProductPage = () => {
     }, [startDate, endDate, product])
 
     async function rentProduct(){
-        // TODO - capire come assegnare l'employee, se casualmente o meno
-        let res = await createRent(getUser(), getUser(), startDate, endDate, price, products, product._id)
-        console.log(res)
+        let res = await createRent(await getUser(), startDate, endDate, price, products, product._id)
     }
 
 
