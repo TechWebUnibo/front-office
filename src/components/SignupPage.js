@@ -2,7 +2,8 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { useState } from "react";
-import { apiRegister } from "../utility/apiLibrary.js";
+import { createCustomer } from "../utility/apiLibrary"
+// import { apiRegister } from "../utility/apiLibrary.js";
 
 const SignupPage = ({ setLoginState }) => {
   const [error, setError] = useState(false);
@@ -13,13 +14,14 @@ const SignupPage = ({ setLoginState }) => {
   const [city, setCity] = useState("");
   const [zip, setZip] = useState("");
   const [address, setAddress] = useState("");
-  const [region, setRegion] = useState();
-  const [avatar, setAvatar] = useState();
   const [isPending, setIsPending] = useState(false);
+
+  const [selectedFile, setSelectedFile] = useState();
+  const [isFilePicked, setIsFilePicked] = useState(false);
 
   const history = useHistory();
 
-  async function signup(e) {
+  /*async function signup(e) {
     e.preventDefault();
     setIsPending(true);
     const status = await apiRegister(
@@ -38,18 +40,23 @@ const SignupPage = ({ setLoginState }) => {
     else {
       history.push("/login");
     }
-  }
+  }*/
 
-  // async function fileSelectHandler(event) {
-  //   //console.log(event.target.files[0]);
-  //   setAvatar(event.target.files[0]);
-  // }
+  const changeHandler = (event) => {
+    setSelectedFile(event.target.files[0]);
+    setIsFilePicked(true);
+  };
+
+  async function signup(){
+    let res = await createCustomer(name, surname, username, password, {city: city, zip: zip, residence: address}, selectedFile)
+    console.log(res)
+  }; 
 
   return (
     <div>
       <Container>
         <p className="display-2">Registrati</p>
-        <Form className="my-3 mx-2" onSubmit={signup}>
+        <Form className="my-3 mx-2">
           <Row>
             <Col sm>
               <Form.Group className="mb-3" controlId="formBasicName">
@@ -147,38 +154,6 @@ const SignupPage = ({ setLoginState }) => {
             <Col md>
               <Form.Group
                 className="mb-3"
-                controlId="formGridState"
-                value={region}
-                onChange={(e) => setRegion(e.target.value)}
-              >
-                <Form.Label>Regione</Form.Label>
-                <Form.Select defaultValue="Choose...">
-                  <option>Abruzzo</option>
-                  <option>Basilicata</option>
-                  <option>Calabria</option>
-                  <option>Campania</option>
-                  <option>Emilia-Romagna</option>
-                  <option>Friuli Venezia Giulia</option>
-                  <option>Lazio</option>
-                  <option>Liguria</option>
-                  <option>Lombardia</option>
-                  <option>Marche</option>
-                  <option>Molise</option>
-                  <option>Piemonte</option>
-                  <option>Puglia</option>
-                  <option>Sardegna</option>
-                  <option>Sicilia</option>
-                  <option>Toscana</option>
-                  <option>Trentino-Alto Adige</option>
-                  <option>Umbria</option>
-                  <option>Valle d'Aosta</option>
-                  <option>Veneto</option>
-                </Form.Select>
-              </Form.Group>
-            </Col>
-            <Col md>
-              <Form.Group
-                className="mb-3"
                 controlId="formGridZip"
                 value={zip}
                 onChange={(e) => setZip(e.target.value)}
@@ -190,17 +165,16 @@ const SignupPage = ({ setLoginState }) => {
           </Row>
 
           <Form.Group controlId="formFile" className="mb-3">
-            <Form.Label>Inserisci mmagine (Facoltativo)</Form.Label>
+            <Form.Label>Inserisci immagine (Facoltativo)</Form.Label>
             <Form.Control
               type="file"
-              value={avatar}
-              onChange={(e) => setAvatar(e.target.files[0])}
+              onChange={changeHandler}
               //onChange={(e) => fileSelectHandler(e)}
             />
           </Form.Group>
 
           <div className="text-center">
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="button" onClick={signup}>
               {!isPending && <span>Submit</span>}
               {isPending && <span>Loading</span>}
             </Button>

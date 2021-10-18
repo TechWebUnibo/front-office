@@ -82,8 +82,8 @@ export function getToken(){
 
 export async function isLogged(){
     try{
-        jwt.verify(getToken(), await getPublicKey(), { algorithm: 'RS256' })
-        return true
+        let decoded = jwt.verify(getToken(), await getPublicKey(), { algorithm: 'RS256' })
+        return decoded.role === 'customer'
     }
     catch(err){
         console.log(err)
@@ -362,3 +362,27 @@ export async function createRent (customer, start, end, price, products, product
     })
     return res.status
 }
+
+export async function createCustomer(name, surname, username, password, address, avatar){
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('surname', surname);
+        formData.append('username', username);
+        formData.append('password', password);
+        formData.append('address.city', address.city);
+        formData.append('address.residence', address.residence);
+        formData.append('address.zip', address.zip);
+        if(typeof avatar !== 'undefined')
+            formData.append('avatar', avatar);
+        try{
+            let res = await fetch(url + customersUrl, {
+                    method: 'POST',
+                    body: formData
+                })
+            
+            return { status: res.status, message: await res.json() }
+        }
+        catch(err){
+            console.log(err)
+        }
+};
