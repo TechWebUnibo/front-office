@@ -22,7 +22,6 @@ function App() {
         setLoggedIn(true);
         break;
       case false:
-        console.log('cos')
         logout();
         setLoggedIn(false);
         break;
