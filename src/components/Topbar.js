@@ -55,3 +55,4 @@ const Topbar = ({loggedIn, setLoginState}) => {
 };
 
 export default Topbar;
+//TODO: fare in modo che la navbar si comprima dopo aver fatto logout

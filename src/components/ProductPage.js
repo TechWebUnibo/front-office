@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Image, Button, Alert } from "react-bootstrap";
 import { useLocation } from "react-router";
 import DatePicker from "react-datepicker";
+import {useHistory, Link} from "react-router-dom";
 
 import "../style/ProductPage.css"
 import "react-datepicker/dist/react-datepicker.css";
@@ -51,9 +52,13 @@ const ProductPage = () => {
         let res = await createRent(await getUser(), startDate, endDate, price, products, product._id)
     }
 
+    const history = useHistory();
 
     return ( 
-        <Container className="mt-5">
+        <Container className="">
+            <Button variant="outline-primary" className="my-3" onClick={history.goBack}>
+                <i className="bi bi-arrow-left-short" style={{fontSize: "1em"}}></i>
+                Product</Button>
             <Row>
                 <Col sm lg={4}>
                     <Image src={product.img} fluid thumbnail="true" alt="product image"/>
@@ -65,7 +70,7 @@ const ProductPage = () => {
                         Rent me for:   <Alert.Link as={"span"}>{price}€</Alert.Link>
                     </Alert>)}
                     {!isLogged && (
-                        <Alert variant="warning"><Alert.Link as={"span"}>Sign in to check the availability</Alert.Link> </Alert>
+                        <Alert variant="warning"><Alert.Link as={Link} to="/login" href="/login">Sign in to check the availability</Alert.Link> </Alert>
                     )}
                     {availableAlert}
                     
