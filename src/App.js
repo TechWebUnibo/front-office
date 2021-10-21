@@ -9,6 +9,7 @@ import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignupPage";
 import { isLogged, logout } from "./utility/apiLibrary";
 import ProductPage from "./components/ProductPage";
+import ConfirmPage from "./components/ConfirmPage";
 
 
 
@@ -57,12 +58,16 @@ function App() {
               <ProductPage />
             </Route>
 
-            <Route path="/login"> {/*TODO: add control if already logged in*/}
+            <Route path="/login">
               <LoginPage setLoginState={setLoginState}/>
             </Route>
 
             <Route path="/signup">
               <SignupPage setLoginState={setLoginState}/>
+            </Route>
+
+            <Route path="/confirm">
+              <ConfirmPage setLoginState={setLoginState}/>
             </Route>
 
             <Route path="*">

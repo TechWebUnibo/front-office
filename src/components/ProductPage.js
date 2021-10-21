@@ -7,6 +7,7 @@ import {useHistory, Link} from "react-router-dom";
 import "../style/ProductPage.css"
 import "react-datepicker/dist/react-datepicker.css";
 import { createRent, getAvailability, getUser } from "../utility/apiLibrary";
+import  Notify  from "./Notify";
 
 const ProductPage = () => {
 
@@ -16,6 +17,9 @@ const ProductPage = () => {
     const [price, setPrice] = useState(NaN)
     const [available, setAvailable] = useState(false)
     const [isLogged, setisLogged] = useState(true)
+
+    // Modal control for error
+    const [errorShow, setErrorShow] = useState(false);
 
     const location = useLocation()
     const { product } = location.state
@@ -49,7 +53,20 @@ const ProductPage = () => {
     }, [startDate, endDate, product])
 
     async function rentProduct(){
-        let res = await createRent(await getUser(), startDate, endDate, price, products, product._id)
+        let { status, body } = await createRent(await getUser(), startDate, endDate, price, products, product._id)
+        console.log(body)
+        if(status === 200){
+            history.push({
+                pathname: '/confirm', 
+                state: {
+                    rental: body.rent,
+                    productName: product.name
+                }
+            })
+        }
+        else{
+            setErrorShow(true)
+        }
     }
 
     const history = useHistory();
@@ -84,11 +101,16 @@ const ProductPage = () => {
                         }}
                         withPortal
                     />
-                    <Button variant="primary" className="mt-4" onClick={rentProduct} disabled={!isLogged}>
+                    <Button variant="primary" className="mt-4" onClick={rentProduct} disabled={!isLogged || !available}>
                         Submit
                     </Button>
                 </Col>
             </Row>
+            <Notify
+                show={errorShow}
+                data={{title: 'Ooops...', text: 'Something gone wrong, please retry later'}}
+                onHide={() => setErrorShow(false)}
+            />
         </Container>
           
      );

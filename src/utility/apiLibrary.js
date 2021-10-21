@@ -308,7 +308,7 @@ export async function getUser(){
     }
     catch(err){
         console.log(err)
-        return null
+        return ''
     }
 }
 
@@ -351,16 +351,23 @@ export async function createRent (customer, start, end, price, products, product
         end: end,
         price: price
     }
-    const res = await fetch(url +  rentsUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'Authorization': 'Bearer ' + getToken()
-        },
-        body: JSON.stringify(data)
-    })
-    return res.status
+    try{
+        let res = await fetch(url +  rentsUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': 'Bearer ' + getToken()
+            },
+            body: JSON.stringify(data)
+        })
+        const status = res.status
+        return {status: status, body: await res.json()}
+    }
+    catch(err){
+        console.log(err)
+        return (500, null)
+    }
 }
 
 export async function createCustomer(name, surname, username, password, address, avatar){

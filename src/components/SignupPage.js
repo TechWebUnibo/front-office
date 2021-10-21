@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { useState } from "react";
 import { createCustomer } from "../utility/apiLibrary"
+import Notify from './Notify';
 // import { apiRegister } from "../utility/apiLibrary.js";
 
 const SignupPage = ({ setLoginState }) => {
@@ -14,9 +15,14 @@ const SignupPage = ({ setLoginState }) => {
   const [city, setCity] = useState("");
   const [zip, setZip] = useState("");
   const [address, setAddress] = useState("");
+  // eslint-disable-next-line
   const [isPending, setIsPending] = useState(false);
 
+  // Modal control for error
+  const [errorShow, setErrorShow] = useState(false);
+
   const [selectedFile, setSelectedFile] = useState();
+  // eslint-disable-next-line
   const [isFilePicked, setIsFilePicked] = useState(false);
 
   const history = useHistory();
@@ -47,16 +53,24 @@ const SignupPage = ({ setLoginState }) => {
     setIsFilePicked(true);
   };
 
-  async function signup(){
-    let res = await createCustomer(name, surname, username, password, {city: city, zip: zip, residence: address}, selectedFile)
-    console.log(res)
+  async function signup(e){
+    e.preventDefault();
+    let { status } = await createCustomer(name, surname, username, password, {city: city, zip: zip, residence: address}, selectedFile)
+    if(status === 200){
+      history.push('/login')
+    }
+    else if(status === 400){
+      setError(true)
+    }
+    else{
+      setErrorShow(true)
+    }
   }; 
 
   return (
-    <div>
       <Container>
         <p className="display-2">Registrati</p>
-        <Form className="my-3 mx-2">
+        <Form className="my-3 mx-2" onSubmit={signup}>
           <Row>
             <Col sm>
               <Form.Group className="mb-3" controlId="formBasicName">
@@ -65,11 +79,9 @@ const SignupPage = ({ setLoginState }) => {
                   type="text"
                   placeholder="Inserisci nome"
                   value={name}
+                  required
                   onChange={(e) => setName(e.target.value)}
                 />
-                {error && (
-                  <Form.Text className=" text-danger">blah blah</Form.Text>
-                )}
               </Form.Group>
             </Col>
 
@@ -84,11 +96,9 @@ const SignupPage = ({ setLoginState }) => {
                   type="text"
                   placeholder="Inserisci cognome"
                   value={surname}
+                  required
                   onChange={(e) => setSurname(e.target.value)}
                 />
-                {error && (
-                  <Form.Text className=" text-danger">blah balh</Form.Text>
-                )}
               </Form.Group>
             </Col>
           </Row>
@@ -105,7 +115,7 @@ const SignupPage = ({ setLoginState }) => {
                   required
                 />
                 {error && (
-                  <Form.Text className=" text-danger">blah blah</Form.Text>
+                  <Form.Text className=" text-danger">Username already taken</Form.Text>
                 )}
               </Form.Group>
             </Col>
@@ -124,9 +134,6 @@ const SignupPage = ({ setLoginState }) => {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
-                {error && (
-                  <Form.Text className=" text-danger">blah balh</Form.Text>
-                )}
               </Form.Group>
             </Col>
           </Row>
@@ -174,15 +181,19 @@ const SignupPage = ({ setLoginState }) => {
           </Form.Group>
 
           <div className="text-center">
-            <Button variant="primary" type="button" onClick={signup}>
+            <Button variant="primary" type="submit" >
               {!isPending && <span>Submit</span>}
               {isPending && <span>Loading</span>}
             </Button>
           </div>
         </Form>
         <Link to="/login">hai già un account? Fai Log in</Link>
+        <Notify
+          show={errorShow}
+          data={{ title: 'Ooops...', text: 'Something gone wrong, please retry later' }}
+          onHide={() => setErrorShow(false)}
+        />
       </Container>
-    </div>
   );
 };
 
