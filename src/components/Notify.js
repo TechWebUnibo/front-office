@@ -15,7 +15,6 @@ const Notify = (props) => {
                 </Modal.Title>
             </Modal.Header> 
             <Modal.Body>
-
                 <p>
                     {data.text}
                 </p>

@@ -4,12 +4,10 @@ import { Link } from "react-router-dom";
 const NotFound = () => {
   return (
     <Container style={{ minHeight: "90vh" }}>
-      <div>
-        <p className="display-1 mt-2">
+        <h2 className="display-1 mt-2">
           Hai chiamato, ma nessuno ha risposto...
-        </p>
+        </h2>
         <p>La pagina da te richiesta non risulta essere disponibile</p>
-      </div>
       <div className="mt-5 text-center">
           <Link to="/">
             <Button>Torna alla home</Button>

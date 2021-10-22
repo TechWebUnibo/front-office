@@ -10,6 +10,8 @@ import SignupPage from "./components/SignupPage";
 import { isLogged, logout } from "./utility/apiLibrary";
 import ProductPage from "./components/ProductPage";
 import ConfirmPage from "./components/ConfirmPage";
+import Dashboard from "./components/Dashboard";
+import Profile from "./components/Profile";
 
 
 
@@ -68,6 +70,14 @@ function App() {
 
             <Route path="/confirm">
               <ConfirmPage setLoginState={setLoginState}/>
+            </Route>
+
+            <Route path="/profile">
+              <Profile setLoginState={setLoginState}/>
+            </Route>
+
+            <Route path="/dashboard">
+              <Dashboard setLoginState={setLoginState}/>
             </Route>
 
             <Route path="*">

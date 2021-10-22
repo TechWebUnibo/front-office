@@ -25,13 +25,13 @@ const Topbar = ({loggedIn, setLoginState}) => {
 
             {loggedIn && (
               <NavDropdown title="Account" id="basic-nav-dropdown">
-                <NavDropdown.Item as={Link} to="/profile" className="shadow-link-gray">
-                    Profilo
+                <NavDropdown.Item as={Link} href='/dashboard' to="/dashboard" className="shadow-link-gray">
+                    Dashboard
                 </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/profile" className="shadow-link-gray">
+                <NavDropdown.Item as={Link} to="/profile" href='/profile' className="shadow-link-gray">
                     Notifiche
                 </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/profile" className="shadow-link-gray">
+                <NavDropdown.Item as={Link} to="/profile" href='/profile' className="shadow-link-gray">
                   Noleggi
                 </NavDropdown.Item>
                 <NavDropdown.Divider />

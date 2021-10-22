@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Image, Button, Alert } from "react-bootstrap";
 import { useLocation } from "react-router";
 import DatePicker from "react-datepicker";
-import {useHistory, Link} from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 import "../style/ProductPage.css"
 import "react-datepicker/dist/react-datepicker.css";
 import { createRent, getAvailability, getUser } from "../utility/apiLibrary";
-import  Notify  from "./Notify";
+import Notify from "./Notify";
+import Explainer from "./Explainer";
 
 const ProductPage = () => {
 
@@ -23,24 +24,24 @@ const ProductPage = () => {
 
     const location = useLocation()
     const { product } = location.state
-    
-    let availableAlert = isLogged ? (<Alert variant={available ? 'success' : 'danger'}>This item is <Alert.Link as={"span"}>{available ? 'available' : 'not available'}</Alert.Link></Alert>) : ''
-    
+
+    let availableAlert = isLogged ? (<Alert variant={available ? 'success' : 'danger'}>Questo prodotto è <Alert.Link as={"span"}>{available ? 'dispnibile' : 'non disponibile'}</Alert.Link></Alert>) : ''
+
     useEffect(() => {
-        async function refreshPrice(){
-            if (Date.parse(startDate) < new Date().setHours(23, 59, 59)){
+        async function refreshPrice() {
+            if (Date.parse(startDate) < new Date().setHours(23, 59, 59)) {
                 setAvailable(false)
             }
-            else{
+            else {
                 const res = await getAvailability(product._id, startDate, endDate)
-                if(res){
+                if (res) {
                     setPrice(res.price)
-                    if (typeof res.available !== 'undefined'){
+                    if (typeof res.available !== 'undefined') {
                         setAvailable(res.available)
                         setisLogged(true)
                         setProducts(res.products)
                     }
-                    else{
+                    else {
                         setisLogged(false)
                     }
                 }
@@ -52,46 +53,52 @@ const ProductPage = () => {
         refresh()
     }, [startDate, endDate, product])
 
-    async function rentProduct(){
+    async function rentProduct() {
         let { status, body } = await createRent(await getUser(), startDate, endDate, price, products, product._id)
         console.log(body)
-        if(status === 200){
+        if (status === 200) {
             history.push({
-                pathname: '/confirm', 
+                pathname: '/confirm',
                 state: {
                     rental: body.rent,
                     productName: product.name
                 }
             })
         }
-        else{
+        else {
             setErrorShow(true)
         }
     }
 
+
+    //explainer
+    const title = "Perchè questo prezzo?";
+    const message = "Abbiamo deciso di offrire in noleggio, in base alla disponibilità, il prodotto più economico. Chi arriva prima, meglio alloggia, no?";
+
     const history = useHistory();
 
-    return ( 
+    return (
         <Container className="">
             <Button variant="outline-primary" className="my-3" onClick={history.goBack}>
-                <i className="bi bi-arrow-left-short" style={{fontSize: "1em"}}></i>
-                Product</Button>
+                <i className="bi bi-arrow-left-short" style={{ fontSize: "1em" }}></i>
+                Prodotti</Button>
             <Row>
                 <Col sm lg={4}>
-                    <Image src={product.img} fluid thumbnail="true" alt="product image"/>
+                    <Image src={product.img} fluid thumbnail="true" alt="product image" />
                 </Col>
                 <Col sm lg={8}>
                     <h2>{product.name}</h2>
                     <p>{product.description}</p>
                     {(!isLogged || available) && (<Alert variant="info">
-                        Rent me for:   <Alert.Link as={"span"}>{price}€</Alert.Link>
+                        A partire da:   <Alert.Link as={"span"}>{price}€ </Alert.Link>
+                        <Explainer message={message} title={title}/>
                     </Alert>)}
                     {!isLogged && (
-                        <Alert variant="warning"><Alert.Link as={Link} to="/login" href="/login">Sign in to check the availability</Alert.Link> </Alert>
+                        <Alert variant="warning"><Alert.Link as={Link} to="/login" href="/login">Fare Login per verificare la disponibilità</Alert.Link> </Alert>
                     )}
                     {availableAlert}
-                    
-                    <label htmlFor="start">Pick a range:</label> 
+
+                    <label htmlFor="start">Inserire un periodo:</label>
                     <DatePicker
                         selectsRange={true}
                         startDate={startDate}
@@ -102,18 +109,19 @@ const ProductPage = () => {
                         withPortal
                     />
                     <Button variant="primary" className="mt-4" onClick={rentProduct} disabled={!isLogged || !available}>
-                        Submit
+                        Invio
                     </Button>
                 </Col>
             </Row>
             <Notify
                 show={errorShow}
-                data={{title: 'Ooops...', text: 'Something gone wrong, please retry later'}}
+                data={{ title: 'Ooops...', text: 'Something gone wrong, please retry later' }}
                 onHide={() => setErrorShow(false)}
             />
+            
         </Container>
-          
-     );
+
+    );
 }
- 
+
 export default ProductPage;

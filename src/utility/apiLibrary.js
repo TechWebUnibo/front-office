@@ -17,7 +17,12 @@ const productsUrl = 'products'
 const itemsUrl = 'items'
 
 
-
+/**
+ * Function that makes an HTTP request to Login
+ * @param {string} username The username of the user
+ * @param {string} password The password of the user
+ * @returns {object} The object containing the status of the request and, in case of errors, the error message
+ */
 export async function apiLogin(username, password) {
   let data = `{
         "username": "${username}",
@@ -42,11 +47,16 @@ export async function apiLogin(username, password) {
   return 502;
 }
 
-
+/**
+ * Logs out the user
+ */
 export function logout() {
     setToken(null);
 }
 
+/**
+ * Refresh the JWT of the user's sesion
+ */
 export async function refreshPublicKey() {
     let res = await fetch(PUBLICKEY_URL, {
         method: 'GET',
@@ -62,7 +72,10 @@ export async function refreshPublicKey() {
     }
 }
 
-
+/**
+ * Function that return the user's public key
+ * @return {string} the user's ublic key
+ */
 async function getPublicKey() {
     if (!localStorage[PUBLICKEY_KEY] || localStorage[PUBLICKEY_KEY] === 'undefined'){
         await refreshPublicKey()
@@ -80,6 +93,10 @@ export function getToken(){
     return localStorage[ACCESS_TOKEN_KEY]
 }
 
+/**
+ * Function that indicate if the user is logged or not
+ * @return {bool} true if the user is logged, false otherwise
+ */
 export async function isLogged(){
     try{
         let decoded = jwt.verify(getToken(), await getPublicKey(), { algorithm: 'RS256' })
@@ -107,6 +124,24 @@ export async function getCustomers (){
     }
     else{
         return []
+    }
+}
+
+export async function getCustomer (id){
+    let res = await fetch(url + customersUrl + '/' + id, {
+        method: 'GET',
+        mode: 'cors', // no-cors, *cors, same-origin
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+        },
+    })
+    if(res.status === 200){
+        res = await res.json()
+        return res
+    }
+    else{
+        return null
     }
 }
 export async function getStaff(){
@@ -301,9 +336,8 @@ export async function getStaff(){
       }
 
 export async function getUser(){
-    let token = getToken()
     try{
-        let decoded = jwt.verify(token, await getPublicKey(), { algorithm: 'RS256' })
+        let decoded = jwt.verify(getToken(), await getPublicKey(), { algorithm: 'RS256' })
         return decoded._id
     }
     catch(err){
