@@ -12,6 +12,9 @@ import ProductPage from "./components/ProductPage";
 import ConfirmPage from "./components/ConfirmPage";
 import Dashboard from "./components/Dashboard";
 import Profile from "./components/Profile";
+import Rentals from "./components/Rentals"
+import PublicRoute from "./components/PublicRoute";
+import PrivateRoute from "./components/PrivateRoute";
 
 
 
@@ -48,7 +51,8 @@ function App() {
         <Topbar loggedIn={loggedIn} setLoginState={setLoginState}/>
         <div className="content">
           <Switch>
-            <Route exact path="/">
+
+          <Route exact path="/">
               <Home />
             </Route>
 
@@ -80,9 +84,14 @@ function App() {
               <Dashboard setLoginState={setLoginState}/>
             </Route>
 
+            <Route path="/rentals">
+              <Rentals/>
+            </Route>
+
             <Route path="*">
               <NotFound />
             </Route>
+
           </Switch>
         </div>
       </div>
@@ -91,3 +100,26 @@ function App() {
 }
 
 export default App;
+
+/*
+<PublicRoute restricted={false} component={Home} path="/" exact/>
+
+            <PublicRoute restricted={false} component={Products} path="/products" exact/>
+
+            <PublicRoute restricted={false} component={ProductPage} path="/productPage" exact/>
+
+            <PublicRoute restricted={false} component={LoginPage} path="/login" props={{setLoginState: setLoginState}} exact/>
+
+            <PublicRoute restricted={false} component={SignupPage} path="/signup" setLoginState={setLoginState} exact/>
+
+            <PrivateRoute component={Dashboard} path="/dashboard" setLoginState={setLoginState} exact />
+            
+            <PrivateRoute component={ConfirmPage} path="/confrim" setLoginState={setLoginState} exact />
+            
+            <PrivateRoute component={Profile} path="/profile" setLoginState={setLoginState} exact />
+            
+            <PrivateRoute component={Rentals} path="/rentals" setLoginState={setLoginState} exact />
+
+            <PublicRoute restricted={false} component={NotFound} path="/*" />
+
+*/

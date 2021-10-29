@@ -15,9 +15,9 @@ const Dashboard = () =>{
             img: '/img/cardProfile.png'
         },
         {
-            title: 'I tuoi ordini',
-            text: 'Visualizza e modifica i tuoi ordini',
-            link: '/orders',
+            title: 'I tuoi noleggi',
+            text: 'Visualizza e modifica i tuoi noleggi',
+            link: '/rentals',
             img: '/img/cardOrders.png'
         },
         {

@@ -302,6 +302,35 @@ export async function getStaff(){
         }
     }
 
+export async function modifyCustomer(id, name, surname, username, password, address, avatar) {
+    const formData = new FormData();
+    if(name) formData.append('name', name);
+    if(surname) formData.append('surname', surname);
+    if(username) formData.append('username', username);
+    if(password) formData.append('password', password);
+    if(address.city) formData.append('address.city', address.city);
+    if(address.residence) formData.append('address.residence', address.residence);
+    if(address.zip) formData.append('address.zip', address.zip);
+    console.log(avatar)
+    if (typeof avatar !== 'undefined')
+        formData.append('avatar', avatar);
+    try {
+        let res = await fetch(url + customersUrl + '/' + id , {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': 'Bearer ' + getToken()
+            },
+            method: 'POST',
+            body: formData
+        })
+
+        return { status: res.status, message: await res.json() }
+    }
+    catch (err) {
+        console.log(err)
+    }
+};
+
     export async function apiRegister(name, surname, username, password, address, city, zip, avatar) {
         let data = `{
               "name": "${name}",

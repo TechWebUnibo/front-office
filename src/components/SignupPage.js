@@ -176,7 +176,6 @@ const SignupPage = ({ setLoginState }) => {
             <Form.Control
               type="file"
               onChange={changeHandler}
-              //onChange={(e) => fileSelectHandler(e)}
             />
           </Form.Group>
 
