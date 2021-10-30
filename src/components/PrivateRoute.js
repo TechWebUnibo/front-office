@@ -3,7 +3,6 @@ import { Route, Redirect } from 'react-router-dom';
 import { isLogged } from '../utility/apiLibrary';
 
 const PrivateRoute = ({component: Component, ...rest}) => {
-    console.log(rest)
     return (
 
         // Show the component only when the user is logged in

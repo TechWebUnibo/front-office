@@ -1,4 +1,4 @@
-import {Container, Button, Spinner} from 'react-bootstrap'
+import {Container, Button, Spinner, Form, Col, Row} from 'react-bootstrap'
 import RentalCard from './RentalCard';
 import { getRentals, getUser } from '../utility/apiLibrary'
 import { useState, useEffect } from 'react';
@@ -6,24 +6,25 @@ import { useState, useEffect } from 'react';
 const Rentals = () => {
     const [isPending, setIsPending] = useState(true);
     const [error, setError] = useState(false);
+    const [rentals, setRentals] = useState([])
 
-    useEffect( () => {
-        f();
-    }, []);
+    async function fetchRentals()  {
 
-    async function f()  {
-
-        let response = await getRentals({productName:true, customer: getUser()});
-        if(response) {
+        let {status, body} = await getRentals({productName:true, customer: await getUser()});
+        if(status) {
             setIsPending(false);
         }
-        if(response.status === 200) {
-
+        if(status === 200) {
+            setRentals(body)
         }
         else {
             setError(true);
         }
     }
+    useEffect( () => {
+        fetchRentals();
+    }, []);
+
 
     return(
         <Container>
@@ -36,10 +37,41 @@ const Rentals = () => {
             {error && (
                 <Container>
             <h2> Uho, qualcosa è andato storto...</h2>
-            <Button onClick={() => f()}> Ricarica</Button>
+                    <Button onClick={() => fetchRentals()}> Ricarica</Button>
             </Container>
             )}
-            <RentalCard id="12345" name="Sedia" img="../public/img/cardProfile.png" price="253.65" startDate="25/10/2021" endDate="11/11/2021" status="in corso"/>
+            {!isPending &&
+                (<Form>
+                        <Row className="mb-3">
+                            <Form.Group as={Col} md={3} controlId="id-filter">
+                                <Form.Label>Id</Form.Label>
+                                <Form.Control type="text" placeholder="Filter by id" />
+                            </Form.Group>
+                        </Row>
+
+                        <Form.Group className="mb-3" controlId="formGridAddress1">
+                            <Form.Label>Address</Form.Label>
+                            <Form.Control placeholder="1234 Main St" />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="formGridAddress2">
+                            <Form.Label>Address 2</Form.Label>
+                            <Form.Control placeholder="Apartment, studio, or floor" />
+                        </Form.Group>
+
+                        <Row className="mb-3">
+                            <Form.Group as={Col} controlId="formGridCity">
+                                <Form.Label>City</Form.Label>
+                                <Form.Control />
+                            </Form.Group>
+                        </Row>
+                    </Form>)
+                }
+            {
+                rentals.map((rental) => {
+                    return <RentalCard alt="Product image" id={rental._id} name={rental.productType} img={rental.img} price={rental.price} startDate={rental.start.split('T')[0]} endDate={rental.end.split('T')[0]} status={rental.state} key={rental._id}/>
+                })
+            }
         </Container>
     );
 }

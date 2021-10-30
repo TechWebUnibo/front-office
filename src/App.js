@@ -13,8 +13,8 @@ import ConfirmPage from "./components/ConfirmPage";
 import Dashboard from "./components/Dashboard";
 import Profile from "./components/Profile";
 import Rentals from "./components/Rentals"
-import PublicRoute from "./components/PublicRoute";
-import PrivateRoute from "./components/PrivateRoute";
+//import PublicRoute from "./components/PublicRoute";
+//import PrivateRoute from "./components/PrivateRoute";
 
 
 

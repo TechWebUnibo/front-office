@@ -207,13 +207,7 @@ export async function getStaff(){
                     'Authorization': 'Bearer ' + getToken()
                 },
             })
-            if(res.status === 200){
-                res = await res.json()
-                return res
-            }
-            else{
-                return []
-            }
+            return {status: res.status, body: await res.json()}
         }
         catch(e){
             console.log(e)

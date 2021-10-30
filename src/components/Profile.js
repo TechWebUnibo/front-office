@@ -2,6 +2,7 @@ import {Row, Col, Form, Button, Container, Image, Spinner } from 'react-bootstra
 import { useEffect, useState } from 'react'
 import { getCustomer, getUser, modifyCustomer } from '../utility/apiLibrary'
 import Notify from './Notify'
+import { useHistory } from 'react-router'
 
 
 const Profile = () => {
@@ -10,6 +11,8 @@ const Profile = () => {
     const [loading, setLoading] = useState(true);
     const [selectedFile, setSelectedFile] = useState()
     const [errorShow, setErrorShow] = useState(false)
+    const history = useHistory();
+
     const genericAvatar = '/img/cardProfile.png'
 
     useEffect(() => {
@@ -31,7 +34,10 @@ const Profile = () => {
         e.preventDefault()
         console.log(customer.name)
         let {status, message} = await modifyCustomer(customer._id, customer.name, customer.surname, customer.username, customer.password, customer.address, selectedFile)
-        if (status !== 200){
+        if(status === 200){
+            history.push('/profile')
+        }
+        else if (status !== 200){
             console.log(message)
             setErrorShow(true)
         }
