@@ -25,3 +25,5 @@ const Products = () => {
 };
 
 export default Products;
+
+//TODO: risolvere bug dove a primo caricamento della pagina da il prodotto non disponibile
