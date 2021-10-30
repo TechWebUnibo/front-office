@@ -1,0 +1,18 @@
+{
+    "products": [
+      {
+        "name": "Gruppo cottura 1",
+        "currency": "€",
+        "price": 245.99,
+        "image": ["../assets/logo.png"],
+        "id": 1
+      },
+      {
+        "name": "Gruppo cottura 2",
+        "currency": "€",
+        "price": 145.99,
+        "image": ["../assets/logo.png"],
+        "id": 2
+      }
+    ]
+  }

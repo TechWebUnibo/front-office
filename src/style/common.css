@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
+.content{
+  font-family: poppins;
+}
+
+.shadow-link {
+  color: black;
+  text-decoration: none;
+}
+.shadow-link-gray {
+  color: rgba(0,0,0,.55);
+  text-decoration: none;
+}
