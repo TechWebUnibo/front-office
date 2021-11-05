@@ -167,9 +167,16 @@ export async function getStaff(){
             console.log(e)
         }
     }
-    export async function getProducts(){
+    export async function getProducts(query){
+        console.log(query)
+        if (typeof query !== 'undefined') {
+            query = '?' + new URLSearchParams(query).toString()
+        }
+        else {
+            query = ''
+        }
         try{
-            let res = await fetch(url + productsUrl, {
+            let res = await fetch(url + productsUrl + query, {
                 method: 'GET',
                 mode: 'cors', // no-cors, *cors, same-origin
                 headers: {
@@ -178,13 +185,7 @@ export async function getStaff(){
                     'Authorization': 'Bearer ' + getToken()
                 },
             })
-            if(res.status === 200){
-                res = await res.json()
-                return res
-            }
-            else{
-                return []
-            }
+            return {status: res.status, body: await res.json()}
         }
         catch(e){
             console.log(e)

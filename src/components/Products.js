@@ -9,7 +9,11 @@ const Products = () => {
 
   useEffect(() => {
     const loadProducts = async () => {
-      setProducts(await getProducts());
+      let {status, body} = await getProducts()
+      if(status !== 200){
+        body = []
+      }
+      setProducts(body);
     };
     loadProducts();
   }, []);
