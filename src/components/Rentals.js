@@ -1,7 +1,8 @@
 import {Container, Button, Spinner, Form, Col, Row} from 'react-bootstrap'
 import RentalCard from './RentalCard';
-import { getRentals, getUser } from '../utility/apiLibrary'
+import { deleteRental, getRentals, getUser } from '../utility/apiLibrary'
 import { useState, useEffect } from 'react';
+import Notify from './Notify'
 
 const Rentals = () => {
     const [isPending, setIsPending] = useState(true);
@@ -10,6 +11,9 @@ const Rentals = () => {
     const [idFilter, setIdFilter] = useState('')
     const [productFilter, setProductFilter] = useState('')  
     const [stateFilter, setStateFilter] = useState('')
+
+    // Modal control for error
+    const [errorShow, setErrorShow] = useState(false);
 
     function rentalsFilter(){
         const filteredByState = rentals.filter((rental) => {
@@ -22,10 +26,24 @@ const Rentals = () => {
         return filteredByText
     }
 
+    // TODO - Use this function to trigger a modal for the confirmation (if you want)
+    async function deleteTrigger(id){
+        console.log(id)
+        await deleteReal(id)
+    }
+    async function deleteReal(id){
+        let res = await deleteRental(id)
+        if(res === 200){
+            window.location.reload(false);
+        }
+        else{
+            setErrorShow(true)
+        }
+    }
+
     useEffect( () => {
         const fetchRentals = async () => {
             let {status, body} = await getRentals({productName:true, img: true, customer: await getUser()});
-            console.log(body)
             if(status === 200) {
                 setRentals(body)
                 setIsPending(false);
@@ -86,10 +104,15 @@ const Rentals = () => {
                 }
             {!isPending &&
                 rentalsFilter().map((rental) => {
-                    return <RentalCard alt="Product image" id={rental._id} name={rental.productType} img={rental.img} price={rental.price} startDate={rental.start.split('T')[0]} endDate={rental.end.split('T')[0]} status={rental.state} key={rental._id}/>
+                    return <RentalCard alt="Product image" deleteRental={deleteTrigger} id={rental._id} name={rental.productType} img={rental.img} price={rental.price} startDate={rental.start.split('T')[0]} endDate={rental.end.split('T')[0]} status={rental.state} key={rental._id}/>
                 })
             }
-        </Container>
+            <Notify
+                show={errorShow}
+                data={{ title: 'Ooops...', text: "E' troppo tardi per poter eliminare il noleggio"}}
+                onHide={() => setErrorShow(false)}
+            />       
+            </Container>
     );
 }
 export default Rentals;

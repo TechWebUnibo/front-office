@@ -272,6 +272,26 @@ export async function getStaff(){
             console.log(e)
         }
     }
+
+    export async function deleteRental(id) {
+        try {
+            let res = await fetch(url + rentsUrl + '/' + id, {
+                method: 'DELETE',
+                mode: 'cors', // no-cors, *cors, same-origin
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': 'Bearer ' + getToken()
+                },
+            })
+            return res.status
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+
+
     export async function modifyStaff(id, data) {
         try {
             let res = await fetch(url + staffUrl + '/' + id, {
