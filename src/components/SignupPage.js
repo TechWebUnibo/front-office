@@ -57,7 +57,7 @@ const SignupPage = ({ setLoginState }) => {
     e.preventDefault();
     let { status } = await createCustomer(name, surname, username, password, {city: city, zip: zip, residence: address}, selectedFile)
     if(status === 200){
-      history.push('/login')
+      history.goBack();
     }
     else if(status === 400){
       setError(true)

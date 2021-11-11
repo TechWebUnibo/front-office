@@ -1,4 +1,4 @@
-import {Container, Button, Spinner, Form, Col, Row} from 'react-bootstrap'
+import {Container, Button, Spinner, Form, Col, Row, Modal} from 'react-bootstrap'
 import RentalCard from './RentalCard';
 import { deleteRental, getRentals, getUser } from '../utility/apiLibrary'
 import { useState, useEffect } from 'react';
@@ -26,10 +26,25 @@ const Rentals = () => {
         return filteredByText
     }
 
+    const [show, setShow] = useState(false);
+    const [rentalId, setRentalId] = useState();
+
+    const handleClose = () => {
+        setRentalId('');
+        setShow(false);
+    }
+    const handleShow = (id) => {
+        setRentalId(id);
+        console.log(rentalId);
+        setShow(true);
+    }
+
+
     // TODO - Use this function to trigger a modal for the confirmation (if you want)
     async function deleteTrigger(id){
         console.log(id)
-        await deleteReal(id)
+        handleShow(id);
+        // await deleteReal(id)
     }
     async function deleteReal(id){
         let res = await deleteRental(id)
@@ -111,7 +126,26 @@ const Rentals = () => {
                 show={errorShow}
                 data={{ title: 'Ooops...', text: "E' troppo tardi per poter eliminare il noleggio"}}
                 onHide={() => setErrorShow(false)}
-            />       
+            />
+
+            <Modal show={show}
+                   onHide={handleClose}
+                   backdrop="static"
+                   keyboard={false}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Eliminazione Noleggio</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Stai per annullare il noleggio {rentalId}, sei sicuro di voler procedere? Questo procedimento è irreversibile.</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Annulla
+                    </Button>
+                    <Button variant="danger" onClick={() => deleteReal(rentalId)}> {/*TODO problemi di sicurezza,la variabile è globale e non un parametro migliorare*/}
+                        Elimina noleggio
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
             </Container>
     );
 }
