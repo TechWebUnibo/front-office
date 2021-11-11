@@ -6,7 +6,7 @@ import { useHistory, Link } from "react-router-dom";
 
 import "../style/ProductPage.css"
 import "react-datepicker/dist/react-datepicker.css";
-import { createRent, getAvailability, getUser } from "../utility/apiLibrary";
+import { createRent, getAvailability, getUser, modifyRent } from "../utility/apiLibrary";
 import Notify from "./Notify";
 import Explainer from "./Explainer";
 
@@ -23,7 +23,7 @@ const ProductPage = () => {
     const [errorShow, setErrorShow] = useState(false);
 
     const location = useLocation()
-    const { product } = location.state
+    const { props, product } = location.state
 
     let availableAlert = isLogged ? (<Alert variant={available ? 'success' : 'danger'}>Questo prodotto è <Alert.Link as={"span"}>{available ? 'dispnibile' : 'non disponibile'}</Alert.Link></Alert>) : ''
 
@@ -33,7 +33,11 @@ const ProductPage = () => {
                 setAvailable(false)
             }
             else {
-                const res = await getAvailability(product._id, startDate, endDate)
+                let res
+                if(props.rentId)
+                    res = await getAvailability(product._id, startDate, endDate, props.rentId)
+                else
+                    res = await getAvailability(product._id, startDate, endDate)
                 if (res) {
                     setPrice(res.price)
                     if (typeof res.available !== 'undefined') {
@@ -51,11 +55,35 @@ const ProductPage = () => {
             await refreshPrice()
         }
         refresh()
-    }, [startDate, endDate, product])
+    }, [startDate, endDate, product, props.rentId])
 
     async function rentProduct() {
         let { status, body } = await createRent(await getUser(), startDate, endDate, price, products, product._id)
-        console.log(body)
+        if (status === 200) {
+            history.push({
+                pathname: '/confirm',
+                state: {
+                    rental: body.rent,
+                    productName: product.name
+                }
+            })
+        }
+        else {
+            setErrorShow(true)
+        }
+    }
+
+    async function action(){
+        if(props.action === 'modify'){
+            await rentModify()
+        }
+        else{
+            await rentProduct()
+        }
+    }
+
+    async function rentModify() {
+        let { status, body } = await modifyRent(props.rentId, startDate, endDate, price, products, product._id)
         if (status === 200) {
             history.push({
                 pathname: '/confirm',
@@ -81,9 +109,9 @@ const ProductPage = () => {
         <Container className="">
             <Button variant="outline-primary" className="my-3" onClick={history.goBack}>
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
-</svg>
-                Prodotti</Button>
+                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+            </svg>
+                {props.backText} </Button>
             <Row>
                 <Col sm lg={4}>
                     <Image src={product.img} fluid thumbnail="true" alt="product image" />
@@ -105,13 +133,19 @@ const ProductPage = () => {
                         selectsRange={true}
                         startDate={startDate}
                         endDate={endDate}
+                        dateFormat="yyyy-MM-dd"
+                        locale="it-IT"
                         onChange={(update) => {
+                            for (const date of update) {
+                                if(date)
+                                    date.setHours(23, 59, 58)
+                            }
                             setDateRange(update);
                         }}
                         withPortal
                     />
-                    <Button variant="primary" className="mt-4" onClick={rentProduct} disabled={!isLogged || !available}>
-                        Invio
+                    <Button variant="primary" className="mt-4" onClick={action} disabled={!isLogged || !available}>
+                        {props.confirmText}
                     </Button>
                 </Col>
             </Row>

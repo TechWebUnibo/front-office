@@ -1,6 +1,25 @@
 import { Card, Row, Col, Button } from 'react-bootstrap';
+import { Link } from "react-router-dom";
+import { getProducts } from '../utility/apiLibrary';
+import { useState, useEffect } from 'react';
+
+
 
 const RentalCard = (prop) => {
+
+
+    const [product, setProduct] = useState({})
+
+    useEffect(() => {
+        const getProductInfo = async () => {
+            let { status, body } = await getProducts({ name: prop.name })
+            if(status === 200){
+                setProduct(body[0])
+            }
+        }
+        getProductInfo()
+    }, [prop.name])
+
     return (
 
             <Card className="mt-3">
@@ -26,7 +45,20 @@ const RentalCard = (prop) => {
                 {(prop.state !== 'terminated' || prop.state !== 'cancelled') && (
                 <Row>
                     <Col>
-                        <Button variant="primary">Modifica ordine</Button> 
+                        <Link to={{
+                                pathname: '/productPage',
+                                state: {
+                                    props: {
+                                        backText: 'Ordini',
+                                        confirmText: 'Modifica',
+                                        action: 'modify',
+                                        rentId: prop.id
+                                    },
+                                    product: product,
+                                    }}}
+                                className="shadow-link-gray">
+                                <Button>Modifica</Button>
+                            </Link>
                     </Col>
                     <Col>
                             <Button variant="primary" onClick={() => prop.deleteRental(prop.id)}>Elimina ordine</Button>

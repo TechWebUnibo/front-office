@@ -13,6 +13,11 @@ const ProductCard = ({product}) => {
           <Link to={{
             pathname: '/productPage',
             state: {
+              props: {
+                backText: 'Prodotti',
+                confirmText: 'Noleggia',
+                action: 'create'
+              },
               product: product,
             }}}
              className="shadow-link-gray">

@@ -291,6 +291,35 @@ export async function getStaff(){
         }
     }
 
+    export async function modifyRent(id, start, end, price, products, productType) {
+        start = start.toISOString().split('T')[0]
+        end = end.toISOString().split('T')[0]
+        const data = {
+            products: products,
+            productType: productType,
+            start: start,
+            end: end,
+            price: price
+        }
+        try {
+            let res = await fetch(url + rentsUrl + `/` + id, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': 'Bearer ' + getToken()
+                },
+                body: JSON.stringify(data)
+            })
+            const status = res.status
+            return { status: status, body: await res.json() }
+        }
+        catch (err) {
+            console.log(err)
+            return (500, null)
+        }
+    }
+
 
     export async function modifyStaff(id, data) {
         try {
