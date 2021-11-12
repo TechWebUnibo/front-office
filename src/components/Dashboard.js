@@ -23,7 +23,7 @@ const Dashboard = () =>{
         {
             title: 'Le tue notifiche',
             text: 'Visualizza le tue notifiche',
-            link: '/messages',
+            link: '/notifications',
             img: '/img/notification.png'
         },
     ]

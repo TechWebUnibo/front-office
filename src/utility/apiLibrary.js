@@ -15,6 +15,7 @@ const staffUrl = 'staff'
 const invoicesUrl = 'invoices'
 const productsUrl = 'products'
 const itemsUrl = 'items'
+const notificationsUrl =  'notifications'
 
 
 /**
@@ -472,6 +473,44 @@ export async function createRent (customer, start, end, price, products, product
         return {status: status, body: await res.json()}
     }
     catch(err){
+        console.log(err)
+        return (500, null)
+    }
+}
+
+export async function getNotifications(id){
+    try {
+        let res = await fetch(url + notificationsUrl + '/' + customersUrl + '/' + id, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': 'Bearer ' + getToken()
+            },
+        })
+        const status = res.status
+        return { status: status, body: await res.json() }
+    }
+    catch (err) {
+        console.log(err)
+        return (500, null)
+    }
+}
+
+export async function checkNotification(id){
+    try {
+        let res = await fetch(url + notificationsUrl + '/' + customersUrl + '/check/' + id, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': 'Bearer ' + getToken()
+            },
+        })
+        const status = res.status
+        return { status: status, body: await res.json() }
+    }
+    catch (err) {
         console.log(err)
         return (500, null)
     }
