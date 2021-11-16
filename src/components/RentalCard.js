@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { getProducts } from '../utility/apiLibrary';
 import { useState, useEffect } from 'react';
 
-
+//possible rent state: not_started, in_progress, delayed, terminated
 
 const RentalCard = (prop) => {
 

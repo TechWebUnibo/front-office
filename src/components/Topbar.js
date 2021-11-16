@@ -28,10 +28,10 @@ const Topbar = ({loggedIn, setLoginState}) => {
                 <NavDropdown.Item as={Link} href='/dashboard' to="/dashboard" className="shadow-link-gray">
                     Dashboard
                 </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/profile" href='/profile' className="shadow-link-gray">
+                <NavDropdown.Item as={Link} to="/notifications" href='/notifications' className="shadow-link-gray">
                     Notifiche
                 </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/profile" href='/profile' className="shadow-link-gray">
+                <NavDropdown.Item as={Link} to="/rentals" href='/rentals' className="shadow-link-gray">
                   Noleggi
                 </NavDropdown.Item>
                 <NavDropdown.Divider />

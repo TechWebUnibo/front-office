@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Spinner } from "react-bootstrap";
+import {Container, ListGroup, Spinner} from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
 import "../style/ProductPage.css"
@@ -31,19 +31,22 @@ const NotificationPage = () => {
         }
     }
 
+
     return (
         <Container className="">
             <h2>Centro notifiche</h2>
-            {isPending && 
-                <Container>
+            {isPending &&
+            (<Container>
                     <Spinner animation="border" size="m" />
-                </Container>
+                </Container>)
             }
-            {(!isPending && notifications.length) ? 
-                notifications.map((n) => {
-                    return <p>{n.rent}</p>
-                })
-                :
+            {!isPending && notifications.length >0 &&
+                (<ListGroup>
+                        {notifications.map((n) => {
+                     return (<ListGroup.Item> {n.rent} </ListGroup.Item>);})}
+                    </ListGroup>)
+            }
+            { !isPending && notifications.length <= 0 &&
                 (<h3>Nessuna notifica</h3>)
             }
         </Container>
