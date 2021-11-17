@@ -244,6 +244,46 @@ export async function getStaff(){
             console.log(e)
         }
     }
+export async function getInvoices2(customer, rent) {
+    if (typeof customer != 'undefined') {
+        customer = '?customer='+customer;//+ new URLSearchParams(customer).toString()
+    }
+    else {
+        customer = ''
+    }
+    if (typeof rent != 'undefined') {
+        if(customer !== '') {
+            rent = '&rent='+rent;
+        }
+        else {
+            rent = '?rent=' + rent;
+        }
+    }
+    else {
+        rent = ''
+    }
+    try {
+        let res = await fetch(url + invoicesUrl + customer + rent, {
+            method: 'GET',
+            mode: 'cors', // no-cors, *cors, same-origin
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': 'Bearer ' + getToken()
+            },
+        })
+        if (res.status === 200) {
+            res = await res.json()
+            return res
+        }
+        else {
+            return []
+        }
+    }
+    catch (e) {
+        console.log(e)
+    }
+}
     export async function getItems(query) {
         if (typeof query != 'undefined') {
             query = '?' + new URLSearchParams(query).toString()

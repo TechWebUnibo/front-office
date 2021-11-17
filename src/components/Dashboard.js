@@ -26,6 +26,12 @@ const Dashboard = () =>{
             link: '/notifications',
             img: '/img/notification.png'
         },
+        {
+            title: 'Le tue fatture',
+            text: 'Visualizza le tue fatture',
+            link: '/invoices',
+            img: '/img/notification.png' //todo cambiare l'icona
+        }
     ]
 
     useEffect(() => {

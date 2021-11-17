@@ -14,6 +14,8 @@ import Dashboard from "./components/Dashboard";
 import Profile from "./components/Profile";
 import Rentals from "./components/Rentals"
 import NotificationPage from "./components/NotificationPage"
+import Invoices from "./components/Invoices"
+import InvoicePage from "./components/InvoicePage"
 //import PublicRoute from "./components/PublicRoute";
 //import PrivateRoute from "./components/PrivateRoute";
 
@@ -91,6 +93,14 @@ function App() {
 
             <Route path="/notifications">
               <NotificationPage />
+            </Route>
+
+            <Route path="/invoices">
+              <Invoices />
+            </Route>
+
+            <Route path="/invoice/:id">
+              <InvoicePage />
             </Route>
 
             <Route path="*">
