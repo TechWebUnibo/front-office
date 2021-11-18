@@ -7,62 +7,19 @@ import {getInvoices, getUser} from "../utility/apiLibrary";
 const InvoicePagePrintable = React.forwardRef(({prop}, ref) => {
     const {id} = useParams();
 
-    const [invoice, setInvoice] = useState([])
-    const [isPending, setIsPending] = useState(false);
+    const [invoice, setInvoice] = useState()
+    const [isPending, setIsPending] = useState(true);
 
-    /*    useEffect(() => {
-            const fetchNotifications = async () => {
-                const res = await getInvoices({customer: await getUser(), rent: id});
-                if (res != undefined) {
-                    setInvoice(res);
-                    setIsPending(false);
-                }
+    useEffect(() => {
+        const fetchInvoices = async () => {
+            const { status, body } = await getInvoices({ productName: true, customer: await getUser(), _id: id});
+            if (status === 200) {
+                setInvoice(body[0]);
+                setIsPending(false);
             }
-        }, []);*/
-
-    let prodN = 1;//debug
-    let prova = {
-        "customer": "customer_id",
-        "employee": "employee_id",
-        "products": {
-            "additionalProp1": {
-                "condition": "broken",
-                "start": "2021-01-10",
-                "end": "2021-01-12"
-            },
-            "additionalProp2": {
-                "condition": "broken",
-                "start": "2021-01-10",
-                "end": "2021-01-12"
-            },
-            "additionalProp3": {
-                "condition": "broken",
-                "start": "2021-01-10",
-                "end": "2021-01-12"
-            }
-        },
-        "price": 100,
-        "start": "2017-07-21",
-        "end": "2017-07-28"
-    };//debug
-
-    let codFattura = 123456789; //debug
-
-    function showSubProduct(products) {
-        let res = [];
-        let i = 0;
-        for (const prod in products) {
-            res.push(
-            <div>
-                <p>Prodotto: {prod}
-                    <br/>
-                Data di inizio: {prova.products[prod].start}
-                    <br/>
-                Data di fine: {prova.products[prod].end}</p>
-            </div>);
         }
-        return res;
-    }
+        fetchInvoices()
+    }, [])
 
     return (
         <div ref={ref} className="container">
@@ -73,30 +30,35 @@ const InvoicePagePrintable = React.forwardRef(({prop}, ref) => {
             </Container>)
             }
 
-            {!isPending && invoice !== [] &&
+            {!isPending &&
             (
                 <div>
-                    <h2 className="display-2">Fattura #{codFattura}</h2>
-                    <p>Cliente: {prova.customer}
+                    <h2 className="display-2">Fattura #{invoice._id}</h2>
+                    <p>Codice cliente: {invoice.customer}
                         <br/>
-                        Impiegato: {prova.employee}</p>
+                    Codice impiegato: {invoice.employee}</p>
                     <h3 className="display-4">Prodotti</h3>
                     <ul>
-                    {showSubProduct(prova.products).map((prod) => {
+                    {Object.keys(invoice.products).map((prod) => {
                         return (
-                            <li>{prod}</li>
-                        );
+                            <li key={prod}>
+                                <div>
+                                    <h4>Prodotto: {prod} </h4>
+                                </div>
+                            </li>
+                        )
                     })}
                     </ul>
-                    <p>Prezzo € {prova.price}</p>
-                    <p>Data di inizio: {prova.start}
+                    <p>Prezzo € {invoice.price}</p>
+                    <p>Data di inizio: {invoice.start.split('T')[0]}
                         <br/>
-                    Data di fine: {prova.end}</p>
+                        Data di fine: {invoice.end.split('T')[0]}
+                    </p>
                 </div>
             )
             }
 
-            {!isPending && invoice === [] &&
+            {(!isPending && invoice === {}) &&
             (<h3> Fattura non disponibile</h3>)
             }
         </div>

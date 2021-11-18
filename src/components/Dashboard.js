@@ -30,7 +30,7 @@ const Dashboard = () =>{
             title: 'Le tue fatture',
             text: 'Visualizza le tue fatture',
             link: '/invoices',
-            img: '/img/notification.png' //todo cambiare l'icona
+            img: '/img/invoice.png'
         }
     ]
 

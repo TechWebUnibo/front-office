@@ -42,8 +42,8 @@ const NotificationPage = () => {
             }
             {!isPending && notifications.length >0 &&
                 (<ListGroup>
-                        {notifications.map((n) => {
-                     return (<ListGroup.Item> {n.rent} </ListGroup.Item>);})}
+                        {notifications.map((notification) => {
+                            return (<ListGroup.Item key={ notification._id } > {notification.rent} </ListGroup.Item>);})}
                     </ListGroup>)
             }
             { !isPending && notifications.length <= 0 &&

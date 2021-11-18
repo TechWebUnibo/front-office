@@ -10,11 +10,10 @@ function Invoices() {
 
     useEffect(() => {
         const fetchInvoices = async () =>{
-            let customer = "{customer: "+await getUser()+"}"
-            const res = await getInvoices(customer);
-            if(res) {
+            const { status, body} = await getInvoices({ customer: await getUser() });
+            if(status === 200) {
                 setIsPending(false);
-                setInvoices(res);
+                setInvoices(body)
             }
         }
         fetchInvoices();
@@ -30,8 +29,8 @@ function Invoices() {
             }
             {!isPending && invoices.length >0 &&
             (<ListGroup>
-                {invoices.map((n) => {
-                    return (<ListGroup.Item action as={Link} to={"/invoice/"+n.invoice} href={"/invoice"+n.invoice}> {n.invoice} </ListGroup.Item>);})}
+                {invoices.map((invoice) => {
+                    return (<ListGroup.Item action as={Link} key={invoice._id} to={"/invoice/" + invoice._id} href={"/invoice" + invoice._id}> Visualizza la fattua per l'ordine: {invoice._id} </ListGroup.Item>);})}
             </ListGroup>) //todo da testare e modificare
             }
             { !isPending && invoices.length <= 0 &&
