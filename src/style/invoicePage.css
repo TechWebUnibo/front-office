@@ -1,0 +1,12 @@
+h3, h2{
+    font-size: 1em;
+    margin-bottom: 5px;
+}
+
+h4{
+    font-size: 0.8em;
+}
+
+hr{
+    border: 3px solid black;
+}

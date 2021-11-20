@@ -1,68 +1,27 @@
 import React, {useEffect, useRef, useState} from "react"
-import {Button, Container, ListGroup, Spinner} from "react-bootstrap";
+import {Button, Container, Spinner, Row, Col, Alert} from "react-bootstrap";
 import {useParams} from "react-router-dom";
 import {useReactToPrint} from 'react-to-print';
 import {getInvoices, getUser} from "../utility/apiLibrary";
+import '../style/common.css';
+import '../style/invoicePage.css';
 
 const InvoicePagePrintable = React.forwardRef(({prop}, ref) => {
     const {id} = useParams();
 
-    const [invoice, setInvoice] = useState([])
-    const [isPending, setIsPending] = useState(false);
+    const [invoice, setInvoice] = useState()
+    const [isPending, setIsPending] = useState(true);
 
-    /*    useEffect(() => {
-            const fetchNotifications = async () => {
-                const res = await getInvoices({customer: await getUser(), rent: id});
-                if (res != undefined) {
-                    setInvoice(res);
-                    setIsPending(false);
-                }
+    useEffect(() => {
+        const fetchInvoices = async () => {
+            const { status, body } = await getInvoices({ productName: true, customer: await getUser(), _id: id});
+            if (status === 200) {
+                setInvoice(body[0]);
+                setIsPending(false);
             }
-        }, []);*/
-
-    let prodN = 1;//debug
-    let prova = {
-        "customer": "customer_id",
-        "employee": "employee_id",
-        "products": {
-            "additionalProp1": {
-                "condition": "broken",
-                "start": "2021-01-10",
-                "end": "2021-01-12"
-            },
-            "additionalProp2": {
-                "condition": "broken",
-                "start": "2021-01-10",
-                "end": "2021-01-12"
-            },
-            "additionalProp3": {
-                "condition": "broken",
-                "start": "2021-01-10",
-                "end": "2021-01-12"
-            }
-        },
-        "price": 100,
-        "start": "2017-07-21",
-        "end": "2017-07-28"
-    };//debug
-
-    let codFattura = 123456789; //debug
-
-    function showSubProduct(products) {
-        let res = [];
-        let i = 0;
-        for (const prod in products) {
-            res.push(
-            <div>
-                <p>Prodotto: {prod}
-                    <br/>
-                Data di inizio: {prova.products[prod].start}
-                    <br/>
-                Data di fine: {prova.products[prod].end}</p>
-            </div>);
         }
-        return res;
-    }
+        fetchInvoices()
+    }, [id])
 
     return (
         <div ref={ref} className="container">
@@ -73,30 +32,67 @@ const InvoicePagePrintable = React.forwardRef(({prop}, ref) => {
             </Container>)
             }
 
-            {!isPending && invoice !== [] &&
+            {!isPending &&
             (
                 <div>
-                    <h2 className="display-2">Fattura #{codFattura}</h2>
-                    <p>Cliente: {prova.customer}
-                        <br/>
-                        Impiegato: {prova.employee}</p>
-                    <h3 className="display-4">Prodotti</h3>
-                    <ul>
-                    {showSubProduct(prova.products).map((prod) => {
-                        return (
-                            <li>{prod}</li>
-                        );
-                    })}
-                    </ul>
-                    <p>Prezzo € {prova.price}</p>
-                    <p>Data di inizio: {prova.start}
-                        <br/>
-                    Data di fine: {prova.end}</p>
-                </div>
-            )
-            }
+                    <Row>
+                        <Col md={4}>
+                            <img src="//site202118.tw.cs.unibo.it/img/logo.eda7be37.png" alt="CATER" style={{ height: "4em" }}></img>
+                        </Col>
+                        <Col md={8} className="text-end mt-4">
+                            <h3 className="small">Fattura: #{invoice._id}</h3>
+                            <h3 className="small">Ordine: #{invoice.rent}</h3>
+                            <h3 className="small">Codice cliente: {invoice.customer}</h3>
+                            <h3 className="small">Codice impiegato: {invoice.employee}</h3>
+                        </Col>
+                    </Row>
+                    <h2 className="mt-4">Noleggio:</h2>
+                    <Row className="mt-2">
+                        <Col>
+                            <h4>Data di inizio: {invoice.start.split('T')[0]}</h4>
+                        </Col>
+                        <Col>
+                            <h4>Data di fine: {invoice.end.split('T')[0]}</h4>
+                        </Col>
+                    </Row>
 
-            {!isPending && invoice === [] &&
+                    <hr />
+
+                    <Row>
+                        <Col>
+                            <h3>
+                                Nome
+                            </h3>
+                        </Col>
+                        <Col>
+                            <h3>
+                                Stato di riconsegna
+                            </h3>
+                        </Col>
+                    </Row>
+
+                    {Object.keys(invoice.products).map((prod) => {
+                        return (
+                            <Row key={prod}>
+                                <Col>
+                                    <h4>{prod}</h4>
+                                </Col>
+                                <Col>
+                                    <h4>{invoice.products[prod].condition}</h4>
+                                </Col>
+                            </Row>
+                        )
+                    })}
+                    <Row className='mt-4'>
+                        <Col md={{offset: 10 }}>
+                            <Alert variant={'secondary'}>
+                                Totale: {invoice.price}
+                            </Alert>                        
+                        </Col>
+                    </Row>
+                </div>
+            )}
+            {(!isPending && invoice === {}) &&
             (<h3> Fattura non disponibile</h3>)
             }
         </div>
@@ -112,7 +108,7 @@ function InvoicePage() {
     });
 
     return (
-        <Container>
+        <Container className="container mt-4 content">
             <InvoicePagePrintable ref={componentRef}/>
             <Button onClick={handlePrint}>Stampa</Button>
         </Container>
