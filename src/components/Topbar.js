@@ -1,9 +1,24 @@
 import React from "react";
+import { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import { Navbar, Container, Nav, NavDropdown, Button } from "react-bootstrap";
+import { Navbar, Container, Nav, NavDropdown, Button, Badge } from "react-bootstrap";
 import "../style/common.css";
+import { getNotifications, getUser } from "../utility/apiLibrary";
 
 const Topbar = ({loggedIn, setLoginState}) => {
+
+  const [notify, setNotify] = useState(0)
+
+  useEffect(() => {
+    async function getNotify(){
+      const { status, body } = await getNotifications(await getUser())
+      if(status === 200) {
+        setNotify(body.length)
+        console.log(notify)
+      }
+    }
+    getNotify()
+  },)
 
   return (
     <Navbar collapseOnSelect bg="light" expand="md" >
@@ -30,6 +45,11 @@ const Topbar = ({loggedIn, setLoginState}) => {
                 </NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/notifications" href='/notifications' className="shadow-link-gray">
                     Notifiche
+                  { notify > 0 &&
+                    <Badge variant="primary" pill>
+                      {notify}
+                    </Badge>
+                  }
                 </NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/rentals" href='/rentals' className="shadow-link-gray">
                   Noleggi
