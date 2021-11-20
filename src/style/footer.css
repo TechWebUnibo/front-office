@@ -1,0 +1,26 @@
+#footerLinks {
+    font-size: 2em;
+    text-align: left;
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;            /* Footer height */
+}
+
+a{
+    color: black;
+}
+ul{
+    list-style: none;
+}
+
+@media only screen and (max-width: 768px) {
+  #footerLinks {
+    text-align: left;
+  }
+}
+#content-wrap {
+  padding-bottom: 2.5rem;    /* Footer height */
+}
