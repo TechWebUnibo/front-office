@@ -16,6 +16,7 @@ import Rentals from "./components/Rentals"
 import NotificationPage from "./components/NotificationPage"
 import Invoices from "./components/Invoices"
 import InvoicePage from "./components/InvoicePage"
+import Bottombar from "./components/Bottombar";
 //import PublicRoute from "./components/PublicRoute";
 //import PrivateRoute from "./components/PrivateRoute";
 
@@ -109,6 +110,7 @@ function App() {
 
           </Switch>
         </div>
+        <Bottombar/>
       </div>
     </Router>
   );
