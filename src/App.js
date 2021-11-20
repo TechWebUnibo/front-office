@@ -17,6 +17,7 @@ import NotificationPage from "./components/NotificationPage"
 import Invoices from "./components/Invoices"
 import InvoicePage from "./components/InvoicePage"
 import Bottombar from "./components/Bottombar";
+import './style/common.css'
 //import PublicRoute from "./components/PublicRoute";
 //import PrivateRoute from "./components/PrivateRoute";
 

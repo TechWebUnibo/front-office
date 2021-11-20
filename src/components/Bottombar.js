@@ -1,31 +1,34 @@
 import React from "react";
-import {Col, Container, Row} from "react-bootstrap";
+import {Col, Container, Row, Image} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import "../style/footer.css"
 
 function Bottombar() {
 
     return(
+        <div id="content-wrap">
         <footer>
-            <Container className={"text-center text-lg-start bg-light text-muted"}>
+            <Container className={"text-center text-lg-start bg-light text-muted"} fluid>
                 <Row>
-                    <Col xs={3} className="">
-                        <img src="//site202118.tw.cs.unibo.it/img/logo.eda7be37.png" alt="CATER" style={{height: "25px"}}/>
+                    <Col md={6}>
+                        <Image src="//site202118.tw.cs.unibo.it/img/logo.eda7be37.png" rounded fluid />
                     </Col>
-                    <Col xs={9}>
-                        <Link to={"/contacts"}>Contatti</Link>
-                        <br/>
-                        <Link to={"/contacts"}>Info</Link>
+                    <Col md={6} id="footerLinks" className="p-4">
+                        <ul>
+                            <li><Link to={"/contacts"}>Contatti</Link></li>
+                            <li><Link to={"/info"}>Info</Link></li>
+                        </ul>
                     </Col>
                 </Row>
-
-
-
+                <Row>
+                <div className="text-center p-1">
+                    Powered by
+                    <span className="text-reset fw-bold"> NoloNolo+</span>
+                </div>
+                </Row>
             </Container>
-            <div className="text-center p-1" style={{backgroundColor: "rgba(0, 0, 0, 0.05)"}}>
-                Powered by
-                <span className="text-reset fw-bold"> NoloNolo+</span>
-            </div>
         </footer>
+        </div>
     )
 }
 export default Bottombar
