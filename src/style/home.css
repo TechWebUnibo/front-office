@@ -14,3 +14,11 @@
     border-bottom-right-radius: 10px;
     position: relative;
 }
+@media only screen and (min-width: 768px) {
+    .bckimg {
+        background-position: center;
+
+    }
+}
+
+/*se siamo su uno schermo grande, mostra il backgroud a metà dell'immagine, dove ci sono i fornelli*/
