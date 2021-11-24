@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Topbar from "./components/Topbar";
-import Home from "./Home";
+import Home from "./components/Home";
 import NotFound from "./components/NotFound";
 import Products from "./components/Products";
 import LoginPage from "./components/LoginPage";
