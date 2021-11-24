@@ -6,23 +6,23 @@ import "../style/footer.css"
 function Bottombar() {
 
     return(
-        <footer className="footer">
-            <div className="container p-5">
-                <div className="row">
-                    <div className="col-md-6">
+        <footer className="footer m-0">
+            <Container className="p-5">
+                <Row className="">
+                    <Col md={6} >
                             <ul>
                             <li><Link to={"/manager"}>Manager</Link></li>
                             <li><Link to={"/admin"}>Admin</Link></li>
                             <li><Link to={"/info"}>Info</Link></li>
                         </ul >
-                    </div>
-                    <div className="col-md-6">
+                    </Col>
+                    <Col md={6} >
                         <img src="//site202118.tw.cs.unibo.it/img/logo.eda7be37.png" className="img-fluid" alt="Company Logo" />
-                    </div>
-                </div>
-                <hr />
+                    </Col>
+                </Row>
+                <hr className="my-1"/>
                 <span className="small-text text-muted">Powered by NoloNolo+</span>
-            </div>
+            </Container>
         </footer>
     )
 }
