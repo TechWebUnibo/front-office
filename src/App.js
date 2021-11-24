@@ -101,6 +101,16 @@ function App() {
               <Invoices />
             </Route>
 
+            <Route path='/manager' component={() => {
+              window.location.href = 'https://site202118.tw.cs.unibo.it/management-dashboard';
+              return null;
+            }} />
+
+            <Route path='/admin' component={() => {
+              window.location.href = 'https://site202118.tw.cs.unibo.it/admin';
+              return null;
+            }} />
+
             <Route path="/invoice/:id">
               <InvoicePage />
             </Route>

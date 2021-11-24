@@ -17,7 +17,9 @@ const Topbar = ({loggedIn, setLoginState}) => {
         console.log(notify)
       }
     }
-    getNotify()
+    if (loggedIn){
+      getNotify()
+    }
   },)
 
   return (

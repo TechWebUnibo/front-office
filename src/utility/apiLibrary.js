@@ -527,7 +527,7 @@ export async function getNotifications(id){
     }
     catch (err) {
         console.log(err)
-        return (500, null)
+        return { status: 500, body: undefined }
     }
 }
 

@@ -6,29 +6,25 @@ import "../style/footer.css"
 function Bottombar() {
 
     return(
-        <div id="content-wrap">
-        <footer>
-            <Container className={"text-center text-lg-start bg-light text-muted"} fluid>
-                <Row>
-                    <Col md={6}>
-                        <Image src="//site202118.tw.cs.unibo.it/img/logo.eda7be37.png" rounded fluid />
-                    </Col>
-                    <Col md={6} id="footerLinks" className="p-4">
-                        <ul>
-                            <li><Link to={"/contacts"}>Contatti</Link></li>
+        <footer className="footer">
+            <div className="container p-5">
+                <div className="row">
+                    <div className="col-md-6">
+                            <ul>
+                            <li><Link to={"/manager"}>Manager</Link></li>
+                            <li><Link to={"/admin"}>Admin</Link></li>
                             <li><Link to={"/info"}>Info</Link></li>
-                        </ul>
-                    </Col>
-                </Row>
-                <Row>
-                <div className="text-center p-1">
-                    Powered by
-                    <span className="text-reset fw-bold"> NoloNolo+</span>
+                        </ul >
+                    </div>
+                    <div className="col-md-6">
+                        <img src="//site202118.tw.cs.unibo.it/img/logo.eda7be37.png" className="img-fluid" alt="Company Logo" />
+                    </div>
                 </div>
-                </Row>
-            </Container>
+                <hr />
+                <span className="small-text text-muted">Powered by NoloNolo+</span>
+            </div>
         </footer>
-        </div>
     )
 }
 export default Bottombar
+
