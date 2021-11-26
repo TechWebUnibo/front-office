@@ -24,7 +24,7 @@ const InvoicePagePrintable = React.forwardRef(({prop}, ref) => {
     }, [id])
 
     return (
-        <div ref={ref} className="container">
+        <div ref={ref} id="invoice" className="container">
 
             {isPending &&
             (<Container>

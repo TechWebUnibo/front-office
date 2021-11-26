@@ -2,6 +2,10 @@ import { Card, Row, Col, Button } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import { getProducts } from '../utility/apiLibrary';
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types'
+import DatePicker from "react-datepicker";
+
+import '../style/rental.css'
 
 //possible rent state: not_started, in_progress, delayed, terminated
 
@@ -22,8 +26,8 @@ const RentalCard = (prop) => {
 
     return (
 
-            <Card className="mt-3">
-                <Card.Header>Ordine #{prop.id}</Card.Header>
+            <Card id="rental" className="mt-3">
+                <Card.Header id='rental-id'>Ordine #{prop.id}</Card.Header>
                 <Card.Body>
                     <Row>
                         <Col className="pe-1">
@@ -42,8 +46,8 @@ const RentalCard = (prop) => {
                                 Periodo: {prop.startDate} <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
                                     <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
                                 </svg> {prop.endDate}
-                {(prop.state !== 'terminated' || prop.state !== 'cancelled') && (
-                <Row>
+                {(prop.status === 'not_started') && (
+                <Row className="mt-3">
                     <Col>
                         <Link to={{
                                 pathname: '/productPage',

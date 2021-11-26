@@ -52,6 +52,7 @@ const Rentals = () => {
             window.location.reload(false);
         }
         else{
+            setShow(false)
             setErrorShow(true)
         }
     }
@@ -72,7 +73,7 @@ const Rentals = () => {
 
 
     return(
-        <Container>
+        <Container fluid="sm">
             <h2 className="title">I tuoi noleggi</h2>
             {isPending && (
                 <Container>
@@ -110,6 +111,7 @@ const Rentals = () => {
                                     <option value="not_started">Non iniziato</option>
                                     <option value="started">In corso</option>
                                     <option value="terminated">Terminato</option>
+                                    <option value="delayed">In ritardo</option>
                                     <option value="cancelled">Cancellato</option>
                                 </Form.Select>
                             </Form.Group>
