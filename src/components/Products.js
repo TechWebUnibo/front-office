@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container} from "react-bootstrap";
 import ProductCard from "./ProductCard";
 import { getProducts } from "../utility/apiLibrary";
+import '../style/products.css'
 
 const Products = () => {
 
@@ -20,7 +21,7 @@ const Products = () => {
 
   return (
     <Container>
-      <h2>I nostri gruppi cottura</h2>
+      <h2 className="title">I nostri Prodotti</h2>
       {products.map((product) => (
         <ProductCard product={product} key={product._id} />
       ))}

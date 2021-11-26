@@ -73,7 +73,7 @@ const Rentals = () => {
 
     return(
         <Container>
-            <h2 className="display-2">I tuoi noleggi</h2>
+            <h2 className="title">I tuoi noleggi</h2>
             {isPending && (
                 <Container>
                     <Spinner animation="border" size="m"/>

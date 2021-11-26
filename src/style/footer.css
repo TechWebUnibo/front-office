@@ -3,7 +3,8 @@
     text-align: left;
 }
 footer {
-  position: relative;
+  position: absolute;
+  bottom: 0;
   line-height: 40px;
   margin-top: 2em;
   width: 100%;

@@ -1,3 +1,11 @@
 .description-header{
     font-size: 1.2em;
 }
+#discount {
+    margin: 1em 0em;
+    width: fit-content;
+    font-size: 0.8em;
+}
+#discount p {
+    margin: 0;
+}

@@ -34,7 +34,7 @@ const NotificationPage = () => {
 
     return (
         <Container className="">
-            <h2>Centro notifiche</h2>
+            <h2 className="title">Centro notifiche</h2>
             {isPending &&
             (<Container>
                     <Spinner animation="border" size="m" />
@@ -47,7 +47,7 @@ const NotificationPage = () => {
                     </ListGroup>)
             }
             { !isPending && notifications.length <= 0 &&
-                (<h3>Nessuna notifica</h3>)
+                (<h3 className="sub-title">Nessuna notifica</h3>)
             }
         </Container>
 

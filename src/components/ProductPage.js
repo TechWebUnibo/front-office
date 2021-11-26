@@ -108,8 +108,8 @@ const ProductPage = () => {
     return (
         <Container className="">
             <Button variant="outline-primary" className="my-3" onClick={history.goBack}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" className="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                <path fillRule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
             </svg>
                 {props.backText} </Button>
             <Row>
@@ -127,7 +127,7 @@ const ProductPage = () => {
                         <Alert variant="warning"><Alert.Link as={Link} to="/login" href="/login">Fare Login per verificare la disponibilità</Alert.Link> </Alert>
                     )}
                     {availableAlert}
-
+                    
                     <label htmlFor="start">Inserire un periodo:</label>
                     <DatePicker
                         selectsRange={true}
@@ -144,11 +144,17 @@ const ProductPage = () => {
                         }}
                         withPortal
                     />
-                    <Button variant="primary" className="mt-4" onClick={action} disabled={!isLogged || !available}>
+                    <Row>
+                        <div id="discount">
+                            <p className="small-text">The party does not finish on Sunday! If you rent last also in the week days you will pay this the half!!! </p>
+                        </div>
+                    </Row>
+                    <Button variant="primary" className="" onClick={action} disabled={!isLogged || !available}>
                         {props.confirmText}
                     </Button>
                 </Col>
             </Row>
+
             <Notify
                 show={errorShow}
                 data={{ title: 'Ooops...', text: 'Something gone wrong, please retry later' }}

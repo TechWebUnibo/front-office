@@ -21,7 +21,7 @@ function Invoices() {
 
     return (
         <Container>
-            <h2>Le tue fatture</h2>
+            <h2 className="title">Le tue fatture</h2>
             {isPending &&
             (<Container>
                 <Spinner animation="border" size="m" />
@@ -34,7 +34,7 @@ function Invoices() {
             </ListGroup>) //todo da testare e modificare
             }
             { !isPending && invoices.length <= 0 &&
-            (<h3>Nessuna fattura disponibile</h3>)
+            (<h3 className="sub-title">Nessuna fattura disponibile</h3>)
             }
         </Container>
 

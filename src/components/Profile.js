@@ -49,7 +49,7 @@ const Profile = () => {
 
     return (
         <Container>
-            <h2 className="display-2">
+            <h2 className="title">
                 Profilo
                 </h2>
             {!loading ?

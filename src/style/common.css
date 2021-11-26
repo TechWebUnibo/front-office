@@ -1,4 +1,18 @@
-@import url('https://fonts.googleapis.com/css?family=Poppins');
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+.title {
+    margin: 0.5em 1em 1em;
+    text-align: center;
+    font-size: 2em;
+    font-family: poppins;
+}
+
+.sub-title {
+    margin: 1em 1em;
+    text-align: left;
+    font-size: 1em;
+    font-family: poppins;
+}
 
 .content{
   font-family: poppins;

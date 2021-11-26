@@ -46,7 +46,7 @@ const Dashboard = () =>{
 
     return(
         <Container>
-            <h2>Welcome {customer.username}</h2>
+            <h2 className="title">Welcome {customer.username}</h2>
             <Row xs={1} md={2} className="g-4 my-2">
                 {cards.map((card) => (
                     <Col key={card.title}>
