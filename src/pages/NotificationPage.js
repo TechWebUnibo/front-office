@@ -35,7 +35,7 @@ const NotificationPage = () => {
 
 
     return (
-        <Container className="">
+        <Container className="containerSM">
             <h2 className="title">Centro notifiche</h2>
             {notificationNumber>1 && (
                 <h3>Hai {notificationNumber} notifche da leggere</h3>

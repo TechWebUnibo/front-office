@@ -20,7 +20,7 @@ function Invoices() {
     }, [])
 
     return (
-        <Container>
+        <Container className="containerSM">
             <h2 className="title">Le tue fatture</h2>
             {isPending &&
             (<Container>

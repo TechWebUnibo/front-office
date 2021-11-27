@@ -11,16 +11,17 @@ const ConfirmPage = () => {
 
 
     return (
-        <Container>
-            <h2>Thank for you purchase!</h2>
-            <p>Your order has been registered:</p>
-            <ListGroup>
+        <Container className="containerSM">
+            <h2 className="title">Thank for your purchase!</h2>
+            <h3 className="sub-title">Your order has been registered:</h3>
+            <ListGroup id="rental-overall">
+                <ListGroup.Item>Rental id: {rental._id}</ListGroup.Item>
                 <ListGroup.Item>Product: {productName}</ListGroup.Item>
                 <ListGroup.Item>Price: {rental.price}€</ListGroup.Item>
                 <ListGroup.Item>Start: {rental.start.split('T')[0]}</ListGroup.Item>
                 <ListGroup.Item>End: {rental.end.split('T')[0]}</ListGroup.Item>
             </ListGroup>
-            <p className='mt-2'>You can still modify your order in your <Link to="/dashboard">dashboard</Link></p>
+            <p className='mt-2'>You can still modify your order in your <Link to="/dashboard" classNmae="underlined">dashboard</Link></p>
         </Container>
     )
 }

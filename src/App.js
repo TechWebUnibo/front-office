@@ -126,8 +126,8 @@ function App() {
             </Route>
 
           </Switch>
+          <Bottombar/>
         </div>
-        <Bottombar/>
       </div>
     </Router>
   );

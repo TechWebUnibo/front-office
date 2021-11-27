@@ -22,7 +22,7 @@ const Products = () => {
   }, []);
 
   return (
-    <Container>
+    <Container className="containerSM">
       <h2 className="title">I nostri Prodotti</h2>
       {products.map((product) => (
         <ProductCard product={product} key={product._id} />

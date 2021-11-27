@@ -89,21 +89,16 @@ const Rentals = () => {
             )}
             {!isPending &&
                 (<Form>
-                        <Row className="mb-3">
+                <Row className="mb-3 justify-content-center" align="center">
                             <Form.Group as={Col} md={3} controlId="id-filter">
                                 <Form.Label>Id</Form.Label>
                                 <Form.Control type="text" value={idFilter} onChange={(e) => setIdFilter(e.target.value)} placeholder="Filter by id" />
                             </Form.Group>
-                        </Row>
 
-                        <Row>
                             <Form.Group as={Col} md={3} className="mb-3" controlId="product-filter">
                                 <Form.Label>Nome del prodotto</Form.Label>
                                 <Form.Control value={productFilter} onChange={(e) => setProductFilter(e.target.value)} placeholder="Filter by product name"  />
                             </Form.Group>
-                        </Row>
-
-                        <Row>
                             <Form.Group as={Col} md={3} className="mb-3" controlId="product-filter">
                                 <Form.Label>Filtra per stato</Form.Label>
                                 <Form.Select aria-label="State filter" value={stateFilter}
@@ -121,9 +116,11 @@ const Rentals = () => {
                     )
                 }
             {!isPending &&
+                <Container className="containerSM"> {
                 rentalsFilter().map((rental) => {
                     return <RentalCard alt="Product image" deleteRental={deleteTrigger} id={rental._id} name={rental.productType} img={rental.img} price={rental.price} startDate={rental.start.split('T')[0]} endDate={rental.end.split('T')[0]} status={rental.state} key={rental._id}/>
-                })
+                })}
+            </Container>
             }
             <Notify
                 show={errorShow}
