@@ -9,6 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 const NotificationPage = () => {
 
     const [notifications, setNotifications] = useState([])
+    const [notificationNumber, setNotificationNumber] = useState(0)
     const [isPending, setIsPending] = useState(true);
 
     const history = useHistory();
@@ -17,6 +18,7 @@ const NotificationPage = () => {
         const fetchNotifications = async () =>{
             const {status, body} = await getNotifications(await getUser())
             if(status === 200){
+                setNotificationNumber(body.length);
                 setNotifications(body)
                 setIsPending(false)
             }
@@ -35,14 +37,24 @@ const NotificationPage = () => {
     return (
         <Container className="">
             <h2 className="title">Centro notifiche</h2>
+            {notificationNumber>1 && (
+                <h3>Hai {notificationNumber} notifche da leggere</h3>
+            )}
+            {notificationNumber===1 && (
+                <h3>Hai {notificationNumber} notifca da leggere</h3>
+            )}
+            {notificationNumber===0 && (
+                <h3>Nessuna nuova notifica</h3>
+            )}
             {isPending &&
             (<Container>
                     <Spinner animation="border" size="m" />
                 </Container>)
             }
             {!isPending && notifications.length >0 &&
-                (<ListGroup>
+                (<ListGroup className="my-2">
                         {notifications.map((notification) => {
+                            console.log(notification);
                             return (<ListGroup.Item key={ notification._id } > {notification.rent} </ListGroup.Item>);})}
                     </ListGroup>)
             }
