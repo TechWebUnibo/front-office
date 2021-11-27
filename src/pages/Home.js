@@ -1,7 +1,8 @@
-import "../style/home.css"
 import React from "react";
 import {Button, Container} from "react-bootstrap";
 import {Link} from "react-router-dom";
+
+import "../style/home.css"
 
 const Home = () => {
     return (

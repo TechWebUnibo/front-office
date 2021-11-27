@@ -1,9 +1,9 @@
 import {Row, Col, Form, Button, Container, Image, Spinner } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
 import { getCustomer, getUser, modifyCustomer } from '../utility/apiLibrary'
-import Notify from './Notify'
 import { useHistory } from 'react-router'
 
+import Notify from '../components/Notify'
 
 const Profile = () => {
 

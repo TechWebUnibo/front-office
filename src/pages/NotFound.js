@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
+
 const NotFound = () => {
   return (
     <Container style={{ minHeight: "90vh" }}>

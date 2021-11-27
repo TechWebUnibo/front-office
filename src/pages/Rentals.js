@@ -1,8 +1,9 @@
 import {Container, Button, Spinner, Form, Col, Row, Modal} from 'react-bootstrap'
-import RentalCard from './RentalCard';
 import { deleteRental, getRentals, getUser } from '../utility/apiLibrary'
 import { useState, useEffect } from 'react';
-import Notify from './Notify'
+
+import RentalCard from '../components/RentalCard';
+import Notify from '../components/Notify'
 
 const Rentals = () => {
     const [isPending, setIsPending] = useState(true);

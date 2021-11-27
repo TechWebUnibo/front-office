@@ -3,6 +3,7 @@ import {Button, Container, Spinner, Row, Col, Alert} from "react-bootstrap";
 import {useParams} from "react-router-dom";
 import {useReactToPrint} from 'react-to-print';
 import {getInvoices, getUser} from "../utility/apiLibrary";
+
 import '../style/common.css';
 import '../style/invoicePage.css';
 

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {Container, ListGroup, Spinner} from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { checkNotification, getNotifications, getUser } from "../utility/apiLibrary";
 
 import "../style/ProductPage.css"
 import "react-datepicker/dist/react-datepicker.css";
-import { checkNotification, getNotifications, getUser } from "../utility/apiLibrary";
 
 const NotificationPage = () => {
 

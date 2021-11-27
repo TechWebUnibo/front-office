@@ -48,7 +48,7 @@ const Topbar = ({loggedIn, setLoginState}) => {
                 <NavDropdown.Item as={Link} to="/notifications" href='/notifications' className="shadow-link-gray">
                     Notifiche
                   { notify > 0 &&
-                    <Badge pill bg="danger">
+                    <Badge className="mx-1" pill bg="danger">
                       {notify}
                     </Badge>
                   }

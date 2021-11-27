@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Container} from "react-bootstrap";
-import ProductCard from "./ProductCard";
 import { getProducts } from "../utility/apiLibrary";
+
 import '../style/products.css'
+
+import ProductCard from "../components/ProductCard";
 
 const Products = () => {
 

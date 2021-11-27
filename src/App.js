@@ -1,23 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Topbar from "./components/Topbar";
-import Home from "./components/Home";
-import NotFound from "./components/NotFound";
-import Products from "./components/Products";
-import LoginPage from "./components/LoginPage";
-import SignupPage from "./components/SignupPage";
 import { isLogged, logout } from "./utility/apiLibrary";
-import ProductPage from "./components/ProductPage";
-import ConfirmPage from "./components/ConfirmPage";
-import Dashboard from "./components/Dashboard";
-import Profile from "./components/Profile";
-import Rentals from "./components/Rentals"
-import NotificationPage from "./components/NotificationPage"
-import Invoices from "./components/Invoices"
-import InvoicePage from "./components/InvoicePage"
-import Bottombar from "./components/Bottombar";
+
+import "bootstrap/dist/css/bootstrap.min.css";
 import './style/common.css'
+
+import Topbar from "./components/Topbar";
+import Bottombar from "./components/Bottombar";
+
+
+import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
+import Products from "./pages/Products";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+import ProductPage from "./pages/ProductPage";
+import ConfirmPage from "./pages/ConfirmPage";
+import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
+import Rentals from "./pages/Rentals"
+import NotificationPage from "./pages/NotificationPage"
+import Invoices from "./pages/Invoices"
+import InvoicePage from "./pages/InvoicePage"
+
+
 //import PublicRoute from "./components/PublicRoute";
 //import PrivateRoute from "./components/PrivateRoute";
 

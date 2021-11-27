@@ -3,8 +3,10 @@ import { Link, useHistory } from "react-router-dom";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { useState } from "react";
 import { createCustomer } from "../utility/apiLibrary"
-import Notify from './Notify';
 // import { apiRegister } from "../utility/apiLibrary.js";
+
+import Notify from '../components/Notify';
+
 
 const SignupPage = ({ setLoginState }) => {
   const [error, setError] = useState(false);

@@ -3,12 +3,13 @@ import { Container, Row, Col, Image, Button, Alert } from "react-bootstrap";
 import { useLocation } from "react-router";
 import DatePicker from "react-datepicker";
 import { useHistory, Link } from "react-router-dom";
+import { createRent, getAvailability, getUser, modifyRent } from "../utility/apiLibrary";
 
 import "../style/ProductPage.css"
 import "react-datepicker/dist/react-datepicker.css";
-import { createRent, getAvailability, getUser, modifyRent } from "../utility/apiLibrary";
-import Notify from "./Notify";
-import Explainer from "./Explainer";
+
+import Notify from "../components/Notify";
+import Explainer from "../components/Explainer";
 
 const ProductPage = () => {
 
