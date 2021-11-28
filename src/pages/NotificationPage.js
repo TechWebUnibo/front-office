@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {Container, ListGroup, Spinner} from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { Container, ListGroup, Spinner } from "react-bootstrap";
+import { useHistory, Link } from "react-router-dom";
 import { checkNotification, getNotifications, getUser } from "../utility/apiLibrary";
 
 import "../style/ProductPage.css"
 import "react-datepicker/dist/react-datepicker.css";
+import NotificationItem from "../components/NotificationItem";
 
 const NotificationPage = () => {
 
@@ -15,9 +16,9 @@ const NotificationPage = () => {
     const history = useHistory();
 
     useEffect(() => {
-        const fetchNotifications = async () =>{
-            const {status, body} = await getNotifications(await getUser())
-            if(status === 200){
+        const fetchNotifications = async () => {
+            const { status, body } = await getNotifications(await getUser())
+            if (status === 200) {
                 setNotificationNumber(body.length);
                 setNotifications(body)
                 setIsPending(false)
@@ -26,9 +27,9 @@ const NotificationPage = () => {
         fetchNotifications()
     }, [])
 
-    async function deleteNotification(id){
-        const {status} = await checkNotification(id)
-        if(status === 200){
+    async function deleteNotification(id) {
+        const { status } = await checkNotification(id)
+        if (status === 200) {
             window.location.reload(false)
         }
     }
@@ -37,28 +38,29 @@ const NotificationPage = () => {
     return (
         <Container className="">
             <h2 className="title">Centro notifiche</h2>
-            {notificationNumber>1 && (
-                <h3>Hai {notificationNumber} notifche da leggere</h3>
+            {notificationNumber > 1 && (
+                <h3 className="sub-title">Hai {notificationNumber} notifche da leggere</h3>
             )}
-            {notificationNumber===1 && (
-                <h3>Hai {notificationNumber} notifca da leggere</h3>
+            {notificationNumber === 1 && (
+                <h3 className="sub-title">Hai {notificationNumber} notifca da leggere</h3>
             )}
-            {notificationNumber===0 && (
-                <h3>Nessuna nuova notifica</h3>
+            {notificationNumber === 0 && (
+                <h3 className="sub-title">Nessuna nuova notifica</h3>
             )}
             {isPending &&
-            (<Container>
+                (<Container>
                     <Spinner animation="border" size="m" />
                 </Container>)
             }
-            {!isPending && notifications.length >0 &&
+            {!isPending && notifications.length > 0 &&
                 (<ListGroup className="my-2">
-                        {notifications.map((notification) => {
-                            console.log(notification);
-                            return (<ListGroup.Item key={ notification._id } > {notification.rent} </ListGroup.Item>);})}
-                    </ListGroup>)
+                    {notifications.map((notification) => {
+                        console.log(notification);
+                        return (<NotificationItem notification={notification}/>);
+                    })}
+                </ListGroup>)
             }
-            { !isPending && notifications.length <= 0 &&
+            {!isPending && notifications.length <= 0 &&
                 (<h3 className="sub-title">Nessuna notifica</h3>)
             }
         </Container>
