@@ -3,7 +3,7 @@ import { Container, Row, Col, Image, Button, Alert } from "react-bootstrap";
 import { useLocation } from "react-router";
 import DatePicker from "react-datepicker";
 import { useHistory, Link } from "react-router-dom";
-import { createRent, getAvailability, getUser, modifyRent } from "../utility/apiLibrary";
+import {createRent, getAvailability, getUser, isLogged, modifyRent} from "../utility/apiLibrary";
 
 import "../style/ProductPage.css"
 import "react-datepicker/dist/react-datepicker.css";
@@ -18,7 +18,7 @@ const ProductPage = () => {
     const [products, setProducts] = useState([])
     const [price, setPrice] = useState(NaN)
     const [available, setAvailable] = useState(false)
-    const [isLogged, setisLogged] = useState(true)
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     // Modal control for error
     const [errorShow, setErrorShow] = useState(false);
@@ -26,7 +26,7 @@ const ProductPage = () => {
     const location = useLocation()
     const { props, product } = location.state
 
-    let availableAlert = isLogged ? (<Alert variant={available ? 'success' : 'danger'}>Questo prodotto è <Alert.Link as={"span"}>{available ? 'dispnibile' : 'non disponibile'}</Alert.Link></Alert>) : ''
+    let availableAlert = isLoggedIn ? (<Alert variant={available ? 'success' : 'danger'}>Questo prodotto è <Alert.Link as={"span"}>{available ? 'dispnibile' : 'non disponibile'}</Alert.Link></Alert>) : ''
 
     useEffect(() => {
         async function refreshPrice() {
@@ -43,19 +43,26 @@ const ProductPage = () => {
                     setPrice(res.price)
                     if (typeof res.available !== 'undefined') {
                         setAvailable(res.available)
-                        setisLogged(true)
+                        setIsLoggedIn(true)
                         setProducts(res.products)
                     }
                     else {
-                        setisLogged(false)
+                        setIsLoggedIn(false)
                     }
                 }
             }
+            console.log(isLoggedIn)
+            //setIsLoggedIn(await isLogged())
         }
         const refresh = async () => {
             await refreshPrice()
         }
         refresh()
+
+        /*const checkLogin = async() =>{
+            setIsLoggedIn(await isLogged())
+        }
+        checkLogin();*/
     }, [startDate, endDate, product, props.rentId])
 
     async function rentProduct() {
@@ -120,11 +127,11 @@ const ProductPage = () => {
                 <Col sm lg={8}>
                     <h2>{product.name}</h2>
                     <p>{product.description}</p>
-                    {(!isLogged || available) && (<Alert variant="info">
+                    {(!isLoggedIn || available) && (<Alert variant="info">
                         A partire da:   <Alert.Link as={"span"}>{price}€ </Alert.Link>
                         <Explainer message={message} title={title}/>
                     </Alert>)}
-                    {!isLogged && (
+                    {!isLoggedIn && (
                         <Alert variant="warning"><Alert.Link as={Link} to="/login" href="/login">Fare Login per verificare la disponibilità</Alert.Link> </Alert>
                     )}
                     {availableAlert}
@@ -150,7 +157,7 @@ const ProductPage = () => {
                             <p className="small-text">The party does not finish on Sunday! If you rent last also in the week days you will pay this the half!!! </p>
                         </div>
                     </Row>
-                    <Button variant="primary" className="" onClick={action} disabled={!isLogged || !available}>
+                    <Button variant="primary" className="" onClick={action} disabled={!isLoggedIn || !available}>
                         {props.confirmText}
                     </Button>
                 </Col>

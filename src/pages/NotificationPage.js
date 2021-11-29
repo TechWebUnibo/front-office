@@ -54,7 +54,6 @@ const NotificationPage = () => {
             {!isPending && notifications.length >0 &&
                 (<ListGroup className="my-2">
                         {notifications.map((notification) => {
-                            console.log(notification);
                             return (<ListGroup.Item key={ notification._id } > {notification.rent} </ListGroup.Item>);})}
                     </ListGroup>)
             }
