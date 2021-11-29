@@ -113,7 +113,7 @@ function App() {
             }} />
 
             <Route path='/admin' component={() => {
-              window.location.href = 'https://site202118.tw.cs.unibo.it/admin';
+              window.location.href = 'https://site202118.tw.cs.unibo.it/admin/Home.html';
               return null;
             }} />
 
