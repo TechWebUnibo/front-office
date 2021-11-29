@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 import { isLogged, logout } from "./utility/apiLibrary";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -76,35 +76,35 @@ function App() {
             </Route>
 
             <Route path="/login">
-              <LoginPage setLoginState={setLoginState}/>
+              {loggedIn ? <Redirect to="/dashboard" /> : <LoginPage setLoginState={setLoginState}/>}
             </Route>
 
             <Route path="/signup">
-              <SignupPage setLoginState={setLoginState}/>
+              {loggedIn ? <Redirect to="/dashboard" /> : <SignupPage setLoginState={setLoginState}/>}
             </Route>
 
             <Route path="/confirm">
-              <ConfirmPage setLoginState={setLoginState}/>
+              {!loggedIn ? <Redirect to="/login" /> : <ConfirmPage setLoginState={setLoginState}/>}
             </Route>
 
             <Route path="/profile">
-              <Profile setLoginState={setLoginState}/>
+              {!loggedIn ? <Redirect to="/login" /> : <Profile setLoginState={setLoginState}/>}
             </Route>
 
             <Route path="/dashboard">
-              <Dashboard setLoginState={setLoginState}/>
+              {!loggedIn ? <Redirect to="/login" /> : <Dashboard setLoginState={setLoginState}/>}
             </Route>
 
             <Route path="/rentals">
-              <Rentals/>
+              {!loggedIn ? <Redirect to="/login" /> : <Rentals/>}
             </Route>
 
             <Route path="/notifications">
-              <NotificationPage />
+              {!loggedIn ? <Redirect to="/login" /> : <NotificationPage />}
             </Route>
 
             <Route path="/invoices">
-              <Invoices />
+              {!loggedIn ? <Redirect to="/login" /> : <Invoices />}
             </Route>
 
             <Route path='/manager' component={() => {
@@ -118,7 +118,7 @@ function App() {
             }} />
 
             <Route path="/invoice/:id">
-              <InvoicePage />
+              {!loggedIn ? <Redirect to="/login" /> : <InvoicePage />}
             </Route>
 
             <Route path="*">
