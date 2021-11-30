@@ -30,7 +30,7 @@ const ProductPage = () => {
 
     useEffect(() => {
         async function refreshPrice() {
-            if (Date.parse(startDate) < new Date().setHours(23, 59, 59)) {
+            if (Date.parse(startDate) < new Date().setHours(0, 0, 1)) {
                 setAvailable(false)
             }
             else {
