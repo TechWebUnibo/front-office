@@ -6,6 +6,8 @@ import { checkNotification, getNotifications, getUser } from "../utility/apiLibr
 import "../style/ProductPage.css"
 import "react-datepicker/dist/react-datepicker.css";
 
+import NotificationItem from "../components/NotificationItem";
+
 const NotificationPage = () => {
 
     const [notifications, setNotifications] = useState([])
@@ -54,7 +56,7 @@ const NotificationPage = () => {
             {!isPending && notifications.length >0 &&
                 (<ListGroup className="my-2">
                         {notifications.map((notification) => {
-                            return (<ListGroup.Item key={ notification._id } > {notification.rent} </ListGroup.Item>);})}
+                            return (<NotificationItem notification={notification}/>);})}
                     </ListGroup>)
             }
             { !isPending && notifications.length <= 0 &&
