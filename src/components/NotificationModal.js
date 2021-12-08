@@ -2,22 +2,25 @@ import { useState, React, useEffect } from "react";
 import {Modal, Button} from "react-bootstrap";
 
 
-function NotificationModal({show, setShow, notification}) {
+function NotificationModal({show, setShow, notification, operationOnClosingModal}) {
 
     //const [show, setShow] = useState(false);
 
     const handleClose = () => {
         setShow(false)
-        //setTemp(false);
+        operationOnClosingModal(false)
     } 
     const handleShow = () => setShow(true);
 
     function handleNotRead() {
+        operationOnClosingModal(true)
         //APIMarkAsNotRead
+        setShow(false)
     }
 
     function handleDelete() {
         //APIDeleteNotification(notificationID)
+        setShow(false)
     }
 
     useEffect(() => {

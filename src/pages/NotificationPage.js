@@ -15,15 +15,24 @@ const NotificationPage = () => {
 
     const history = useHistory();
 
-    useEffect(() => {
-        const fetchNotifications = async () => {
-            const { status, body } = await getNotifications(await getUser())
-            if (status === 200) {
-                setNotificationNumber(body.length);
-                setNotifications(body)
-                setIsPending(false)
-            }
+    async function fetchNotifications() {
+        const { status, body } = await getNotifications(await getUser())
+        if (status === 200) {
+            setNotificationNumber(body.length);
+            setNotifications(body)
+            setIsPending(false)
         }
+    }
+
+    useEffect(() => {
+        // const fetchNotifications = async () => {
+        //     const { status, body } = await getNotifications(await getUser())
+        //     if (status === 200) {
+        //         setNotificationNumber(body.length);
+        //         setNotifications(body)
+        //         setIsPending(false)
+        //     }
+        // }
         fetchNotifications()
     }, [])
 
@@ -33,6 +42,8 @@ const NotificationPage = () => {
             window.location.reload(false)
         }
     }
+
+    
 
 
     return (
@@ -55,7 +66,7 @@ const NotificationPage = () => {
             {!isPending && notifications.length > 0 &&
                 (<ListGroup className="my-2">
                         {notifications.map((notification) => {
-                            return (<NotificationItem notification={notification}/>);})}
+                            return (<NotificationItem notification={notification} updatePage={fetchNotifications}/>);})}
                     </ListGroup>)
             }
             {!isPending && notifications.length <= 0 &&

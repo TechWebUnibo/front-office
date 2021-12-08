@@ -5,21 +5,26 @@ import NotificationModal from "./NotificationModal";
 
 import "../style/NotificationItem.css"
 
-function NotificationItem({ notification }) {
+function NotificationItem({ notification, updatePage }) {
 
     const [showModal, setShowModal] = useState(false)
+    const [opened, setOpened] = useState(notification.checked)
 
     function handleShowModal() {
         //codice per dire al backend che la notifica è stata letta
         setShowModal(true)
+        updatePage()
     }
 
-    console.log(notification)
+    function handleCloseModal( keepAsNotRead ) {
+        if(!keepAsNotRead && !opened)
+        setOpened(true)
+    }
 
     return (
         <>
             <ListGroup.Item action onClick={handleShowModal} key={notification._id} className="ps-3 pe-2">
-                {!notification.checked && (
+                {!opened && (
                     <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
                         className="bi bi-envelope-fill me-2 text-primary" viewBox="0 0 16 16">
                         <path
@@ -27,7 +32,7 @@ function NotificationItem({ notification }) {
                     </svg>
                 )}
 
-                {notification.checked && (
+                {opened && (
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         className="bi bi-envelope-open me-2 " viewBox="0 0 16 16">
                         <path
@@ -39,7 +44,7 @@ function NotificationItem({ notification }) {
                 <br />
                 <small className="secondary-text">{notification.date}</small>
             </ListGroup.Item>
-            <NotificationModal show={showModal} setShow={setShowModal} notification={notification} />
+            <NotificationModal show={showModal} setShow={setShowModal} notification={notification} operationOnClosingModal={handleCloseModal} />
         </>
     )
 }
