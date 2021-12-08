@@ -46,7 +46,7 @@ function NotificationModal({show, setShow, notification, operationOnClosingModal
             <Button variant="secondary" onClick={handleClose}>
               Chiudi
             </Button>
-            <Button variant="primary" onClick={handleNotRead}>Mantieni come non letta</Button>
+            {!notification.cheked && ( <Button variant="primary" onClick={handleNotRead}>Mantieni come non letta</Button> )}
             <Button variant="danger" onClick={handleDelete}>Elimina</Button>
           </Modal.Footer>
         </Modal>
