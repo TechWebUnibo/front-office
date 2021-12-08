@@ -12,7 +12,7 @@ const ProductCard = ({product}) => {
           </div>
           <div className="col-8">
             <div className="card-body">
-              <h5 className="card-title">Card title</h5>
+              <h5 className="card-title">{product.name}</h5>
                 <Card.Text>{product.description}</Card.Text>
                 <Link to={{
                   pathname: '/productPage',
@@ -25,7 +25,7 @@ const ProductCard = ({product}) => {
                     product: product,
                   }}}
                   className="shadow-link-gray">
-                <Button>Vai a prodotto</Button>
+                <Button>Vai al prodotto</Button>
               </Link>
             </div>
           </div>

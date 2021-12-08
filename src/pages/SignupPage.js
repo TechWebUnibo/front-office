@@ -70,7 +70,7 @@ const SignupPage = ({ setLoginState }) => {
   }; 
 
   return (
-      <Container>
+    <Container className="containerSM">
         <p className="display-2">Registrati</p>
         <Form className="my-3 mx-2" onSubmit={signup}>
           <Row>
@@ -181,14 +181,14 @@ const SignupPage = ({ setLoginState }) => {
             />
           </Form.Group>
 
-          <div className="text-center">
+          <div className="text-left">
             <Button variant="primary" type="submit" >
-              {!isPending && <span>Submit</span>}
-              {isPending && <span>Loading</span>}
+              {!isPending && <span>Registrati</span>}
+              {isPending && <span>Loading...</span>}
             </Button>
           </div>
         </Form>
-        <Link to="/login">hai già un account? Fai Log in</Link>
+        <Link to="/login">Hai già un account? Fai Log in</Link>
         <Notify
           show={errorShow}
           data={{ title: 'Ooops...', text: 'Something gone wrong, please retry later' }}

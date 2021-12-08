@@ -7,6 +7,8 @@ import "../style/ProductPage.css"
 import "react-datepicker/dist/react-datepicker.css";
 import NotificationItem from "../components/NotificationItem";
 
+import NotificationItem from "../components/NotificationItem";
+
 const NotificationPage = () => {
 
     const [notifications, setNotifications] = useState([])
@@ -36,7 +38,7 @@ const NotificationPage = () => {
 
 
     return (
-        <Container className="">
+        <Container className="containerSM">
             <h2 className="title">Centro notifiche</h2>
             {notificationNumber > 1 && (
                 <h3 className="sub-title">Hai {notificationNumber} notifche da leggere</h3>
@@ -54,11 +56,9 @@ const NotificationPage = () => {
             }
             {!isPending && notifications.length > 0 &&
                 (<ListGroup className="my-2">
-                    {notifications.map((notification) => {
-                        console.log(notification);
-                        return (<NotificationItem notification={notification}/>);
-                    })}
-                </ListGroup>)
+                        {notifications.map((notification) => {
+                            return (<NotificationItem notification={notification}/>);})}
+                    </ListGroup>)
             }
             {!isPending && notifications.length <= 0 &&
                 (<h3 className="sub-title">Nessuna notifica</h3>)

@@ -48,10 +48,13 @@ const Profile = () => {
     };
 
     return (
-        <Container>
+        <Container className="containerSM">
             <h2 className="title">
                 Profilo
                 </h2>
+            <h3 className="sub-title">
+                Modifica le tue informazioni
+                </h3>
             {!loading ?
                 (<Form onSubmit={updateCustomer}>
                     <Form.Group as={Row} className="mb-3 align-content-center" controlId="username">
