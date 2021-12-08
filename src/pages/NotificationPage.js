@@ -7,8 +7,6 @@ import "../style/ProductPage.css"
 import "react-datepicker/dist/react-datepicker.css";
 import NotificationItem from "../components/NotificationItem";
 
-import NotificationItem from "../components/NotificationItem";
-
 const NotificationPage = () => {
 
     const [notifications, setNotifications] = useState([])
