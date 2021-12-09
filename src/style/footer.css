@@ -3,7 +3,7 @@
     text-align: left;
 }
 footer {
-  position: absolute;
+  /* position: absolute; */
   bottom: 0;
   line-height: 40px;
   margin-top: 2em;
