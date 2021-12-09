@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Container, ListGroup, Spinner } from "react-bootstrap";
-import { useHistory, Link } from "react-router-dom";
 import { checkNotification, getNotifications, getUser } from "../utility/apiLibrary";
 
 import "../style/ProductPage.css"
 import "react-datepicker/dist/react-datepicker.css";
+
 import NotificationItem from "../components/NotificationItem";
 
 const NotificationPage = () => {
@@ -12,8 +12,6 @@ const NotificationPage = () => {
     const [notifications, setNotifications] = useState([])
     const [notificationNumber, setNotificationNumber] = useState(0)
     const [isPending, setIsPending] = useState(true);
-
-    const history = useHistory();
 
     async function fetchNotifications() {
         const { status, body } = await getNotifications(await getUser())
@@ -25,14 +23,6 @@ const NotificationPage = () => {
     }
 
     useEffect(() => {
-        // const fetchNotifications = async () => {
-        //     const { status, body } = await getNotifications(await getUser())
-        //     if (status === 200) {
-        //         setNotificationNumber(body.length);
-        //         setNotifications(body)
-        //         setIsPending(false)
-        //     }
-        // }
         fetchNotifications()
     }, [])
 
@@ -42,9 +32,6 @@ const NotificationPage = () => {
             window.location.reload(false)
         }
     }
-
-    
-
 
     return (
         <Container className="containerSM">

@@ -1,16 +1,13 @@
-import { useState, React, useEffect } from "react";
+import { React, useEffect } from "react";
 import {Modal, Button} from "react-bootstrap";
 
 
 function NotificationModal({show, setShow, notification, operationOnClosingModal}) {
 
-    //const [show, setShow] = useState(false);
-
     const handleClose = () => {
         setShow(false)
         operationOnClosingModal(false)
     } 
-    const handleShow = () => setShow(true);
 
     function handleNotRead() {
         operationOnClosingModal(true)

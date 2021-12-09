@@ -72,7 +72,7 @@ function App() {
             </Route>
 
             <Route path="/productPage">
-              <ProductPage />
+              <ProductPage loggedIn={loggedIn}/>
             </Route>
 
             <Route path="/login">

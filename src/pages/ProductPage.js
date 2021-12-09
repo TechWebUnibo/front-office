@@ -3,7 +3,7 @@ import { Container, Row, Col, Image, Button, Alert } from "react-bootstrap";
 import { useLocation } from "react-router";
 import DatePicker from "react-datepicker";
 import { useHistory, Link } from "react-router-dom";
-import {createRent, getAvailability, getUser, isLogged, modifyRent} from "../utility/apiLibrary";
+import {createRent, getAvailability, getUser, modifyRent} from "../utility/apiLibrary";
 
 import "../style/ProductPage.css"
 import "react-datepicker/dist/react-datepicker.css";
@@ -11,14 +11,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import Notify from "../components/Notify";
 import Explainer from "../components/Explainer";
 
-const ProductPage = () => {
+const ProductPage = ({loggedIn}) => {
 
     const [dateRange, setDateRange] = useState([new Date(), new Date()]);
     const [startDate, endDate] = dateRange;
     const [products, setProducts] = useState([])
     const [price, setPrice] = useState(NaN)
     const [available, setAvailable] = useState(false)
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [isLoggedIn, setIsLoggedIn] = useState(loggedIn)
 
     // Modal control for error
     const [errorShow, setErrorShow] = useState(false);
@@ -29,6 +29,7 @@ const ProductPage = () => {
     let availableAlert = isLoggedIn ? (<Alert variant={available ? 'success' : 'danger'}>Questo prodotto è <Alert.Link as={"span"}>{available ? 'dispnibile' : 'non disponibile'}</Alert.Link></Alert>) : ''
 
     useEffect(() => {
+        setIsLoggedIn(loggedIn)
         async function refreshPrice() {
             if (Date.parse(startDate) < new Date().setHours(0, 0, 1)) {
                 setAvailable(false)
@@ -52,18 +53,12 @@ const ProductPage = () => {
                 }
             }
             console.log(isLoggedIn)
-            //setIsLoggedIn(await isLogged())
         }
         const refresh = async () => {
             await refreshPrice()
         }
         refresh()
-
-        /*const checkLogin = async() =>{
-            setIsLoggedIn(await isLogged())
-        }
-        checkLogin();*/
-    }, [startDate, endDate, product, props.rentId])
+    }, [startDate, endDate, product, props.rentId, isLoggedIn, loggedIn])
 
     async function rentProduct() {
         let { status, body } = await createRent(await getUser(), startDate, endDate, price, products, product._id)
@@ -158,7 +153,7 @@ const ProductPage = () => {
                         </div>
                     </Row>
                     <Button variant="primary" className="" onClick={action} disabled={!isLoggedIn || !available}>
-                        {props.confirmText}
+                        {isLoggedIn ? props.confirmText : "Login necessario"}
                     </Button>
                 </Col>
             </Row>

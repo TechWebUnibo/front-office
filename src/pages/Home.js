@@ -17,7 +17,7 @@ const Home = () => {
                     </h1>
                 </div>
                 <Container fluid className="mh-100 ps-2 ps-md-5">
-                    <div className="row align-items-end" style={{ height: "250px" }}>
+                    <div className="row align-items-end button-div">
                         <div className="col-12 text-center flex-grow-1">
                             <Link to="/products">
                                 <Button><p className="display-6 mb-0">Fai un preventivo</p></Button>
