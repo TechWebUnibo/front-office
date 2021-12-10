@@ -2,13 +2,17 @@ import { Container, ListGroup } from "react-bootstrap";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 
+import seo from "../utility/dynamicPageTitle";
 
 const ConfirmPage = () => {
+
     const location = useLocation()
     const { rental, productName } = location.state
 
     console.log(location.state)
-
+    
+    //Dynamic page title
+    seo({title : 'Conferma ordine '+rental._id+' | Cater', metaDescription : 'La conferma per il tuo ordine'})
 
     return (
         <Container className="containerSM">

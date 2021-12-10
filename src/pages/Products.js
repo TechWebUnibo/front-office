@@ -5,8 +5,12 @@ import { getProducts } from "../utility/apiLibrary";
 import '../style/products.css'
 
 import ProductCard from "../components/ProductCard";
+import seo from "../utility/dynamicPageTitle";
 
 const Products = () => {
+
+  //Dynamic page title
+  seo({title : 'Prodotti | Cater', metaDescription : 'I nostri prodotti'})
 
   const [products, setProducts] = useState([])
 

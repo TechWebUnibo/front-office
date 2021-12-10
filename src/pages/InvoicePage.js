@@ -7,6 +7,8 @@ import {getInvoices, getUser} from "../utility/apiLibrary";
 import '../style/common.css';
 import '../style/invoicePage.css';
 
+import seo from "../utility/dynamicPageTitle";
+
 const InvoicePagePrintable = React.forwardRef(({prop}, ref) => {
     const {id} = useParams();
 
@@ -19,6 +21,8 @@ const InvoicePagePrintable = React.forwardRef(({prop}, ref) => {
             if (status === 200) {
                 setInvoice(body[0]);
                 setIsPending(false);
+                //Dynamic page title
+                seo({title : 'fattura '+body[0]._id+' | Cater', metaDescription : 'La mia fattura'})
             }
         }
         fetchInvoices()

@@ -4,8 +4,12 @@ import { getCustomer, getUser, modifyCustomer } from '../utility/apiLibrary'
 import { useHistory } from 'react-router'
 
 import Notify from '../components/Notify'
+import seo from '../utility/dynamicPageTitle'
 
 const Profile = () => {
+    
+    //Dynamic page title
+    seo({title : 'Modifica profilo | Cater', metaDescription : 'Modifica le informazioni del tuo profilo'})
 
     const [customer, setCustomer] = useState({})
     const [loading, setLoading] = useState(true);

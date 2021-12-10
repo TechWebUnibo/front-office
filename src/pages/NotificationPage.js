@@ -6,8 +6,12 @@ import "../style/ProductPage.css"
 import "react-datepicker/dist/react-datepicker.css";
 
 import NotificationItem from "../components/NotificationItem";
+import seo from "../utility/dynamicPageTitle";
 
 const NotificationPage = () => {
+
+    //Dynamic page title
+    seo({title : 'Notifiche | Cater', metaDescription : 'Le tue notifiche'})
 
     const [notifications, setNotifications] = useState([])
     const [notificationNumber, setNotificationNumber] = useState(0)

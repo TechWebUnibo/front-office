@@ -1,10 +1,12 @@
 import React from "react";
 import {Button, Container} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import seo from "../utility/dynamicPageTitle";
 
 import "../style/home.css"
 
 const Home = () => {
+    seo();
     return (
         <Container fluid className="p-0">
             <div className="py-5 pe-2 pe-md-5 text-start shadow-2-strong bckimg">

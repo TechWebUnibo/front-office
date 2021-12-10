@@ -6,9 +6,14 @@ import { createCustomer } from "../utility/apiLibrary"
 // import { apiRegister } from "../utility/apiLibrary.js";
 
 import Notify from '../components/Notify';
+import seo from "../utility/dynamicPageTitle";
 
 
 const SignupPage = ({ setLoginState }) => {
+
+  //Dynamic page title
+  seo({title : 'Registrati | Cater', metaDescription : 'Registra un profilo utente su Cater'})
+
   const [error, setError] = useState(false);
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");

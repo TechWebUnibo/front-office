@@ -3,7 +3,13 @@ import { Link, useHistory } from "react-router-dom";
 import { Form, Button, Container } from "react-bootstrap";
 import { useState } from "react";
 import {apiLogin} from "../utility/apiLibrary.js";
+
+import seo from "../utility/dynamicPageTitle.js";
+
 const LoginPage = ({setLoginState}) => {
+
+  //Dynamic page title
+  seo({title : 'LogIn | Cater', metaDescription : 'Fai Login nel tuo profilo'})
 
   const [wrongUsrnm, setWrongUsrnm] = useState(false);
   const [wrongPassw, setWrongPassw] = useState(false);

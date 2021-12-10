@@ -3,7 +3,12 @@ import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getCustomer, getUser } from '../utility/apiLibrary'
 
+import seo from '../utility/dynamicPageTitle'
+
 const Dashboard = () =>{
+
+    //Dynamic page title
+    seo({title : 'Profilo | Cater', metaDescription : 'Il tuo profilo'})
 
     const [customer, setCustomer] = useState({})
     

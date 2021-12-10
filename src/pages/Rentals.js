@@ -4,8 +4,13 @@ import { useState, useEffect } from 'react';
 
 import RentalCard from '../components/RentalCard';
 import Notify from '../components/Notify'
+import seo from '../utility/dynamicPageTitle';
 
 const Rentals = () => {
+
+    //Dynamic page title
+    seo({title : 'Noleggi | Cater', metaDescription : 'I tuoi noleggi'})
+
     const [isPending, setIsPending] = useState(true);
     const [error, setError] = useState(false);
     const [rentals, setRentals] = useState([])

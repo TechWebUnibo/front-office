@@ -3,7 +3,12 @@ import {Container, ListGroup, Spinner} from "react-bootstrap";
 import {getInvoices, getUser} from "../utility/apiLibrary";
 import {Link} from "react-router-dom";
 
+import seo from "../utility/dynamicPageTitle";
+
 function Invoices() {
+
+    //Dynamic page title
+    seo({title : 'Fatture | Cater', metaDescription : 'Le tue fatture'})
 
     const [invoices, setInvoices] = useState([])
     const [isPending, setIsPending] = useState(true);
