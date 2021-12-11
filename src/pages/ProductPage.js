@@ -6,6 +6,7 @@ import { useHistory, Link } from "react-router-dom";
 import {
   createRent,
   getAvailability,
+  getProduct,
   getUser,
   modifyRent,
 } from "../utility/apiLibrary";
@@ -142,15 +143,13 @@ const ProductPage = ({ loggedIn }) => {
 
   const history = useHistory();
 
-  async function getBundleProduct(productId) {
-    const temp = await getAvailability(
-      productId,
-      startDate,
-      endDate,
-      props.rentId
-    );
+  async function getBundleProducts(bundle) {
+    const products = []
+    for (const product of bundle.products) {
+      products.push(await getProduct(product))
+    }
     return(
-      <ListGroupItem>{temp.name}</ListGroupItem>
+      products.map(product => <ListGroupItem>{product.name}</ListGroupItem>)
     )
   }
 

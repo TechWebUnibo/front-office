@@ -192,6 +192,23 @@ export async function getStaff(){
             console.log(e)
         }
     }
+    export async function getProduct(id){
+        try{
+            let res = await fetch(url + productsUrl + '/' + id, {
+                method: 'GET',
+                mode: 'cors', // no-cors, *cors, same-origin
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': 'Bearer ' + getToken()
+                },
+            })
+            return {status: res.status, body: await res.json()}
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
     export async function getRentals(query){
         if(typeof query != 'undefined'){
             query = '?' + new URLSearchParams(query).toString()
