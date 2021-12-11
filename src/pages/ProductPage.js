@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Image, Button, Alert } from "react-bootstrap";
+import { Container, Row, Col, Image, Button, Alert, ListGroup, ListGroupItem } from "react-bootstrap";
 import { useLocation } from "react-router";
 import DatePicker from "react-datepicker";
 import { useHistory, Link } from "react-router-dom";
@@ -129,7 +129,8 @@ const ProductPage = ({ loggedIn }) => {
       setErrorShow(true);
     }
   }
-
+ console.log(product)
+ console.log(products)
   //explainer
   const title1 = "Perchè questo prezzo?";
   const message1 =
@@ -140,6 +141,18 @@ const ProductPage = ({ loggedIn }) => {
       questi vengono scontati del 50%! Così hai tutto il tempo che ti serve per fare su baracca senza fretta o servire qualche delizioso piatto in più!`;
 
   const history = useHistory();
+
+  async function getBundleProduct(productId) {
+    const temp = await getAvailability(
+      productId,
+      startDate,
+      endDate,
+      props.rentId
+    );
+    return(
+      <ListGroupItem>{temp.name}</ListGroupItem>
+    )
+  }
 
   return (
     <Container className="containerSM">
@@ -170,6 +183,12 @@ const ProductPage = ({ loggedIn }) => {
         <Col sm lg={8}>
           <h2>{product.name}</h2>
           <p>{product.description}</p>
+          {/*List of product in the bundle (if the product is a bundle)*/}
+          {product.products.length !== 0 && (
+            <ListGroup className="mb-3">
+              {product.products.map((bundleProduct) => <ListGroupItem>{bundleProduct.name}</ListGroupItem>)}
+            </ListGroup>
+          )}
           {(!isLoggedIn || available) && (
             <Alert variant="info">
               A partire da: <Alert.Link as={"span"}>{price}€ </Alert.Link>
