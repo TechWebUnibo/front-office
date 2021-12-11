@@ -35,7 +35,7 @@ const ProductPage = ({ loggedIn }) => {
     <Alert variant={available ? "success" : "danger"}>
       Questo prodotto è{" "}
       <Alert.Link as={"span"}>
-        {available ? "dispnibile" : "non disponibile"}
+        {available ? "disponibile" : "non disponibile"}
       </Alert.Link>
     </Alert>
   ) : (
@@ -131,9 +131,13 @@ const ProductPage = ({ loggedIn }) => {
   }
 
   //explainer
-  const title = "Perchè questo prezzo?";
-  const message =
+  const title1 = "Perchè questo prezzo?";
+  const message1 =
     "Abbiamo deciso di offrire in noleggio, in base alla disponibilità, il prodotto più economico. Chi arriva prima, meglio alloggia, no?";
+  const title2 = "Scopri l'offerta";
+  const message2 =
+    `Non farti rincorrere dall'ansia! Se un noleggio che comprende il weekend finisce nei giorni lavorativi successivi, 
+      questi vengono scontati del 50%! Così hai tutto il tempo che ti serve per fare su baracca senza fretta o servire qualche delizioso piatto in più!`;
 
   const history = useHistory();
 
@@ -169,7 +173,7 @@ const ProductPage = ({ loggedIn }) => {
           {(!isLoggedIn || available) && (
             <Alert variant="info">
               A partire da: <Alert.Link as={"span"}>{price}€ </Alert.Link>
-              <Explainer message={message} title={title} />
+              <Explainer message={message1} title={title1} />
             </Alert>
           )}
           {!isLoggedIn && (
@@ -198,9 +202,9 @@ const ProductPage = ({ loggedIn }) => {
           />
           <Row>
             <div id="discount">
-              <p className="small-text">
-                The party does not finish on Sunday! If you rent last also in
-                the week days you will pay this the half!!!{" "}
+              <p className="">
+                Offerta "Il lunedì è sempre un dramma" 
+                <Explainer title={title2} message={message2} className="mx-3"/>
               </p>
             </div>
           </Row>

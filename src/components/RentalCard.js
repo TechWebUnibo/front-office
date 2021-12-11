@@ -7,10 +7,25 @@ import DatePicker from "react-datepicker";
 
 import '../style/rental.css'
 
+import Explainer from './Explainer';
+
 //possible rent state: not_started, in_progress, delayed, terminated
 
 const RentalCard = (prop) => {
 
+    //Explainer text
+    const title = "Leggenda"
+    const message = (<>
+        <span><b>Not started</b>: il noleggio non è ancora in corso e deve essere revisionato da uno dei nostri addetti;</span>
+        <br /> 
+        <span><b>In progress</b>: la merce noleggiata è stata erogata e il noleggio è in corso;</span>
+        <br /> 
+        <span><b>Delayed</b>: il noleggio sta riscontrando problemi organizzativi dalla nostra parte e ci stiamo adoperando per risolverli il prima possibile;</span>
+        <br /> 
+        <span><b>Terminated</b>: la merce è stata restituita e sono state effettuate tutte le verifiche necessarie per chiudere il noleggio.</span>
+        <br /> 
+        <span><b>Cancelled</b>: il noleggio è stato terminato prima della sua erogazione.</span>
+     </>)
 
     const [product, setProduct] = useState({})
 
@@ -34,7 +49,7 @@ const RentalCard = (prop) => {
                             <Card.Title className="display-5">{prop.name}</Card.Title>
                             <Card.Text>
                                 Costo: {prop.price}€ <br />
-                                Stato: {prop.status}
+                                Stato: {prop.status} <Explainer title={title} message={message}/>
                             </Card.Text>
                         </Col>
                         <Col className="ps-1 text-center">
