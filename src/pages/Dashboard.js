@@ -43,6 +43,9 @@ const Dashboard = () =>{
         const loadProfile = async function () {
             let res = await getCustomer(await getUser())
             if(res){
+                if(res.avatar) {
+                    cards[0].img = customer.avatar
+                }
                 setCustomer(res)
             }
         }
@@ -60,7 +63,7 @@ const Dashboard = () =>{
                             <Card.Body>
                                 <Row>
                                     <Col xs={4} className="align-self-center">
-                                        <Card.Img variant="top" src={card.img} />
+                                        <Card.Img variant="top" src={card.img} roundedCircle/>
                                     </Col>
                                     <Col xs={8}>
                                         

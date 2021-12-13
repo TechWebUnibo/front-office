@@ -66,7 +66,7 @@ const Profile = () => {
                             Avatar
                         </Form.Label>
                         <Col sm={2}>
-                            <Image fluid alt='Profile image' src={customer.avatar ? customer.avatar : genericAvatar} roundedCircle />
+                            <Image fluid alt='Avatar del profilo' src={customer.avatar ? customer.avatar : genericAvatar} roundedCircle />
                         </Col>
                         <Col sm={8} className='align-self-center'>
                             <Form.Control

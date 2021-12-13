@@ -25,6 +25,7 @@ const ProductPage = ({ loggedIn }) => {
   const [price, setPrice] = useState(NaN);
   const [available, setAvailable] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(loggedIn);
+  const [bundleProducts, setBundleProducts] = useState([])
 
   // Modal control for error
   const [errorShow, setErrorShow] = useState(false);
@@ -69,7 +70,8 @@ const ProductPage = ({ loggedIn }) => {
           }
         }
       }
-      console.log(isLoggedIn);
+      setBundleProducts(await getBundleProducts(product));
+      console.log(bundleProducts)
     }
     const refresh = async () => {
       await refreshPrice();
@@ -146,11 +148,10 @@ const ProductPage = ({ loggedIn }) => {
   async function getBundleProducts(bundle) {
     const products = []
     for (const product of bundle.products) {
-      products.push(await getProduct(product))
+      const {status, body} = await getProduct(product)
+      products.push(body)
     }
-    return(
-      products.map(product => <ListGroupItem>{product.name}</ListGroupItem>)
-    )
+    return(products)
   }
 
   return (
@@ -180,13 +181,16 @@ const ProductPage = ({ loggedIn }) => {
           <Image src={product.img} fluid thumbnail="true" alt="product image" />
         </Col>
         <Col sm lg={8}>
-          <h2>{product.name}</h2>
+          <h2 className="display-6">{product.name}</h2>
           <p>{product.description}</p>
           {/*List of product in the bundle (if the product is a bundle)*/}
           {product.products.length !== 0 && (
-            <ListGroup className="mb-3">
-              {product.products.map((bundleProduct) => <ListGroupItem>{bundleProduct.name}</ListGroupItem>)}
+            <>
+            <h3>Questo bundle contiene:</h3>
+            <ListGroup variant="flush" className="mb-3">
+              {bundleProducts.map((bundleProduct) => <ListGroupItem>{bundleProduct.name}</ListGroupItem>)}
             </ListGroup>
+            </>
           )}
           {(!isLoggedIn || available) && (
             <Alert variant="info">
