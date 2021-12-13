@@ -1,6 +1,7 @@
 import {Container, Button, Spinner, Form, Col, Row, Modal} from 'react-bootstrap'
 import { deleteRental, getRentals, getUser } from '../utility/apiLibrary'
 import { useState, useEffect } from 'react';
+import Paginator from "../components/Paginator"
 
 import RentalCard from '../components/RentalCard';
 import Notify from '../components/Notify'
@@ -17,6 +18,9 @@ const Rentals = () => {
     const [idFilter, setIdFilter] = useState('')
     const [productFilter, setProductFilter] = useState('')  
     const [stateFilter, setStateFilter] = useState('')
+    const [currentPage, setCurrentPage] = useState(1);
+    const [rentalsPerPage] = useState(2);
+
 
     // Modal control for error
     const [errorShow, setErrorShow] = useState(false);
@@ -77,6 +81,13 @@ const Rentals = () => {
         fetchRentals();
     }, []);
 
+    // Get current posts
+    const indexOfLastPost = currentPage * rentalsPerPage;
+    const indexOfFirstPost = indexOfLastPost - rentalsPerPage;
+    const currentRentals = rentalsFilter().slice(indexOfFirstPost, indexOfLastPost);
+
+    // Change page
+    const paginate = pageNumber => setCurrentPage(pageNumber);
 
     return(
         <Container fluid="sm">
@@ -122,7 +133,7 @@ const Rentals = () => {
                 }
             {!isPending &&
                 <Container className="containerSM"> {
-                rentalsFilter().map((rental) => {
+                currentRentals.map((rental) => {
                     return <RentalCard alt="Product image" deleteRental={deleteTrigger} id={rental._id} name={rental.productType} img={rental.img} price={rental.price} startDate={rental.start.split('T')[0]} endDate={rental.end.split('T')[0]} status={rental.state} key={rental._id}/>
                 })}
             </Container>
@@ -150,7 +161,11 @@ const Rentals = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-
+            <Paginator className="text-center"
+                postsPerPage={rentalsPerPage}
+                totalPosts={rentals.length}
+                paginate={paginate}
+            />
             </Container>
     );
 }

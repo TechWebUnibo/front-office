@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Container, ListGroup, Spinner } from "react-bootstrap";
 import { checkNotification, getNotifications, getUser } from "../utility/apiLibrary";
+import Paginator from "../components/Paginator"
+
 
 import "../style/ProductPage.css"
 import "react-datepicker/dist/react-datepicker.css";
@@ -16,7 +18,9 @@ const NotificationPage = () => {
     const [notifications, setNotifications] = useState([])
     const [notificationNumber, setNotificationNumber] = useState(0)
     const [isPending, setIsPending] = useState(true);
-
+    const [currentPage, setCurrentPage] = useState(1);
+    const [notificationsPerPage] = useState(5);
+    
     async function fetchNotifications() {
         const { status, body } = await getNotifications(await getUser())
         if (status === 200) {
@@ -37,6 +41,14 @@ const NotificationPage = () => {
         }
     }
 
+    // Get current posts
+    const indexOfLastPost = currentPage * notificationsPerPage;
+    const indexOfFirstPost = indexOfLastPost - notificationsPerPage;
+    const currentNotifications = notifications.slice(indexOfFirstPost, indexOfLastPost);
+
+    // Change page
+    const paginate = pageNumber => setCurrentPage(pageNumber);
+
     return (
         <Container className="containerSM">
             <h2 className="title">Centro notifiche</h2>
@@ -56,13 +68,18 @@ const NotificationPage = () => {
             }
             {!isPending && notifications.length > 0 &&
                 (<ListGroup className="my-2">
-                        {notifications.map((notification) => {
+                    {currentNotifications.map((notification) => {
                             return (<NotificationItem notification={notification} updatePage={fetchNotifications}/>);})}
                     </ListGroup>)
             }
             {!isPending && notifications.length <= 0 &&
                 (<h3 className="sub-title">Nessuna notifica</h3>)
             }
+            <Paginator className="text-center"
+                postsPerPage={notificationsPerPage}
+                totalPosts={notifications.length}
+                paginate={paginate}
+            />
         </Container>
 
     );
