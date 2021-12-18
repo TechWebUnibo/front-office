@@ -31,7 +31,7 @@ import InvoicePage from "./pages/InvoicePage"
 
 function App() {
 
-  const [loggedIn, setLoggedIn] = useState();
+  const [loggedIn, setLoggedIn] = useState(undefined);
   
   const setLoginState = (value) => {
     switch (value) {
@@ -52,7 +52,7 @@ function App() {
       setLoginState(await isLogged())
     } 
     checkLogin()
-  }, [])
+  }, [loggedIn])
 
 
 
@@ -76,35 +76,35 @@ function App() {
             </Route>
 
             <Route path="/login">
-              {loggedIn ? <Redirect to="/dashboard" /> : <LoginPage setLoginState={setLoginState}/>}
+              {loggedIn !== undefined && loggedIn ? <Redirect to="/dashboard" /> : <LoginPage setLoginState={setLoginState}/>}
             </Route>
 
             <Route path="/signup">
-              {loggedIn ? <Redirect to="/dashboard" /> : <SignupPage setLoginState={setLoginState}/>}
+              {loggedIn !== undefined && loggedIn ? <Redirect to="/dashboard" /> : <SignupPage setLoginState={setLoginState}/>}
             </Route>
 
             <Route path="/confirm">
-              {!loggedIn ? <Redirect to="/login" /> : <ConfirmPage/>}
+              {loggedIn !== undefined && !loggedIn ? <Redirect to="/login" /> : <ConfirmPage/>}
             </Route>
 
             <Route path="/profile">
-              {!loggedIn ? <Redirect to="/login" /> : <Profile/>}
+              {loggedIn !== undefined && !loggedIn ? <Redirect to="/login" /> : <Profile/>}
             </Route>
 
             <Route path="/dashboard">
-              {!loggedIn ? <Redirect to="/login" /> : <Dashboard/>}
+              {loggedIn !== undefined && !loggedIn ? <Redirect to="/login" /> : <Dashboard/>}
             </Route>
 
             <Route path="/rentals">
-              {!loggedIn ? <Redirect to="/login" /> : <Rentals/>}
+              {loggedIn !== undefined && !loggedIn ? <Redirect to="/login" /> : <Rentals/>}
             </Route>
 
             <Route path="/notifications">
-              {!loggedIn ? <Redirect to="/login" /> : <NotificationPage />}
+              {loggedIn !== undefined && !loggedIn ? <Redirect to="/login" /> : <NotificationPage />}
             </Route>
 
             <Route path="/invoices">
-              {!loggedIn ? <Redirect to="/login" /> : <Invoices />}
+              {loggedIn !== undefined && !loggedIn ? <Redirect to="/login" /> : <Invoices />}
             </Route>
 
             <Route path='/manager' component={() => {
@@ -118,7 +118,7 @@ function App() {
             }} />
 
             <Route path="/invoice/:id">
-              {!loggedIn ? <Redirect to="/login" /> : <InvoicePage />}
+              {loggedIn !== undefined && !loggedIn ? <Redirect to="/login" /> : <InvoicePage />}
             </Route>
 
             <Route path="*">

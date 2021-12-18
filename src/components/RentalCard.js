@@ -20,7 +20,7 @@ const RentalCard = (prop) => {
         <br /> 
         <span><b>In progress</b>: la merce noleggiata è stata erogata e il noleggio è in corso;</span>
         <br /> 
-        <span><b>Delayed</b>: il noleggio sta riscontrando problemi organizzativi dalla nostra parte e ci stiamo adoperando per risolverli il prima possibile;</span>
+        <span><b>Delayed</b>: il noleggio dovrebbe essere già terminato ma l'utente non ha ancora restituito la merce (si ricorda che ogni giorno extra comprende il pagamento di una penale);</span>
         <br /> 
         <span><b>Terminated</b>: la merce è stata restituita e sono state effettuate tutte le verifiche necessarie per chiudere il noleggio.</span>
         <br /> 

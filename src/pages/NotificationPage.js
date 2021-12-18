@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, ListGroup, Spinner } from "react-bootstrap";
-import { checkNotification, getNotifications, getUser } from "../utility/apiLibrary";
+import { checkNotification, getNotifications, getUser, deleteNotification } from "../utility/apiLibrary";
 import Paginator from "../components/Paginator"
 
 
@@ -35,7 +35,7 @@ const NotificationPage = () => {
     }, [])
 
     async function deleteNotification(id) {
-        const { status } = await checkNotification(id)
+        const { status } = await deleteNotification(id)
         if (status === 200) {
             window.location.reload(false)
         }

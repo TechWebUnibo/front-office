@@ -49,7 +49,7 @@ const Dashboard = () =>{
                 setCustomer(res)
             }
         }
-        loadProfile() 
+       loadProfile() 
     }, [])
 
     return(

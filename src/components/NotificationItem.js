@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ListGroup } from "react-bootstrap";
 
+import { checkNotification, deleteNotification } from "../utility/apiLibrary";
 import NotificationModal from "./NotificationModal";
 
 import "../style/NotificationItem.css"
@@ -10,15 +11,29 @@ function NotificationItem({ notification, updatePage }) {
     const [showModal, setShowModal] = useState(false)
     const [opened, setOpened] = useState(notification.checked)
 
-    function handleShowModal() {
-        //codice per dire al backend che la notifica è stata letta
+    async function handleShowModal() {
         setShowModal(true)
-        updatePage()
+        //updatePage()
     }
 
-    function handleCloseModal( keepAsNotRead ) {
+    async function handleCloseModal( keepAsNotRead ) {
         if(!keepAsNotRead && !opened)
-        setOpened(true)
+        {
+            const { status } = await checkNotification(notification._id)
+            if (status === 200) {
+                //window.location.reload(false)
+                updatePage() //TODO, modificare
+            }
+        }
+    }
+
+    async function handleDeleteNotification() {
+        const { status } = await deleteNotification(notification._id)
+        console.log(status)
+        if (status === 200) {
+            //window.location.reload(false)
+            updatePage() //TODO, modificare
+        }
     }
 
     return (
@@ -40,11 +55,11 @@ function NotificationItem({ notification, updatePage }) {
                     </svg>
                 )}
 
-                <span classname="main-text">{notification.rent}</span>
+                <span classname="main-text">Noleggio: {notification.rent}</span>
                 <br />
                 <small className="secondary-text">{notification.date}</small>
             </ListGroup.Item>
-            <NotificationModal show={showModal} setShow={setShowModal} notification={notification} operationOnClosingModal={handleCloseModal} />
+            <NotificationModal show={showModal} setShow={setShowModal} notification={notification} operationOnClosingModal={handleCloseModal} onDelete={handleDeleteNotification} />
         </>
     )
 }

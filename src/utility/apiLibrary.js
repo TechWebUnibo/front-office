@@ -567,6 +567,25 @@ export async function checkNotification(id){
     }
 }
 
+export async function deleteNotification(id){
+    try {
+        let res = await fetch(url + notificationsUrl + '/' + customersUrl + '/' + id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': 'Bearer ' + getToken()
+            },
+        })
+        const status = res.status
+        return { status: status, body: await res.json() }
+    }
+    catch (err) {
+        console.log(err)
+        return (500, null)
+    }
+}
+
 export async function createCustomer(name, surname, username, password, address, avatar){
         const formData = new FormData();
         formData.append('name', name);

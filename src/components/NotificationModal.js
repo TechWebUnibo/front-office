@@ -2,7 +2,7 @@ import { React, useEffect } from "react";
 import {Modal, Button} from "react-bootstrap";
 
 
-function NotificationModal({show, setShow, notification, operationOnClosingModal}) {
+function NotificationModal({show, setShow, notification, operationOnClosingModal, onDelete}) {
 
     const handleClose = () => {
         setShow(false)
@@ -16,7 +16,7 @@ function NotificationModal({show, setShow, notification, operationOnClosingModal
     }
 
     function handleDelete() {
-        //APIDeleteNotification(notificationID)
+        onDelete();
         setShow(false)
     }
 
