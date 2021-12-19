@@ -1,4 +1,4 @@
-import { Row, Col, Card, Container, Spinner } from 'react-bootstrap'
+import { Row, Col, Card, Container, Spinner, Image } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getCustomer, getUser } from '../utility/apiLibrary'
@@ -75,7 +75,8 @@ const Dashboard = () => {
                                         <Card.Body>
                                             <Row>
                                                 <Col xs={4} className="align-self-center">
-                                                    <Card.Img variant="top" src={card.img} roundedCircle />
+                                                <Image fluid alt='Avatar del profilo' src={card.img} {...card.link === '/profile'  && 'roundedCircle'} />
+                                                    {/*<Card.Img variant="top" src={card.img} roundedCircle />*/}
                                                 </Col>
                                                 <Col xs={8}>
 
