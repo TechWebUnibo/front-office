@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Image, Button, Alert, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Container, Row, Col, Image, Button, Alert, ListGroup, ListGroupItem, Spinner} from "react-bootstrap";
 import { useLocation } from "react-router";
 import DatePicker from "react-datepicker";
 import { useHistory, Link } from "react-router-dom";
@@ -26,6 +26,7 @@ const ProductPage = ({ loggedIn }) => {
   const [available, setAvailable] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(loggedIn);
   const [bundleProducts, setBundleProducts] = useState([])
+  const [isPending, setIsPending] = useState(true);
 
   // Modal control for error
   const [errorShow, setErrorShow] = useState(false);
@@ -70,14 +71,15 @@ const ProductPage = ({ loggedIn }) => {
           }
         }
       }
+      setIsPending(true);
       setBundleProducts(await getBundleProducts(product));
-      console.log(bundleProducts)
+      setIsPending(false);
     }
     const refresh = async () => {
       await refreshPrice();
     };
     //Dynamic page title
-    seo({ title: product.name+" | Cater", metaDescription: "Pagina del prodotto" });
+    seo({ title: product.name + " | Cater", metaDescription: "Pagina del prodotto" });
     refresh();
   }, [startDate, endDate, product, props.rentId, isLoggedIn, loggedIn]);
 
@@ -132,8 +134,8 @@ const ProductPage = ({ loggedIn }) => {
       setErrorShow(true);
     }
   }
- console.log(product)
- console.log(products)
+  console.log(product)
+  console.log(products)
   //explainer
   const title1 = "Perchè questo prezzo?";
   const message1 =
@@ -148,10 +150,10 @@ const ProductPage = ({ loggedIn }) => {
   async function getBundleProducts(bundle) {
     const products = []
     for (const product of bundle.products) {
-      const {status, body} = await getProduct(product)
+      const { status, body } = await getProduct(product)
       products.push(body)
     }
-    return(products)
+    return (products)
   }
 
   return (
@@ -182,14 +184,23 @@ const ProductPage = ({ loggedIn }) => {
         </Col>
         <Col sm lg={8}>
           <h2 className="display-6">{product.name}</h2>
-          <h3>{product.description}</h3>
+          <h3 className="mb-2">{product.description}</h3>
           {/*List of product in the bundle (if the product is a bundle)*/}
           {product.products.length !== 0 && (
             <>
-            <h3>Questo bundle contiene:</h3>
-            <ListGroup variant="flush" className="mb-3">
-              {bundleProducts.map((bundleProduct) => <ListGroupItem>{bundleProduct.name}</ListGroupItem>)}
-            </ListGroup>
+              {isPending &&
+                (<Container>
+                  <Spinner animation="border" size="m" />
+                </Container>)
+              }
+              {!isPending && (
+                <>
+                  <h3>Questo bundle contiene:</h3>
+                  <ListGroup variant="flush" className="mb-3">
+                    {bundleProducts.map((bundleProduct) => <ListGroupItem>{bundleProduct.name}</ListGroupItem>)}
+                  </ListGroup>
+                </>
+              )}
             </>
           )}
           {(!isLoggedIn || available) && (
@@ -226,8 +237,8 @@ const ProductPage = ({ loggedIn }) => {
           <Row>
             <div id="discount">
               <p className="">
-                Offerta "Il lunedì è sempre un dramma" 
-                <Explainer title={title2} message={message2} className="mx-3"/>
+                Offerta "Il lunedì è sempre un dramma"
+                <Explainer title={title2} message={message2} className="mx-3" />
               </p>
             </div>
           </Row>
