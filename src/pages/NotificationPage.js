@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, ListGroup, Spinner } from "react-bootstrap";
-import { checkNotification, getNotifications, getUser, deleteNotification } from "../utility/apiLibrary";
+import { getNotifications, getUser } from "../utility/apiLibrary";
 import Paginator from "../components/Paginator"
 
 

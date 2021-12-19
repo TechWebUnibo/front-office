@@ -2,8 +2,6 @@ import { Card, Row, Col, Button } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import { getProducts } from '../utility/apiLibrary';
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types'
-import DatePicker from "react-datepicker";
 
 import '../style/rental.css'
 
@@ -49,7 +47,7 @@ const RentalCard = (prop) => {
                             <Card.Title className="display-5">{prop.name}</Card.Title>
                             <Card.Text>
                                 Costo: {prop.price}€ <br />
-                                Stato: {prop.status} <Explainer title={title} message={message}/>
+                                Stato: {prop.status.replace(/_/, ' ')} <Explainer title={title} message={message}/>
                             </Card.Text>
                         </Col>
                         <Col className="ps-1 text-center">

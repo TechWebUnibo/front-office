@@ -9,7 +9,6 @@ import "../style/NotificationItem.css"
 function NotificationItem({ notification, updatePage }) {
 
     const [showModal, setShowModal] = useState(false)
-    const [opened, setOpened] = useState(notification.checked)
 
     async function handleShowModal() {
         setShowModal(true)
@@ -17,7 +16,7 @@ function NotificationItem({ notification, updatePage }) {
     }
 
     async function handleCloseModal( keepAsNotRead ) {
-        if(!keepAsNotRead && !opened)
+        if(!keepAsNotRead && !notification.checked)
         {
             const { status } = await checkNotification(notification._id)
             if (status === 200) {
@@ -39,7 +38,7 @@ function NotificationItem({ notification, updatePage }) {
     return (
         <>
             <ListGroup.Item action onClick={handleShowModal} key={notification._id} className="ps-3 pe-2">
-                {!opened && (
+                {!notification.checked && (
                     <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
                         className="bi bi-envelope-fill me-2 text-primary" viewBox="0 0 16 16">
                         <path
@@ -47,7 +46,7 @@ function NotificationItem({ notification, updatePage }) {
                     </svg>
                 )}
 
-                {opened && (
+                {notification.checked && (
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         className="bi bi-envelope-open me-2 " viewBox="0 0 16 16">
                         <path
@@ -57,7 +56,7 @@ function NotificationItem({ notification, updatePage }) {
 
                 <span classname="main-text">Noleggio: {notification.rent}</span>
                 <br />
-                <small className="secondary-text">{notification.date}</small>
+                <small className="secondary-text">{notification.date.split('T')[0]}</small>
             </ListGroup.Item>
             <NotificationModal show={showModal} setShow={setShowModal} notification={notification} operationOnClosingModal={handleCloseModal} onDelete={handleDeleteNotification} />
         </>
