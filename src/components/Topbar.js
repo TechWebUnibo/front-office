@@ -1,9 +1,34 @@
 import React from "react";
+import { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import { Navbar, Container, Nav, NavDropdown, Button } from "react-bootstrap";
+import { Navbar, Container, Nav, NavLink, NavItem, Button, Badge, Image, Dropdown } from "react-bootstrap";
 import "../style/common.css";
+import { getNotifications, getUser, getCustomer } from "../utility/apiLibrary";
 
-const Topbar = ({loggedIn, setLoginState}) => {
+const Topbar = ({ loggedIn, setLoginState }) => {
+
+  const [notify, setNotify] = useState(0)
+  const [avatar, setAvatar] = useState(undefined)
+
+  useEffect(() => {
+    async function getNotify() {
+      const user = await getUser();
+      const { status, body } = await getNotifications(user)
+      if (status === 200) {
+        setNotify(body.length)
+      }
+      const res = await getCustomer(await getUser())
+      if (res && res.avatar) {
+        setAvatar(res.avatar)
+      }
+      else{
+        setAvatar('/img/cardProfile.png')
+      }
+    }
+    if (loggedIn) {
+      getNotify()
+    }
+  }, [avatar, notify, loggedIn])
 
   return (
     <Navbar collapseOnSelect bg="light" expand="md" >
@@ -20,27 +45,37 @@ const Topbar = ({loggedIn, setLoginState}) => {
               Home
             </Nav.Link>
             <Nav.Link as={Link} to="/products" href="/products" className="shadow-link-gray" >
-                Prodotti
+              Prodotti
             </Nav.Link>
 
             {loggedIn && (
-              <NavDropdown title="Account" id="basic-nav-dropdown">
-                <NavDropdown.Item as={Link} href='/dashboard' to="/dashboard" className="shadow-link-gray">
-                    Dashboard
-                </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/profile" href='/profile' className="shadow-link-gray">
-                    Notifiche
-                </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/profile" href='/profile' className="shadow-link-gray">
+              <Dropdown as={NavItem} >
+                <Dropdown.Toggle as={NavLink}><Navbar.Brand className="m-0">
+                  <Image alt='Avatar del profilo' src={avatar} style={{ height: "35px" }} roundedCircle />
+                </Navbar.Brand></Dropdown.Toggle>
+                <Dropdown.Menu>
+                <Dropdown.Item as={Link} href='/dashboard' to="/dashboard" className="shadow-link-gray">
+                  Dashboard
+                </Dropdown.Item>
+                <Dropdown.Item as={Link} to="/notifications" href='/notifications' className="shadow-link-gray">
+                  Notifiche
+                  {notify > 0 &&
+                    <Badge className="mx-1" pill bg="danger">
+                      {notify}
+                    </Badge>
+                  }
+                </Dropdown.Item>
+                <Dropdown.Item as={Link} to="/rentals" href='/rentals' className="shadow-link-gray">
                   Noleggi
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item >
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item >
                   <Button className="btn-danger" onClick={() => setLoginState(false)}>
                     Logout
                   </Button>
-                </NavDropdown.Item>
-              </NavDropdown>
+                </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             )}
             {!loggedIn && (
               <Nav.Link as={Link} to="/login" href="/login" className="shadow-link-gray" >

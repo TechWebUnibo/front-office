@@ -1,0 +1,28 @@
+.bckimg {
+    background-image:
+            url('https://images.unsplash.com/photo-1509315811345-672d83ef2fbc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80');
+    height: 94vh;
+    width: 100%;
+    background-size: 100% 100%;
+    background-size:     cover;
+    background-repeat:   no-repeat;
+}
+
+.button-div {
+    height: 250px;
+}
+
+.text-box-home {
+    background-color: rgba(255,255,255,.4);
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    position: relative;
+}
+@media only screen and (min-width: 768px) {
+    .bckimg {
+        background-position: center;
+
+    }
+}
+
+/*se siamo su uno schermo grande, mostra il backgroud a metà dell'immagine, dove ci sono i fornelli*/

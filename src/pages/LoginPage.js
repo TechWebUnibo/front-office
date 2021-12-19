@@ -3,7 +3,13 @@ import { Link, useHistory } from "react-router-dom";
 import { Form, Button, Container } from "react-bootstrap";
 import { useState } from "react";
 import {apiLogin} from "../utility/apiLibrary.js";
+
+import seo from "../utility/dynamicPageTitle.js";
+
 const LoginPage = ({setLoginState}) => {
+
+  //Dynamic page title
+  seo({title : 'LogIn | Cater', metaDescription : 'Fai Login nel tuo profilo'})
 
   const [wrongUsrnm, setWrongUsrnm] = useState(false);
   const [wrongPassw, setWrongPassw] = useState(false);
@@ -33,8 +39,8 @@ const LoginPage = ({setLoginState}) => {
   };
 
   return (
-    <Container className="my-3">
-      <p className="display-2 mb-0">Log in</p>
+    <Container className="my-3 containerSM">
+      <h2 className="display-2 mb-0">Log in</h2>
       <Form className="my-3" onSubmit={login}>
 
         <Form.Group className="mb-3" controlId="formBasicUsername">
@@ -52,15 +58,10 @@ const LoginPage = ({setLoginState}) => {
             Password errata
           </Form.Text>}
         </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Rimani collegato" />
-        </Form.Group>
-
-        <div className="text-center">
+        <div className="text-left">
           <Button variant="primary" type="submit">
-            {!isPending && <span>Submit</span> }
-            { isPending && <span>Loading</span> }
+            {!isPending && <span>Login</span> }
+            { isPending && <span>Loading...</span> }
           </Button>
         </div>
       </Form>

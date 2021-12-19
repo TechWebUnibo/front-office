@@ -3,10 +3,17 @@ import { Link, useHistory } from "react-router-dom";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { useState } from "react";
 import { createCustomer } from "../utility/apiLibrary"
-import Notify from './Notify';
 // import { apiRegister } from "../utility/apiLibrary.js";
 
+import Notify from '../components/Notify';
+import seo from "../utility/dynamicPageTitle";
+
+
 const SignupPage = ({ setLoginState }) => {
+
+  //Dynamic page title
+  seo({title : 'Registrati | Cater', metaDescription : 'Registra un profilo utente su Cater'})
+
   const [error, setError] = useState(false);
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
@@ -57,7 +64,7 @@ const SignupPage = ({ setLoginState }) => {
     e.preventDefault();
     let { status } = await createCustomer(name, surname, username, password, {city: city, zip: zip, residence: address}, selectedFile)
     if(status === 200){
-      history.push('/login')
+      history.goBack();
     }
     else if(status === 400){
       setError(true)
@@ -68,8 +75,8 @@ const SignupPage = ({ setLoginState }) => {
   }; 
 
   return (
-      <Container>
-        <p className="display-2">Registrati</p>
+    <Container className="containerSM">
+        <h2 className="display-2">Registrati</h2>
         <Form className="my-3 mx-2" onSubmit={signup}>
           <Row>
             <Col sm>
@@ -179,14 +186,14 @@ const SignupPage = ({ setLoginState }) => {
             />
           </Form.Group>
 
-          <div className="text-center">
+          <div className="text-left">
             <Button variant="primary" type="submit" >
-              {!isPending && <span>Submit</span>}
-              {isPending && <span>Loading</span>}
+              {!isPending && <span>Registrati</span>}
+              {isPending && <span>Loading...</span>}
             </Button>
           </div>
         </Form>
-        <Link to="/login">hai già un account? Fai Log in</Link>
+        <Link to="/login">Hai già un account? Fai Log in</Link>
         <Notify
           show={errorShow}
           data={{ title: 'Ooops...', text: 'Something gone wrong, please retry later' }}

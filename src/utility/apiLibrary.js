@@ -15,6 +15,7 @@ const staffUrl = 'staff'
 const invoicesUrl = 'invoices'
 const productsUrl = 'products'
 const itemsUrl = 'items'
+const notificationsUrl =  'notifications'
 
 
 /**
@@ -167,9 +168,16 @@ export async function getStaff(){
             console.log(e)
         }
     }
-    export async function getProducts(){
+    export async function getProducts(query){
+        console.log(query)
+        if (typeof query !== 'undefined') {
+            query = '?' + new URLSearchParams(query).toString()
+        }
+        else {
+            query = ''
+        }
         try{
-            let res = await fetch(url + productsUrl, {
+            let res = await fetch(url + productsUrl + query, {
                 method: 'GET',
                 mode: 'cors', // no-cors, *cors, same-origin
                 headers: {
@@ -178,13 +186,24 @@ export async function getStaff(){
                     'Authorization': 'Bearer ' + getToken()
                 },
             })
-            if(res.status === 200){
-                res = await res.json()
-                return res
-            }
-            else{
-                return []
-            }
+            return {status: res.status, body: await res.json()}
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
+    export async function getProduct(id){
+        try{
+            let res = await fetch(url + productsUrl + '/' + id, {
+                method: 'GET',
+                mode: 'cors', // no-cors, *cors, same-origin
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': 'Bearer ' + getToken()
+                },
+            })
+            return {status: res.status, body: await res.json()}
         }
         catch(e){
             console.log(e)
@@ -230,18 +249,52 @@ export async function getStaff(){
                     'Authorization': 'Bearer ' + getToken()
                 },
             })
-            if (res.status === 200) {
-                res = await res.json()
-                return res
-            }
-            else {
-                return []
-            }
+                return { status: res.status, body: await res.json() }
         }
         catch (e) {
             console.log(e)
         }
     }
+export async function getInvoices2(customer, rent) {
+    if (typeof customer != 'undefined') {
+        customer = '?customer='+customer;//+ new URLSearchParams(customer).toString()
+    }
+    else {
+        customer = ''
+    }
+    if (typeof rent != 'undefined') {
+        if(customer !== '') {
+            rent = '&rent='+rent;
+        }
+        else {
+            rent = '?rent=' + rent;
+        }
+    }
+    else {
+        rent = ''
+    }
+    try {
+        let res = await fetch(url + invoicesUrl + customer + rent, {
+            method: 'GET',
+            mode: 'cors', // no-cors, *cors, same-origin
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': 'Bearer ' + getToken()
+            },
+        })
+        if (res.status === 200) {
+            res = await res.json()
+            return res
+        }
+        else {
+            return []
+        }
+    }
+    catch (e) {
+        console.log(e)
+    }
+}
     export async function getItems(query) {
         if (typeof query != 'undefined') {
             query = '?' + new URLSearchParams(query).toString()
@@ -271,6 +324,55 @@ export async function getStaff(){
             console.log(e)
         }
     }
+
+    export async function deleteRental(id) {
+        try {
+            let res = await fetch(url + rentsUrl + '/' + id, {
+                method: 'DELETE',
+                mode: 'cors', // no-cors, *cors, same-origin
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': 'Bearer ' + getToken()
+                },
+            })
+            return res.status
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+
+    export async function modifyRent(id, start, end, price, products, productType) {
+        start = start.toISOString().split('T')[0]
+        end = end.toISOString().split('T')[0]
+        const data = {
+            products: products,
+            productType: productType,
+            start: start,
+            end: end,
+            price: price
+        }
+        try {
+            let res = await fetch(url + rentsUrl + `/` + id, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': 'Bearer ' + getToken()
+                },
+                body: JSON.stringify(data)
+            })
+            const status = res.status
+            return { status: status, body: await res.json() }
+        }
+        catch (err) {
+            console.log(err)
+            return (500, null)
+        }
+    }
+
+
     export async function modifyStaff(id, data) {
         try {
             let res = await fetch(url + staffUrl + '/' + id, {
@@ -422,6 +524,63 @@ export async function createRent (customer, start, end, price, products, product
         return {status: status, body: await res.json()}
     }
     catch(err){
+        console.log(err)
+        return (500, null)
+    }
+}
+
+export async function getNotifications(id){
+    try {
+        let res = await fetch(url + notificationsUrl + '/' + customersUrl + '/' + id, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': 'Bearer ' + getToken()
+            },
+        })
+        const status = res.status
+        return { status: status, body: await res.json() }
+    }
+    catch (err) {
+        console.log(err)
+        return { status: 500, body: undefined }
+    }
+}
+
+export async function checkNotification(id){
+    try {
+        let res = await fetch(url + notificationsUrl + '/' + customersUrl + '/check/' + id, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': 'Bearer ' + getToken()
+            },
+        })
+        const status = res.status
+        return { status: status, body: await res.json() }
+    }
+    catch (err) {
+        console.log(err)
+        return (500, null)
+    }
+}
+
+export async function deleteNotification(id){
+    try {
+        let res = await fetch(url + notificationsUrl + '/' + customersUrl + '/' + id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': 'Bearer ' + getToken()
+            },
+        })
+        const status = res.status
+        return { status: status, body: await res.json() }
+    }
+    catch (err) {
         console.log(err)
         return (500, null)
     }
