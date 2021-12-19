@@ -75,7 +75,7 @@ const Dashboard = () => {
                                         <Card.Body>
                                             <Row>
                                                 <Col xs={4} className="align-self-center">
-                                                <Image fluid alt='Avatar del profilo' src={card.img} {...card.link === '/profile'  && 'roundedCircle'} />
+                                                <Image fluid alt='Avatar del profilo' src={card.img} className={card.link === '/profile' ? 'roundedCircle' : ''} />
                                                     {/*<Card.Img variant="top" src={card.img} roundedCircle />*/}
                                                 </Col>
                                                 <Col xs={8}>
