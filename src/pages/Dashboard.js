@@ -55,7 +55,7 @@ const Dashboard = () => {
         loadProfile()
     }, [])
 
-    cards[0].img = customer.avatar
+    cards[0].img = customer.avatar !== '' ? customer.avatar : '/img/cardProfile.png'
 
     return (
         <>
