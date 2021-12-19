@@ -71,7 +71,7 @@ const Rentals = () => {
         const fetchRentals = async () => {
             let {status, body} = await getRentals({productName:true, img: true, customer: await getUser()});
             if(status === 200) {
-                setRentals(body)
+                setRentals(body.reverse())
                 setIsPending(false);
             }
             else {
@@ -107,17 +107,17 @@ const Rentals = () => {
                 (<Form>
                 <Row className="mb-3 justify-content-center" align="center">
                             <Form.Group as={Col} md={3} controlId="id-filter">
-                                <Form.Label>Id</Form.Label>
-                                <Form.Control type="text" value={idFilter} onChange={(e) => setIdFilter(e.target.value)} placeholder="Filter by id" />
+                                <Form.Label htmlFor='id'>Id</Form.Label>
+                                <Form.Control id='id' type="text" value={idFilter} onChange={(e) => setIdFilter(e.target.value)} placeholder="Filter by id" />
                             </Form.Group>
 
                             <Form.Group as={Col} md={3} className="mb-3" controlId="product-filter">
-                                <Form.Label>Nome del prodotto</Form.Label>
-                                <Form.Control value={productFilter} onChange={(e) => setProductFilter(e.target.value)} placeholder="Filter by product name"  />
+                                <Form.Label htmlFor='product-name'>Nome del prodotto</Form.Label>
+                                <Form.Control id='product-name' value={productFilter} onChange={(e) => setProductFilter(e.target.value)} placeholder="Filter by product name"  />
                             </Form.Group>
                             <Form.Group as={Col} md={3} className="mb-3" controlId="product-filter">
-                                <Form.Label>Filtra per stato</Form.Label>
-                                <Form.Select aria-label="State filter" value={stateFilter}
+                                <Form.Label htmlFor='state'>Filtra per stato</Form.Label>
+                                <Form.Select id='state' value={stateFilter}
                                     onChange={(e) => setStateFilter(e.target.value)}>
                                     <option value='' defaultValue>Tutti gli stati</option>
                                     <option value="not_started">Non iniziato</option>
@@ -134,7 +134,7 @@ const Rentals = () => {
             {!isPending &&
                 <Container className="containerSM"> {
                 currentRentals.map((rental) => {
-                    return <RentalCard alt="Product image" deleteRental={deleteTrigger} id={rental._id} name={rental.productType} img={rental.img} price={rental.price} startDate={rental.start.split('T')[0]} endDate={rental.end.split('T')[0]} status={rental.state} key={rental._id}/>
+                    return <RentalCard alt={rental.productType} deleteRental={deleteTrigger} id={rental._id} name={rental.productType} img={rental.img} price={rental.price} startDate={rental.start.split('T')[0]} endDate={rental.end.split('T')[0]} status={rental.state} key={rental._id}/>
                 })}
             </Container>
             }

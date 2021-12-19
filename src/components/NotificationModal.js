@@ -35,9 +35,9 @@ function NotificationModal({show, setShow, notification, operationOnClosingModal
             <Modal.Title>{notification._id }</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p> <b>Noleggio:</b> {notification.rent} </p>
-            <p> <b>Stato:</b> {notification.state.replace(/_/, ' ')} </p>
-            <p> <b>Data:</b> {notification.date.split('T')[0]} </p>
+            <h3> <b>Noleggio:</b> {notification.rent} </h3>
+            <h3> <b>Stato:</b> {notification.state.replace(/_/, ' ')} </h3>
+            <h3> <b>Data:</b> {notification.date.split('T')[0]} </h3>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>

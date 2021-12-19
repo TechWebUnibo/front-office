@@ -76,7 +76,7 @@ const SignupPage = ({ setLoginState }) => {
 
   return (
     <Container className="containerSM">
-        <p className="display-2">Registrati</p>
+        <h2 className="display-2">Registrati</h2>
         <Form className="my-3 mx-2" onSubmit={signup}>
           <Row>
             <Col sm>

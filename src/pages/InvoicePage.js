@@ -54,10 +54,10 @@ const InvoicePagePrintable = React.forwardRef(({prop}, ref) => {
                     <h2 className="mt-4">Noleggio:</h2>
                     <Row className="mt-2">
                         <Col>
-                            <h4>Data di inizio: {invoice.start.split('T')[0]}</h4>
+                            <h3>Data di inizio: {invoice.start.split('T')[0]}</h3>
                         </Col>
                         <Col>
-                            <h4>Data di fine: {invoice.end.split('T')[0]}</h4>
+                            <h3>Data di fine: {invoice.end.split('T')[0]}</h3>
                         </Col>
                     </Row>
 

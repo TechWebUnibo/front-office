@@ -18,25 +18,29 @@ const Dashboard = () => {
             title: 'Informazioni personali',
             text: 'Visualizza e modifica il tuo account',
             link: '/profile',
-            img: '/img/cardProfile.png'
+            img: '/img/cardProfile.png',
+            alt: "avatar dell'utente"
         },
         {
             title: 'I tuoi noleggi',
             text: 'Visualizza e modifica i tuoi noleggi',
             link: '/rentals',
-            img: '/img/cardOrders.png'
+            img: '/img/cardOrders.png',
+            alt: 'ordini su un foglio'
         },
         {
             title: 'Le tue notifiche',
             text: 'Visualizza le tue notifiche',
             link: '/notifications',
-            img: '/img/notification.png'
+            img: '/img/notification.png',
+            alt: 'campanella delle notifiche'
         },
         {
             title: 'Le tue fatture',
             text: 'Visualizza le tue fatture',
             link: '/invoices',
-            img: '/img/invoice.png'
+            img: '/img/invoice.png',
+            alt: 'diverse fatture'
         }
     ]
 
@@ -75,14 +79,11 @@ const Dashboard = () => {
                                         <Card.Body>
                                             <Row>
                                                 <Col xs={4} className="align-self-center">
-                                                <Image fluid alt='Avatar del profilo' src={card.img} className={card.link === '/profile' ? 'roundedCircle' : ''} />
+                                                <Image fluid alt={card.alt} src={card.img} className={card.link === '/profile' ? 'roundedCircle' : ''} />
                                                 </Col>
                                                 <Col xs={8}>
-
-                                                    <Card.Title>{card.title}</Card.Title>
-                                                    <Card.Text>
-                                                        {card.text}
-                                                    </Card.Text>
+                                                    <Card.Title><h3>{card.title}</h3></Card.Title>
+                                                    <Card.Text><h4>{card.text}</h4></Card.Text>
                                                 </Col>
                                             </Row>
                                         </Card.Body>

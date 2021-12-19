@@ -178,11 +178,11 @@ const ProductPage = ({ loggedIn }) => {
       </Button>
       <Row>
         <Col sm lg={4}>
-          <Image src={product.img} fluid thumbnail="true" alt="product image" />
+          <Image src={product.img} fluid thumbnail="true" alt={product.name} />
         </Col>
         <Col sm lg={8}>
           <h2 className="display-6">{product.name}</h2>
-          <p>{product.description}</p>
+          <h3>{product.description}</h3>
           {/*List of product in the bundle (if the product is a bundle)*/}
           {product.products.length !== 0 && (
             <>
@@ -209,6 +209,7 @@ const ProductPage = ({ loggedIn }) => {
 
           <label htmlFor="start">Inserire un periodo:</label>
           <DatePicker
+            id="start"
             selectsRange={true}
             startDate={startDate}
             endDate={endDate}
@@ -245,7 +246,7 @@ const ProductPage = ({ loggedIn }) => {
         show={errorShow}
         data={{
           title: "Ooops...",
-          text: "Something gone wrong, please retry later",
+          text: "Qualcosa non è andato dritto, riprova fra un lasso di tempo",
         }}
         onHide={() => setErrorShow(false)}
       />

@@ -22,7 +22,7 @@ const Home = () => {
                     <div className="row align-items-end button-div">
                         <div className="col-12 text-center flex-grow-1">
                             <Link to="/products">
-                                <Button><p className="display-6 mb-0">Fai un preventivo</p></Button>
+                                <Button><h2 className="display-6 mb-0">Fai un preventivo</h2></Button>
                             </Link>
                         </div>
                     </div>

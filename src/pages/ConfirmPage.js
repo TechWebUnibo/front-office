@@ -29,12 +29,12 @@ const ConfirmPage = () => {
             </div>
                         <ListGroup id="rental-overall">
                 <ListGroup.Item>ID noleggio: {rental._id}</ListGroup.Item>
-                <ListGroup.Item>Prodotto/i: {productName}</ListGroup.Item>
+                <ListGroup.Item>Prodotto: {productName}</ListGroup.Item>
                 <ListGroup.Item>Prezzo: {rental.price}€</ListGroup.Item>
                 <ListGroup.Item>Inizio: {rental.start.split('T')[0]}</ListGroup.Item>
                 <ListGroup.Item>Fine: {rental.end.split('T')[0]}</ListGroup.Item>
             </ListGroup>
-            <p className='mt-2'>Si ricorda che si è ancora in tempo per modificare il noleggio andando nella pagina dei noleggi del profilo personale e selezionando 'modifica' sull'ordine da modificare.<Link to="/dashboard" classNmae="underlined">dashboard</Link></p>
+            <p className='mt-2'>Si ricorda che si è ancora in tempo per modificare il noleggio andando nella <Link to="/rentals" className="text-decoration-underline text-primary">pagina dei noleggi</Link> del profilo personale e selezionando 'modifica' sull'ordine da modificare.</p>
         </Container>
     )
 }

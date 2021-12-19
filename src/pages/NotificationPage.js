@@ -25,7 +25,7 @@ const NotificationPage = () => {
         const { status, body } = await getNotifications(await getUser())
         if (status === 200) {
             setNotificationNumber(body.length);
-            setNotifications(body)
+            setNotifications(body.reverse())
             setIsPending(false)
         }
     }
