@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import { Navbar, Container, Nav, NavLink, NavItem, NavDropdown, Button, Badge, Image, Dropdown } from "react-bootstrap";
+import { Navbar, Container, Nav, NavLink, NavItem, Button, Badge, Image, Dropdown } from "react-bootstrap";
 import "../style/common.css";
 import { getNotifications, getUser, getCustomer } from "../utility/apiLibrary";
 
