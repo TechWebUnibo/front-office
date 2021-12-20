@@ -79,7 +79,7 @@ const Dashboard = () => {
                                         <Card.Body>
                                             <Row>
                                                 <Col xs={4} className="align-self-center">
-                                                <Image fluid alt={card.alt} src={card.img} className={card.link === '/profile' ? 'roundedCircle' : ''} />
+                                                <Image fluid alt={card.alt} src={card.img} className={card.link === '/profile' ? 'rounded-circle' : ''} />
                                                 </Col>
                                                 <Col xs={8}>
                                                     <Card.Title><h3>{card.title}</h3></Card.Title>
