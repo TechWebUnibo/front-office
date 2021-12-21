@@ -14,7 +14,7 @@ const NotFound = () => {
         <h2 className="display-1 mt-2">
           Hai chiamato, ma nessuno ha risposto...
         </h2>
-        <p>La pagina da te richiesta non risulta essere disponibile</p>
+        <h3>La pagina da te richiesta non risulta essere disponibile</h3>
       <div className="mt-5 text-center">
           <Link to="/">
             <Button>Torna alla home</Button>

@@ -1,6 +1,6 @@
 import { Card, Row, Col, Button } from 'react-bootstrap';
 import { Link } from "react-router-dom";
-import { getProducts } from '../utility/apiLibrary';
+import { getProducts, getInvoices } from '../utility/apiLibrary';
 import { useState, useEffect } from 'react';
 
 import '../style/rental.css'
@@ -26,6 +26,14 @@ const RentalCard = (prop) => {
     </>)
 
     const [product, setProduct] = useState({})
+    const [invoice, setInvoice] = useState(undefined)
+
+    const fetchInvoices = async () =>{
+        const { status, body} = await getInvoices({ rent: prop.id });
+        if(status === 200 && body[0] !== undefined ) {
+            setInvoice(body[0]._id)
+        }
+    }
 
     useEffect(() => {
         const getProductInfo = async () => {
@@ -35,6 +43,11 @@ const RentalCard = (prop) => {
             }
         }
         getProductInfo()
+        if (prop.status === 'terminated')
+        {
+            fetchInvoices()
+        }
+        
     }, [prop.name])
 
     return (
@@ -49,6 +62,12 @@ const RentalCard = (prop) => {
                             <h3>
                                 Costo: {prop.price}€ <br />
                                 Stato: {prop.status.replace(/_/, ' ')} <Explainer title={title} message={message} />
+                                {invoice !== undefined && (
+                                    <>
+                                    <br/>
+                                    <Link to={'/invoice/'+invoice} className="text-decoration-underline text-primary">Fattura</Link>
+                                    </>
+                                )}
                             </h3>
                         </Card.Text>
                     </Col>

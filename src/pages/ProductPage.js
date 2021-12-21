@@ -181,6 +181,7 @@ const ProductPage = ({ loggedIn }) => {
       <Row>
         <Col sm lg={4}>
           <Image src={product.img} fluid thumbnail="true" alt={product.name} />
+          <h2 className="my-1" style={{fontSize : "0.4em"}}>L'immagine è a puro scopo illustrativo e potrebbe differire dal prodotto recapitato.</h2>
         </Col>
         <Col sm lg={8}>
           <h2 className="display-6">{product.name}</h2>

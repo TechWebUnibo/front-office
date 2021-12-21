@@ -35,7 +35,7 @@ function Invoices() {
             {!isPending && invoices.length >0 &&
             (<ListGroup>
                 {invoices.map((invoice) => {
-                    return (<ListGroup.Item action as={Link} key={invoice._id} to={"/invoice/" + invoice._id} href={"/invoice" + invoice._id}> Visualizza la fattua per l'ordine: {invoice._id} </ListGroup.Item>);})}
+                    return (<ListGroup.Item action as={Link} key={invoice._id} to={"/invoice/" + invoice._id} href={"/invoice" + invoice._id}> Visualizza la fattua per l'ordine: {invoice.rent} </ListGroup.Item>);})}
             </ListGroup>) //todo da testare e modificare
             }
             { !isPending && invoices.length <= 0 &&

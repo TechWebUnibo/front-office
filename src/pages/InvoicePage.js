@@ -9,7 +9,7 @@ import '../style/invoicePage.css';
 
 import seo from "../utility/dynamicPageTitle";
 
-const InvoicePagePrintable = React.forwardRef(({prop}, ref) => {
+const InvoicePagePrintable = React.forwardRef(({canPrint}, ref) => {
     const {id} = useParams();
 
     const [invoice, setInvoice] = useState()
@@ -22,11 +22,19 @@ const InvoicePagePrintable = React.forwardRef(({prop}, ref) => {
                 setInvoice(body[0]);
                 setIsPending(false);
                 //Dynamic page title
-                seo({title : 'fattura '+body[0]._id+' | Cater', metaDescription : 'La mia fattura'})
+                if(body[0] === undefined) 
+                {
+                    canPrint(false)
+                    seo({title : 'fattura non disponibile | Cater', metaDescription : 'La mia fattura'})
+                }
+                else {
+                    seo({title : 'fattura '+body[0]._id+' | Cater', metaDescription : 'La mia fattura'})
+                }
+                
             }
         }
         fetchInvoices()
-    }, [id])
+    }, [])
 
     return (
         <div ref={ref} id="invoice" className="container">
@@ -37,7 +45,7 @@ const InvoicePagePrintable = React.forwardRef(({prop}, ref) => {
             </Container>)
             }
 
-            {!isPending &&
+            {!isPending && invoice !== undefined &&
             (
                 <div>
                     <Row>
@@ -89,16 +97,16 @@ const InvoicePagePrintable = React.forwardRef(({prop}, ref) => {
                         )
                     })}
                     <Row className='mt-4'>
-                        <Col md={{offset: 10 }}>
+                        <Col md={{offset: 9 }} className="text-md-center">
                             <Alert variant={'secondary'}>
-                                Totale: {invoice.price}
+                                Totale: {invoice.price} €
                             </Alert>                        
                         </Col>
                     </Row>
                 </div>
             )}
-            {(!isPending && invoice === {}) &&
-            (<h3> Fattura non disponibile</h3>)
+            {(!isPending && invoice === undefined) &&
+            (<h2 className="display-2"> Fattura non disponibile</h2>)
             }
         </div>
     );
@@ -107,6 +115,8 @@ const InvoicePagePrintable = React.forwardRef(({prop}, ref) => {
 
 function InvoicePage() {
 
+    const [enablePrint, setEnablePrint] = useState(true);
+
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
@@ -114,8 +124,8 @@ function InvoicePage() {
 
     return (
         <Container className="container mt-4 content">
-            <InvoicePagePrintable ref={componentRef}/>
-            <Button onClick={handlePrint}>Stampa</Button>
+            <InvoicePagePrintable ref={componentRef} canPrint={(value) => setEnablePrint(value)} />
+            <Button onClick={handlePrint} className={enablePrint ? '' : 'disabled'}>Stampa</Button>
         </Container>
     );
 }
